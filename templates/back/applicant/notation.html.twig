@@ -1,0 +1,59 @@
+{% extends "back/base_back.html.twig" %}
+
+{% block title %}
+    Notation du projet
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href=" {{ path('project_show',{slug:applicantRating.project.slug,id:applicantRating.project.id}) }} ">{{ applicantRating.project.name }}</a></li>
+    <li class="breadcrumb-item">
+        <a href="">notation</a>
+    </li>
+
+{% endblock %}
+
+
+{% block back_main_content %}
+
+
+    <div class="col-12 mb-5">
+        <h2 class="amour">Notation du projet</h2>
+        <h3 class="amour">{{applicantRating.project.name }} </h3>
+        <button class="btn-custom-xl bg-darkmontainmeadow text-white" onclick=" location.href='{{path('project_show', {slug:applicantRating.project.slug,id:applicantRating.project.id} )}}'">retour projet</button>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-shape">
+            {{ form_start(form, { 'attr': {'class': '_form'} } ) }}
+
+            {{ form_errors(form) }}
+
+
+            {{ form_label(form.note, 'La prestation réalisée correspond-elle aux résultats attendus :', {'label_attr': {'class': 'foo mt-4'}}) }}
+            {{ form_widget(form.note, { 'attr': {'disabled':'disabled'} } )}}
+
+            {{ form_label(form.comment, 'Commentaires', {'label_attr': {'class': 'foo mt-4'}}) }}
+            {{ form_widget(form.comment, )}}
+
+            {{ form_end(form) }}
+        </div>
+        <!-- Illustrations -->
+        <div class=" col-md-6 card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">{{cat}} par {{ applicantRating.project.requestBy.firstname }} {{ applicantRating.project.requestBy.lastname }}</h6>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="{{asset('build/images/RATE.svg')}}" alt="">
+                </div>
+                {% if cat == 'En cours de notation' %}
+                <a href="{{ url('project_applicant_rating', {id:applicantRating.url}) }}">Lien vers le formulaire</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

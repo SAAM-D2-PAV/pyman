@@ -1,0 +1,70 @@
+{% extends "back/base_back.html.twig" %}
+
+{# {% form_theme form 'bootstrap_4_layout.html.twig' %} #}
+
+{% block title %}
+   {{ cat | lower }}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href=" {{ path('equipments_list') }} ">Materiel</a></li>
+
+    {% if cat == "PRET DE MATÉRIEL" or cat == "MODIFICATION DU PRET DE MATERIEL" %}
+        <li class="breadcrumb-item "> <a href="{{ path('rentals_list') }}">liste des prêts</a> </li>
+    {% endif %}
+
+    <li class="breadcrumb-item "><a href="">{{ cat | lower }}</a>  </li>
+{% endblock %}
+
+{% block back_main_content %}
+
+    <div class="row">
+
+        <div class="col-12 mb-4">
+
+            <h3 class="card-title amour ">{{cat}}</h3>
+        
+        </div>
+
+        <div class="col-md-6">
+       
+            {% if equipmentType is empty and cat == "Ajout de matériel"%}
+
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Oh snap!</strong> <a href=" {{path('equipment_type_create')}} " class="alert-link">Merci de définir un type de matériel</a> Revenez ici ensuite.
+                </div>
+            {% endif %}
+            
+            {% include "back/_form.html.twig" %}
+            
+        </div>
+
+        <div class="col-md-6">
+            <div class="col">
+            <div class="">
+                <div class="card mb-4">
+                    
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                src="{{asset('build/images/BUILDING_BLOCK.svg')}}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="jumbotron">
+                <h2 class="h1-responsive">{{cat}}</h2>
+               
+                <hr class="my-2">
+               
+                <button class="bg-nasu_purple btn-custom-lg text-white" onclick=" location.href=' {{path('equipments_list')}}'"> Liste du matériel</button>
+            </div>
+        </div>
+        </div>
+         
+ </div>   
+
+{% endblock %}

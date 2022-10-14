@@ -1,0 +1,53 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    upload_directory: '%kernel.project_dir%/doc/uploads/documents'
+    upload_photo_directory: '%kernel.project_dir%/public/build/images/photos'
+    default_admin_email: no-reply@gdp-app.ovh
+    default_team_email: audiovideo.ac@education.gouv.fr
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $adminEmail: "%env(string:default:default_admin_email:ADMIN_EMAIL)%"
+            $teamEmail: "%env(string:default:default_team_email:TEAM_EMAIL)%"
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\Service\FileManager:
+        arguments:
+            $targetDirectory: '%upload_directory%'
+
+    App\Service\PhotoManager:
+        arguments:
+            $targetPhotoDirectory: '%upload_photo_directory%'
+    
+    #https://symfony.com/doc/current/service_container.html --> mailer service
+
+    App\Doctrine\Listener\TaskListener:
+        tags:
+            -
+                # these are the options required to define the entity listener
+                name: 'doctrine.orm.entity_listener'
+                event: 'preUpdate'
+                entity: 'App\Entity\Task'

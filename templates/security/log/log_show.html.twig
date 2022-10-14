@@ -1,0 +1,74 @@
+{% extends "back/base_back.html.twig" %}
+
+{% block title %}
+    logs
+{% endblock %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item"> <a href="{{path('locations_list')}}">liste des logs</a></li>
+{% endblock %}
+{% block back_main_content %}
+
+    <!-- Content Row -->
+    <div class="row">
+        <div class="col-xl-12 font-weight-light text-center amour">
+            <h2>Dernières actualités</h2>
+        </div>
+    </div>
+    <!-- Content Row -->
+        <div class="col-12">
+            <div class="card">
+                <h5 class="m-0 font-weight-bold bg-aqua_velvet text-white p-3">Logs</h5>
+                <div class="card-body">
+                    <table class="table" id="dataTableFull">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Projet</th>
+                            <th scope="col">Tâche</th>
+                            <th scope="col">Créé par  </th>
+                            <th scope="col">Créé le</th>
+                            <th scope="col">type </th>
+                            <th scope="col">Noté par</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for log in logs %}
+                            <tr class="">
+                                <td>{{log.id}}</td>
+
+                                {% if (log.project) %}
+                                <td> <a href="{{path('project_show', {slug:log.project.slug,id:log.project.id} )}}">{{log.project.name}}</a></td>
+                                {% else %}
+                                    <td> X </td>
+                                {% endif %}
+
+                                {% if (log.task) %}
+                                    <td><a href="{{path('task_show', {id:log.task.id} )}}" target="_blank">{{log.task.name}}</a></td>
+                                {% else %}
+                                    <td> X </td>
+                                {% endif %}
+
+
+                                <td>{{log.createdBy.firstname}}</td>
+
+                                <td>{{log.createdAt | date ("d-m-Y")}} à {{log.createdAt | date ("H:m:i")}}</td>
+
+                                <td>{{log.type}}</td>
+
+                                {% if (log.ratedBy) %}
+                                    <td>{{log.ratedBy.firstname}} {{log.ratedBy.lastname}}</td>
+                                {% else %}
+                                    <td> - </td>
+                                {% endif %}
+
+
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+{% endblock %}

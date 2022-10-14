@@ -1,0 +1,21 @@
+{{ form_start(form, {'attr': {'class': 'upload_form'}}) }}
+
+{{ form_errors(form) }}
+ 
+<div class="form-group">
+    <label for="{{ form.uploadName.vars.id }}" class="foo label-file wrap">
+         
+    </label>
+    
+        {{ form_widget(form.uploadName,{'attr': {'class': 'form-control-file uploadFileInput'}}) }}
+    
+    
+</div>
+
+<button type="submit" id="customFileInput" class="btn-custom-xl {{btnLabel}} text-white mb-5 fileSubmitButton">
+    <i class="fas fa-{{ico}}"></i>
+    {{ btnText }}
+    
+</button>
+
+{{ form_end(form) }}

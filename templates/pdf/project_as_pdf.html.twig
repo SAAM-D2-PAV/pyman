@@ -1,0 +1,181 @@
+<!doctype html>
+
+    <style>
+        page{
+
+        }
+        .mr{
+            margin-right: 10px;
+        }
+        .amour{
+            color: #ee5253;
+        }
+        .rouge{
+            color: #E1000F;
+        }
+        .blue{
+            color:#5770BE;
+        }
+        .double_dragon_skin{
+            color: #ff9f43;
+        }
+        .align-center{
+            text-align: center;
+        }
+        .table{
+
+            border: #ee5253;
+            margin-top: 20px;
+            padding: 10px;
+        }
+        h4{
+            font-weight: lighter;
+        }
+        .success{
+            background-color: #169B62;
+            color: white;
+
+        }
+        .danger{
+            background-color: #E1000F;
+            color: white;
+        }
+        .warning{
+            background-color: #FDCF41;
+
+        }
+        .info{
+            background-color: #0abde3;
+
+        }
+        .bg-bluebell{
+            background-color: #341f97;
+            color: white;
+            padding: 10px 0;
+        }
+        .box{
+            padding: 10px;
+            border: 1px solid;
+        }
+        .text-right{
+            text-align: right;
+        }
+        .divider{
+            border-bottom: 2px solid #341f97;
+            margin-top: 50px;
+        }
+    </style>
+
+<page>
+    {% set foo = 'primary' %}
+    {% if project.status == "En cours" %} {% set foo = 'warning' %} {% endif %}
+    {% if project.status == "Fait" %} {% set foo = 'success' %} {% endif %}
+    {% if project.status == "Annulé" %} {% set foo = 'danger' %} {% endif %}
+    {% if project.status == "Refusé" %} {% set foo = 'danger' %} {% endif %}
+
+    <body>
+
+    <h3 class="rouge">{{ project.name }} </h3> <span class="{{ foo }}"> {{ project.status }}&nbsp;</span>
+    <h5>Ce projet est porté par : <span class="amour">{{project.requestBy.department}}.</span></h5>
+
+    Catégorie : <span class="double_dragon_skin">{{project.category.name}}</span>
+    <p>créée le {{ project.createdAt|date("d/m/Y") }} par {{ project.createdBy.firstname }} | Modifiée le {{ project.updatedAt | date("d/m/Y") }} par {{project.updatedBy.firstname}} </p>
+
+        <h5 class="bg-bluebell">{% if project.requestBy %}Contact :<br/><br/> {{project.requestBy.email}} <br/>  {{project.requestBy.phone}}{% endif %} <br/><br/> </h5>
+
+    <div class="">
+        <div class="text-right">
+            <h5> Date d'échéance de ce projet : {{project.deliveryDate |date("d/m/Y") }}</h5>
+        </div>
+    </div>
+
+    <div class="box">
+        <h4 class="blue">Description</h4>
+        <p>{{project.information | raw}}.</p>
+    </div>
+
+    <div class="">
+        <h3 class="amour">  Actualité du projet</h3>
+    </div>
+
+        {% for comment in project.comments  %}
+            <div class="">
+                <h4 class="warning">{{ comment.title }}</h4>  <p>Posté par : {{comment.createdBy.firstname}} le {{ comment.createdAt|date('d/m/Y') }} à {{ comment.createdAt|date("G:i") }}, mise à jour {{ comment.updatedAt|date('d/m/Y') }} à {{ comment.updatedAt|date("G:i") }}.</p>
+
+
+                    {{ comment.content | raw}}
+            </div>
+        {% endfor %}
+
+    <div class="divider">
+    </div>
+</page>
+<page>
+    <div class="">
+        <h3 class="amour">  Tâches</h3>
+    </div>
+
+    {% for task in project.tasks  %}
+
+            {% set foo2 = 'primary' %}
+            {% if task.status == "A faire" %} {% set foo2 = 'info' %} {% endif %}
+            {% if task.status == "En cours" %} {% set foo2 = 'warning' %} {% endif %}
+            {% if task.status == "Faite" %} {% set foo2 = 'success' %} {% endif %}
+            {% if task.status == "Annulée" %} {% set foo2 = 'danger' %} {% endif %}
+            {% if task.status == "Refusée" %} {% set foo2 = 'danger' %} {% endif %}
+
+            <h4 class="rouge">{{ task.name }} du {{ task.startDate|date("d/m/Y") }}</h4> <span class="{{ foo2 }}"> {{ task.status }}&nbsp;</span>
+            <h5>Cette tâche est liée au projet <span class="amour">{{task.project.name}}.</span></h5>
+            Catégorie : <span class="double_dragon_skin">{{task.category.name}}</span>, lieu : <span class="double_dragon_skin">{{task.location.name}}.</span>
+            <p>créée le {{ task.createdAt|date("d/m/Y") }} par {{ task.createdBy.firstname }} | Modifiée le {{ task.updatedAt | date("d/m/Y") }} par {{task.updatedBy.firstname}} </p>
+
+            <h4 class="blue">Description</h4>
+            <p>{{task.description | raw}}.</p>
+
+            <h4 class="blue">Horaires</h4>
+            <ul class="list-group list-group-flush imperial_primer">
+                <li class="list-group-item">Date de début : {{ task.startDate|date("d/m/Y") }} </li>
+                <li class="list-group-item">Date de fin : {{ task.endDate|date("d/m/Y") }}</li>
+                <li class="list-group-item">Heure de début : {{ task.startHour|date("G:i") }}</li>
+                <li class="list-group-item">Heure de fin : {{ task.endHour|date("G:i") }}</li>
+            </ul>
+
+            <h4 class="blue">Liste du matériel utilisé pour cette tâche</h4>
+            {% if task.equipment is empty %}
+                <h6>Il n'y a rien ici</h6>
+            {% else %}
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Code d'identification MENESRI</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for equipment in task.equipment %}
+
+
+                        <tr>
+
+                            <td>{{equipment.name}}</td>
+
+                            <td class="align-center">{{equipment.identificationCode}}</td>
+                        </tr>
+
+
+
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        <div class="divider">
+        </div>
+
+    {% endfor %}
+
+
+    </body>
+
+</page>

@@ -1,0 +1,288 @@
+{% extends "back/base_back.html.twig" %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    {{ encore_entry_link_tags('back') }}
+   
+
+{% endblock %}
+
+{% block title %}
+	Tableau de bord
+{% endblock %}
+
+
+
+
+{% block back_main_content %}
+
+{% set todoCpt = 0 %}
+
+{% for task in ttasks %}
+
+	{% if task.status == "A faire" %}
+		{% set todoCpt = todoCpt + 1 %}	
+	{% endif %}
+	{% if task.status == "En cours" %}
+		{% set todoCpt = todoCpt + 1 %}	
+	{% endif %}
+	
+{% endfor %}
+
+
+
+<h1 class="amour text-center mb-2">Tableau de bord</h1>
+    <div class="col text-center">
+        <img class="img-fluid px-3 px-sm-4 mb-4" style="width: 15rem;"
+             src="{{asset('build/images/ADVENTURE.svg')}}" alt="...">
+    </div>
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold red_flag text-uppercase mb-1">
+                            Projets</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"> {{projects|length }} </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-project-diagram fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold red_flag text-uppercase mb-1">
+                           Tâches</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ todoCpt }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa-solid fa-list-check fa-2x"></i> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold blue_flag text-uppercase mb-1">
+                           Equipements inventoriés</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ equipmentsCount }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa-solid fa-video fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold blue_flag text-uppercase mb-1">
+                           Lieux d'intervention</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ locationsCount }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa-solid fa-location-dot fa-2x"></i> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+<div class="row">
+    <div class="col-md-6 mt-5 mb-4">
+        <h5>Navigation rapide</h5>
+        <ul class="nav">
+            <li class="nav-item mr-2 mt-2">
+            
+                <a class="nav-link btn btn-custom-lg" aria-current="page" href="{{path('calendar')}}"> <i class="fa-solid fa-calendar-days fa-3x blue_flag"></i> Calendrier</a>
+            </li>
+            <li class="nav-item mr-2 mt-2">
+                <a class="nav-link btn btn-custom-lg" href="{{path('home_projects_2',{id:app.user.id})}} "><i class="fa-solid fa-diagram-project fa-3x blue_flag"></i> Projets</a>
+            </li>
+            <li class="nav-item mr-2 mt-2">
+                <a class="nav-link btn btn-custom-lg" href="{{path('todo_tasks_list')}} "><i class="fa-solid fa-list-check fa-3x blue_flag"></i> Tâches</a>
+            </li>
+            <li class="nav-item mr-2 mt-2">
+                <a class="nav-link btn btn-custom-lg" href="{{path('locations_list')}}"><i class="fa-solid fa-location-dot fa-3x blue_flag"></i> Espaces</a>
+            </li>
+            {% if is_granted('ROLE_EDITOR') %}
+            <li class="nav-item mr-2 mt-2">
+                <a class="nav-link btn btn-custom-lg" href="{{path('equipments_list')}}"><i class="fa-solid fa-video fa-3x blue_flag"></i> Matériel</a>
+            </li>
+            <li class="nav-item mr-2 mt-2">
+                <a class="nav-link btn btn-custom-lg" href="{{path('rentals_list')}}"><i class="fas fa-shopping-cart fa-3x blue_flag"></i> Prêts</a>
+            </li>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item mr-2 mt-2">
+                <a class="nav-link btn btn-custom-lg" href="{{path('applicants_list')}}"><i class="fa-solid fa-users fa-3x blue_flag"></i> Contacts</a>
+            </li>
+            {% endif %}
+             <li class="nav-item mr-2 mt-2">
+                <a class="nav-link btn btn-custom-lg" href="{{path('stats_show')}}"><i class="fa-solid fa-chart-bar fa-3x blue_flag"></i> Stats</a>
+            </li>
+            <li class="nav-item mr-2 mt-2">
+                <a class="nav-link btn btn-custom-lg" href="{{path('media')}}"><i class="fa-solid fa-camera fa-3x blue_flag"></i> Média</a>
+            </li>
+            <li class="nav-item mr-2 mt-2">
+                <a class="nav-link btn btn-custom-lg" href="{{path('documents_show')}} "><i class="fa-solid fa-folder fa-3x blue_flag"></i> Documents</a>
+            </li>
+        </ul>       
+    </div>
+    <div class="col-md-5 mt-5 mb-4">
+        {% if is_granted('ROLE_EDITOR') %}
+        <h5 class="">Ajouter</h5>
+
+        <ul class="list-group list-group-horizontal mt-4">
+            <li class="list-group-item"><a href=" {{path('project_create')}} " class="blue_chart_0"><i class="fas fa-plus-square"></i> Projet</a></li>
+            <li class="list-group-item"><a href=" {{path('task_create')}}" class="blue_chart_0"><i class="fas fa-plus-square"></i> Tâche</a></li>
+            <li class="list-group-item"><a href=" {{path('location_create')}} " class="blue_chart_0"><i class="fas fa-plus-square"></i> Espace</a></li>
+            <li class="list-group-item"><a href=" {{path('equipment_create')}} " class="blue_chart_0"><i class="fas fa-plus-square"></i> Matériel</a></li>
+            <li class="list-group-item"><a href=" {{path('equipment_rent')}} " class="blue_chart_0"><i class="fas fa-plus-square"></i> Prêt</a></li>
+            <li class="list-group-item"><a href=" {{path('applicant_create')}} " class="blue_chart_0"><i class="fas fa-plus-square"></i> Contact</a></li>
+        </ul>
+        {% endif %}
+    </div>
+
+</div>
+<h3 class="m-0 font-weight-bold mt-4">Activité</h3>
+<div class="row">
+
+    <div class="col mt-4">
+
+        <div class="card-header py-3">
+            <h5 class="m-0 font-weight-bold">Aujourd'hui</h5>
+        </div>
+        <div class="card-body">
+            <table>
+                <tbody>
+
+                {% for task in ttasks %}
+
+                    {% if ( task.startDate|date("Y-m-d") == "now"|date("Y-m-d") ) or ( ( "now"|date("Y-m-d") >= task.startDate|date("Y-m-d") ) and ( "now"|date("Y-m-d") <= task.endDate|date("Y-m-d")) ) %}
+
+                        <tr>
+                            {% if task.status == "Annulée" %}
+                                <td class="p-4"> <a class="red_flag" href="{{ path('task_show',{id:task.id})}}"> <s>{{task.name}}</s> </a></td>
+                                <td class="p-4"><s>{{task.project.name}}</s></td>
+                                <td class="p-4"><s>{{task.category.name}}</s></td>
+                                <td class="text-center">
+                                    <button type="button" class="btn-custom-lg bg-blue_flag_comp text-white" onclick="location.href='{{ path('task_show',{id:task.id})}}';"><i class="fas fa-eye"></i> Voir</button>
+                                </td>
+                            {% else %}
+                                <td class="p-4"> <a class="red_flag" href="{{ path('task_show',{id:task.id})}}">{{task.name}}</a></td>
+                                <td class="p-4">{{task.project.name}}</td>
+                                <td class="p-4">{{task.category.name}}</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn-custom-lg bg-blue_flag_comp text-white" onclick="location.href='{{ path('task_show',{id:task.id})}}';"><i class="fas fa-eye"></i> Voir</button>
+                                </td>
+                            {% endif %}
+                        </tr>
+
+                    {% endif %}
+                
+                {% endfor %}
+                </tbody>
+            </table> 
+        </div>
+        <div class="text-center">
+            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                src="{{asset('build/images/CHART01.svg')}}" alt="...">
+        </div>
+        <div class="card-header py-3">
+            <h5 class="m-0 font-weight-bold">Dernières modifications</h5>
+        </div>
+        <div class="card-body">
+            <table>
+                <tbody>
+                {% for log in logs %}
+
+
+
+                        <tr>
+
+                            <td class="p-4">{{log.type}} le {{log.createdAt|date("d/m/Y")}}</td>
+                            {% if log.project %}
+                                <td class="p-4"><a href="{{path('project_show',{id:log.project.id,slug:log.project.slug})}}">{{log.project.name}}</a></td>
+                            {% endif %}
+                            {% if log.task %}
+                                <td class="p-4"><a href="{{path('task_show',{id:log.task.id})}}">{{log.task.name}}</a></td>
+                            {% endif %}
+                            <td></td>
+
+                        </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <button type="button" class="btn-custom-lg bg-yellow_chart_0 text-white" onclick="location.href='{{ path('logsEvent_show')}}';"><i class="fas fa-plus"></i></button>
+        </div>
+
+
+
+    </div>
+
+    <div class="col mt-4">
+        <div class="card-header py-3">
+            <h5 class="m-0 font-weight-bold red_flag">A cloturer</h5>
+        </div>
+        <div class="card-body">
+            <table>
+            <tbody>
+            {% for task in ttasks %}
+        
+                {% if task.status == "A faire" or task.status == "En cours" %}
+                    {% if task.endDate|date("Y-m-d") < "now"|date("Y-m-d") %}
+                        <tr>
+                            <td class="p-4"> <a class="red_flag" href="{{ path('task_show',{id:task.id})}}"> {{task.name}}</a></td>
+                            <td class="p-4">{{task.project.name}}</td>
+                            <td class="p-4">{{task.category.name}}</td>
+                            <td class="{% if task.startDate <= date()%}amour {% endif %}"> {{task.startDate|date("d/m/Y")}} à {{ task.startHour|date("G:i") }}</td>
+                                    
+                                            
+                            <td class="text-center">
+                                <button type="button" class="btn-custom-lg bg-bord_chart_0 text-white" onclick="location.href='{{ path('task_show',{id:task.id})}}';"><i class="fas fa-eye"></i> Voir</button>
+                            </td>
+                        </tr>
+                {% endif %}
+
+            {% endif %}
+                
+                
+            {% endfor %}
+            </tbody>
+        </table> 
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+    <script>
+
+       
+    </script>
+{% endblock %}
+

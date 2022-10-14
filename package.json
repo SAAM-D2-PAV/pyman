@@ -1,0 +1,35 @@
+{
+    "devDependencies": {
+        "@hotwired/stimulus": "^3.0.0",
+        "@symfony/stimulus-bridge": "^3.0.0",
+        "@symfony/ux-autocomplete": "file:vendor/symfony/ux-autocomplete/assets",
+        "bootstrap": "^4.6.0",
+        "@symfony/webpack-encore": "^2.0.0",
+        "core-js": "^3.0.0",
+        "file-loader": "^6.0.0",
+        "jquery": "^3.5.1",
+        "popper.js": "^1.16.1",
+        "regenerator-runtime": "^0.13.2",
+        "sass": "^1.32.8",
+        "sass-loader": "^12.6.0",
+        "stimulus": "^2.0.0",
+        "tom-select": "^2.0.1",
+        "webpack-notifier": "^1.6.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "dependencies": {
+        "animate.css": "^4.1.1",
+        "chart.js": "^3.6.0",
+        "ckeditor": "^4.12.1",
+        "shufflejs": "^6.0.0",
+        "simple-datatables": "^3.0.2",
+        "sweetalert2": "^11.3.8"
+    }
+}

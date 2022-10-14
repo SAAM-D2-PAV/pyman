@@ -1,0 +1,83 @@
+{% extends "back/base_back.html.twig" %}
+{% block title %}
+	Catégories des projets
+{% endblock %}
+
+{% block breadcrumb %}
+	<li class="breadcrumb-item "><a href="{{path('projects_list')}}">Projets</a></li>
+    <li class="breadcrumb-item "> <a href="">catégories des projets</a></li>
+{% endblock %}
+
+{% block back_main_content %}
+	
+
+		<div class="row">
+				{% if emptyList %}
+                <div class="col-lg-12 col-md-12 mb-12">
+                <!-- Jumbotron -->
+                    <div class="card card-image">
+                        <div class="text-white text-center rgba-stylish-strong py-5 px-4">
+                            <div class="py-5">
+
+                                <!-- Content -->
+                                <h3 class="text-warning"><i class="far fa-folder-open"></i> Section vide</h3>
+                                <h2 class="card-title h2 my-4 py-2 imperial_primer">Veuillez ajouter des catégories de projet</h2>
+                                
+                                 {% if is_granted('ROLE_EDITOR') %}
+                                <a class="btn-custom-xl bg-imperial_primer text-white" href="#" onclick="location.href='{{path('project_category_create')}} ';" role="button"><i class="fas fa-clone left"></i> Ajouter</a>
+								{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Jumbotron -->
+				{% else %}
+					
+				<!-- Illustrations -->
+				<div class="card col-lg-2 col-sm-12 mb-4">
+					
+						<h6 class="m-0 p-3 font-weight-bold bg-pastel_red text-white">Catégories de projet</h6>
+				
+					<div class="card-body">
+						<div class="text-center">
+							<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+								src="{{asset('build/images/PROJECT.svg')}}" alt="">
+						</div>
+						 {% if is_granted('ROLE_EDITOR') %}
+						<p>Liste des catégories de projet, pour en ajouter, c'est <a
+								target="_blank" rel="nofollow" href="{{path('project_category_create')}}">ici </a>!</p>
+						{% endif %}
+					</div>
+				</div>
+
+				<div class="col-lg-9 mx-auto">
+                	<h3>Liste des catégories de projet</h3>
+					<table class="table table-hover" id="dataTableFull">
+						<thead>
+							<tr>
+								<th scope="col">Nom</th>
+								<th scope="col">Description</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for category in categories %}
+								<tr class="{#table-{{ random(['primary', 'secondary', 'success','danger','warning','info','light','dark']) }}#}">
+									<th scope="row">{{category.name}}</th>
+									<td>{{category.information}}</td>
+									<td>
+										 {% if is_granted('ROLE_EDITOR') %}
+										<button class="btn-custom-lg bg-casandora_yellow text-white" onclick=" location.href='{{ path('project_category_edit', {id:category.id})}} '"> <i class="fas fa-edit"></i></button>
+										{% endif %}
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+            	</div>
+				{% endif %}
+		</div>
+
+
+
+{% endblock %}

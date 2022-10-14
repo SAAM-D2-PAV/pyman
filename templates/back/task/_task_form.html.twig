@@ -1,0 +1,82 @@
+
+
+{{ form_start(form, {'attr': {'class': 'task_form _form'}}) }}
+
+
+<div class="row">
+    <div class="col">
+        {{ form_label(form.name, '', {'label_attr': {'class': 'foo'}}) }}
+        {{ form_widget(form.name) }}
+       
+        {{ form_label(form.description, '', {'label_attr': {'class': 'foo mt-4'}}) }}
+        {{ form_widget(form.description)}}
+
+        {{ form_label(form.status, 'ÉTAT', {'label_attr': {'class': 'foo mt-4'}}) }}
+        {{ form_widget(form.status)}}
+
+        {{ form_label(form.category, 'CATÉGORIE', {'label_attr': {'class': 'foo mt-4'}}) }}
+        {{ form_widget(form.category)}}
+        {{ form_label(form.stream, 'Live (streaming)', {'label_attr': {'class': 'foo mt-4'}}) }}
+        {{ form_widget(form.stream)}}
+        {{ form_label(form.location, 'LIEU DE LA TACHE', {'label_attr': {'class': 'foo mt-4'}}) }}
+        {{ form_widget(form.location)}}
+        <div class="mt-5 pb-3 mb-5 bg-wildcaribbeangreen text-black wrap">
+            {{ form_label(form.owners,'INSCRIPTIONS', {'label_attr': {'class': 'foo text-white'} } ) }}
+            {{ form_widget(form.owners,{'attr':{'class':'text-white'}})}}
+        </div>
+        
+    </div>
+    <div class="col">
+        {% if addTasktoProject is defined %}
+             
+            {{ form_label(form.project, 'PROJET', {'label_attr': {'class': 'foo mt-2'}}) }}
+            <p>{{ project.name }}</p>
+            {{ form_widget
+                (form.project,
+                    {'attr':{'class':''} }
+                )
+            }}
+           
+
+        {% else %}
+            <div class="alert alert-dismissible bg-double_dragon_skin">
+                <h4 class="alert-heading">Attention !</h4>
+                <p class="mb-0"> Cette tâche doit être liée à un projet existant.</p>
+            </div>
+            {{ form_label(form.project, 'PROJET', {'label_attr': {'class': 'foo mt-2'}}) }}
+            {{ form_widget(form.project)}}
+        {% endif %}
+        
+        
+
+        <div class="mt-5 pb-3 bg-bluebell text-white wrap">
+            <h4>HORAIRES</h4>
+            {{ form_label(form.startDate,'', {'label_attr': {'class': 'foo text-white'} } ) }}
+            {{ form_widget(form.startDate,{'attr':{'class':'text-white'}})}}
+            {{ form_label(form.endDate,'', {'label_attr': {'class': 'foo text-white mt-2'} } ) }}
+            {{ form_widget(form.endDate,{'attr':{'class':'text-white'}})}}
+            {{ form_label(form.startHour,'', {'label_attr': {'class': 'foo text-white mt-4'} } ) }}
+            {{ form_widget(form.startHour,{'attr':{'class':'text-white'}})}}
+            {{ form_label(form.endHour,'', {'label_attr': {'class': 'foo text-white mt-2'} } ) }}
+            {{ form_widget(form.endHour,{'attr':{'class':'text-white'}})}}
+            
+        </div>
+        
+
+        
+    </div>
+    
+    
+</div>
+
+<button type="submit" class="btn-custom-lg {{btnLabel}} submitButton">
+    <i class="fas fa-{{ico}}"></i>
+    {{ btnText }}
+    
+</button>
+
+{{ form_end(form) }}
+
+
+
+

@@ -1,0 +1,79 @@
+{% extends "back/base_back.html.twig" %}
+
+{# {% form_theme form 'bootstrap_4_layout.html.twig' %} #}
+
+{% block title %}
+   {{ cat }}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href=" {{ path('projects_list') }} ">projets</a></li>
+    <li class="breadcrumb-item ">{{ cat }}</li>
+{% endblock %}
+
+{% block back_main_content %}
+
+    <div class="row">
+
+        <div class="col-12 mb-4">
+               
+            <h3 class="amour">{{cat | upper}}</h3>
+            <h4>{{ item.name }}</h4>
+            {% if item != null %}
+                <button class="btn-custom-xl bg-darkmontainmeadow text-white" onclick="location.href='{{ path('project_show', {slug:item.slug,id:item.id}) }}';">Retour au projet</button>
+               
+                
+                    {% if form.vars.value.id %}
+                    <form method="post" action="{{ path('comment_delete', {id: form.vars.value.id}) }}" onsubmit="return confirm('Valider la suppression de cette actualité ?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ form.vars.value.id) }}">
+                        <button class="btn-custom-xl bg-amour text-white mt-2"><i class="far fa-trash-alt"></i> Supprimer l'actu</button>
+                   
+                    </form>
+                   {% endif %}
+               
+
+            {% endif %}
+               
+        </div>
+
+        <div class="col-md-6">
+       
+            {% if projectCategories is empty and cat == "Ajout d'un projet"%}
+
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Oh snap!</strong> <a href=" {{path('project_category_create')}} " class="alert-link">Merci de définir une catégorie de projet</a> Revenez ici ensuite.
+                </div>
+            {% endif %}
+            
+            {% include "back/_form.html.twig" %}
+            
+        </div>
+        
+        <div class="col-md-6">
+
+            <div class="col">
+                <div class="">
+                    <div class="card mb-4">
+                        
+                        <div class="card-body">
+                            <div class="text-center">
+                                {% if cat == "Ajout d\'une actualité" %}
+                                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                    src="{{asset('build/images/BUILDING_BLOCK.svg')}}" alt="">
+                                {% else %}
+                                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                    src="{{asset('build/images/PROJECT.svg')}}" alt="">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+ </div>   
+
+{% endblock %}

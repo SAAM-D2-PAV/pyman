@@ -1,0 +1,54 @@
+<div class="col mt-5">
+    <div class="col-12">
+        {{ form_start(form) }}
+
+        {{ form_errors(form) }}
+    </div>
+    
+    <div class="row">
+        <div class="col-6">
+        {{ form_label(form.lastname, '', {'label_attr': {'class': 'foo'}}) }}
+        {{ form_widget(form.lastname) }}
+        {{ form_label(form.firstname, '', {'label_attr': {'class': 'foo'}}) }}
+        {{ form_widget(form.firstname) }}
+        {{ form_label(form.email, '', {'label_attr': {'class': 'foo'}}) }}
+        {{ form_widget(form.email) }}
+        {{ form_label(form.phone, '', {'label_attr': {'class': 'foo'}}) }}
+        {{ form_widget(form.phone) }}
+        </div>
+
+        <div class="col-6">
+        {{ form_label(form.mobil, '', {'label_attr': {'class': 'foo'}}) }}
+        {{ form_widget(form.mobil) }}
+        {{ form_label(form.job, '', {'label_attr': {'class': 'foo'}}) }}
+        {{ form_widget(form.job) }}
+        {{ form_label(form.office, '', {'label_attr': {'class': 'foo'}}) }}
+        {{ form_widget(form.office) }}
+        {{ form_label(form.department, '', {'label_attr': {'class': 'foo'}}) }}
+        {{ form_widget(form.department) }}
+
+        {% for role in app.user.roles %}
+            {% if role == "ROLE_ADMIN" %}
+                 {{ form_label(form.roles, '', {'label_attr': {'class': 'foo'}}) }}
+                 {{ form_widget(form.roles) }}
+            {% endif %}
+        {% endfor %}
+       
+         
+
+        </div>
+
+        <div class="col-6 mt-5">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">
+        <i class="fas fa-{{ico}}"></i>
+        {{ btnText }}
+        </button>
+    </div>
+    
+    </div>
+    
+    
+    {{ form_end(form) }}
+
+
+</div>

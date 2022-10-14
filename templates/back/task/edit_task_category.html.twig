@@ -1,0 +1,69 @@
+{% extends "back/base_back.html.twig" %}
+
+{# {% form_theme form 'bootstrap_4_layout.html.twig' %} #}
+
+{% block title %}
+   {{ cat }}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href=" {{ path('tasks_list') }} ">Tâches</a></li>
+    <li class="breadcrumb-item "> <a href="">{{ cat | lower}}</a> </li>
+{% endblock %}
+
+{% block back_main_content %}
+
+
+    
+
+    <div class="row">
+
+        
+
+        <div class="col-md-6">
+            {% if taskCategories is empty and cat == "Ajout d'une tâche"%}
+
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Oh snap!</strong> <a href=" {{path('task_category_create')}} " class="alert-link">Merci de définir une catégorie de tâche</a> Revenez ici ensuite.
+                </div>
+            {% endif %}
+         <div class="col-12">
+					<h3 class="amour">{{cat | upper}}</h3>
+				</div>   
+        {% include "back/_form.html.twig" %}
+        </div>
+
+        <div class="col-md-6">
+            <div class="col">
+            <div class="">
+                <div class="card mb-4">
+                    
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                src="{{asset('build/images/TASK2.svg')}}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col">
+            <div class="jumbotron">
+                <h2 class="h1-responsive">{{cat | upper}}</h2>
+                <p class="lead">{% if item is defined %} <p>{{item.name | upper}}</p> {% endif %}</p>
+                <hr class="my-2">
+                
+               
+                    <p>Vous pouvez ici ajouter des catégories de tâche.</p>
+                    <button class="btn-custom-lg bg-megaman" onclick=" location.href='{{path('task_categories_list')}}'">Liste des catégories disponibles</button>
+                    
+                
+                
+            </div>
+        </div>
+       
+    </div> 
+
+{% endblock %}

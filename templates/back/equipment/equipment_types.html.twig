@@ -1,0 +1,62 @@
+{% extends "back/base_back.html.twig" %}
+
+{% block title %}
+    {{type.name}}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href=" {{ path('equipments_list') }} ">Materiel</a></li>
+    <li class="breadcrumb-item "> <a href="">{{type.name | lower}}</a> </li>
+{% endblock %}
+
+{% block back_main_content %}
+
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="card col-lg-9 mx-auto">
+                <h3 class="card-title amour">{{type.name}}</h3>
+                <table class="table table-hover" id="dataTableFull">
+                    <thead>
+                        <tr>
+                        <th scope="col">Nom</th>
+                        <th scope="col">ref.</th>
+                        <th scope="col">Marque</th>
+                        <th scope="col">slug</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for equipment in type.equipments %}
+                            <tr class="{#table-{{ random(['primary', 'secondary', 'success','danger','warning','info','light','dark']) }}#}">
+                                <th scope="row"><a href="{{path('equipment_show', {type_slug:equipment.equipmentType.slug, slug: equipment.slug, id:equipment.id} )}}">{{equipment.name}}</a></th>
+                                <td>{{equipment.ref}}</td>
+                                <td>{{equipment.brand}}</td>
+                                <td>{{equipment.slug}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-3">
+                 <div class="card mb-4">
+                   
+                        
+                        <h6 class="m-0 p-3 font-weight-bold bg-aqua_velvet text-white">Type : {{type.name}}</h6>
+                  
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                src="{{asset('build/images/SEARCH.svg')}}" alt="">
+                        </div>
+                        <p> {{type.information}} </p>
+                         {% if is_granted('ROLE_EDITOR') %}
+                        <button class="bg-cyanite btn-custom-lg text-white" onclick=" location.href='{{ path('equipment_type_edit', {id:type.id})}}'"> Modifier</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

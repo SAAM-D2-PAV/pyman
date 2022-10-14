@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('front') }}
+{% endblock %}
+
+
+{% block navigation %}
+    {% include "front/_main_navbar.html.twig" %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+     {{ encore_entry_script_tags('front') }}
+{% endblock %}

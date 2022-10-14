@@ -1,0 +1,80 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  
+  <a class="navbar-brand" href="">
+    <img src="{{asset('build/images/logos/pyman341f97.png')}}" width="150" height="auto" class="d-inline-block align-top" alt="">
+    
+  </a>
+  <p>{{app_version}} | {{app_date}}</p>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor03">
+
+    <ul class="navbar-nav mr-auto">
+    {% if app.user is null %}
+      <li class="nav-item">
+        <a class="nav-link" href=" {{path('homepage')}} ">Accueil</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#about">A propos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#tech">Tech.</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#plugins">Plugins</a>
+      </li>
+       {% endif %}
+    </ul>
+   
+    
+    {% if app.user %}
+        {# menu notification #}
+        <div class="mr-3">
+
+
+          <button type="button" class="btn" data-toggle="modal" data-target="#ajaxModal" id="ajaxModalBtn">
+            <i class="far fa-bell"></i>
+          </button>
+
+        </div>
+
+        <div class="dropdown">
+          <button class="btn-custom-xl bg-blue_flag_comp-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{app.user.firstname }} {{app.user.lastname}}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {# <a class="dropdown-item" href=" {{ path("user_backoffice",{id:app.user.id}) }} ">Mon espace</a> #}
+            <a class="dropdown-item" href=" {{ path("user_account",{id:app.user.id}) }} ">Mon compte</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item amour" href=" {{path('app_logout')}} ">Se déconnecter</a>
+          </div>
+        </div>
+    {% endif %}
+  </div>
+</nav>
+
+
+<!-- Modal -->
+<div class="modal fade" id="ajaxModal" tabindex="10" role="dialog" aria-labelledby="ajaxModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ajaxModalLabel">Actualité {{ app_name }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul></ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          
+        <button type="button" class="btn btn-primary" onclick="location.href='{{ path('logsEvent_show')}}'" >Voir +</button>
+      </div>
+    </div>
+  </div>
+</div>

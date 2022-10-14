@@ -1,0 +1,117 @@
+<!doctype html>
+<page>
+<style>
+    page{
+
+    }
+    .mr{
+        margin-right: 10px;
+    }
+    .amour{
+        color: #ee5253;
+    }
+    .rouge{
+        color: #E1000F;
+    }
+    .blue{
+        color:#5770BE;
+    }
+    .double_dragon_skin{
+        color: #ff9f43;
+    }
+    .align-center{
+        text-align: center;
+    }
+    .success{
+        background-color: #169B62;
+        color: white;
+
+    }
+    .danger{
+        background-color: #E1000F;
+        color: white;
+    }
+    .warning{
+        background-color: #FDCF41;
+
+    }
+    .info{
+        background-color: #0abde3;
+
+    }
+    .table{
+
+        border: #ee5253;
+        margin-top: 20px;
+        padding: 10px;
+    }
+    h4{
+        font-weight: lighter;
+    }
+</style>
+    {% set foo = 'primary' %}
+    {% if task.status == "A faire" %} {% set foo = 'info' %} {% endif %}
+    {% if task.status == "En cours" %} {% set foo = 'warning' %} {% endif %}
+    {% if task.status == "Faite" %} {% set foo = 'success' %} {% endif %}
+    {% if task.status == "Annulée" %} {% set foo = 'danger' %} {% endif %}
+    {% if task.status == "Refusée" %} {% set foo = 'danger' %} {% endif %}
+<body>
+    <h3 class="rouge">{{ task.name }} du {{ task.startDate|date("d/m/Y") }}</h3> <span class="{{ foo }}"> {{ task.status }}&nbsp;</span>
+    <h5>Cette tâche est liée au projet <span class="amour">{{task.project.name}}.</span></h5>
+    Catégorie : <span class="double_dragon_skin">{{task.category.name}}</span>, lieu : <span class="double_dragon_skin">{{task.location.name}}.</span>
+    <p>créée le {{ task.createdAt|date("d/m/Y") }} par {{ task.createdBy.firstname }} | Modifiée le {{ task.updatedAt | date("d/m/Y") }} par {{task.updatedBy.firstname}} </p>
+
+    <h4 class="blue">Description</h4>
+    <p>{{task.description | raw}}.</p>
+
+    <h4 class="blue">Horaires</h4>
+    <ul class="list-group list-group-flush imperial_primer">
+        <li class="list-group-item">Date de début : {{ task.startDate|date("d/m/Y") }} </li>
+        <li class="list-group-item">Date de fin : {{ task.endDate|date("d/m/Y") }}</li>
+        <li class="list-group-item">Heure de début : {{ task.startHour|date("G:i") }}</li>
+        <li class="list-group-item">Heure de fin : {{ task.endHour|date("G:i") }}</li>
+    </ul>
+
+    <h4 class="blue">Liste du matériel utilisé pour cette tâche</h4>
+    {% if task.equipment is empty %}
+        <h6>Il n'y a rien ici</h6>
+    {% else %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Code d'identification MENESRI</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for equipment in task.equipment %}
+
+
+                <tr>
+
+                    <td>{{equipment.name}}</td>
+
+                    <td class="align-center">{{equipment.identificationCode}}</td>
+                </tr>
+
+
+
+
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    <div></div>
+    <h5>Ajout de matériel</h5>
+    <input type="text" class="mr"><input type="text"><input type="text"><input type="text"><input type="text"><br>
+    <div></div>
+    <input type="text" class="mr"><input type="text"><input type="text"><input type="text"><input type="text"><br>
+
+
+    <h4 class="blue">Commentaires</h4>
+    <textarea cols="87" rows="10"> ...</textarea>
+
+</body>
+
+</page>

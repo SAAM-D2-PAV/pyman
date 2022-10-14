@@ -1,0 +1,21 @@
+{{ form_start(photoForm, {'attr': {'class': 'upload_photo_form'}}) }}
+
+{{ form_errors(photoForm) }}
+ 
+<div class="form-group">
+    <label for="{{ photoForm.uploadPhotoName.vars.id }}" class="foo label-file wrap">
+         
+    </label>
+    
+        {{ form_widget(photoForm.uploadPhotoName,{'attr': {'class': 'form-control-file uploadPhotoInput'}}) }}
+    
+    
+</div>
+
+<button type="submit" id="customFileInput2" class="btn-custom-xl {{btnLabel2}} text-white mb-5 fileSubmitButton2">
+    <i class="fas fa-{{ico}}"></i>
+    {{ btnText2 }}
+    
+</button>
+
+{{ form_end(photoForm) }}

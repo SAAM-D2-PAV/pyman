@@ -1,0 +1,26 @@
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+@import "_colors";
+
+.header-section{
+    margin-top:80px;
+}
+section {
+    padding: 100px 0;
+}
+
+#content{
+    display: none;
+}
+.btn-custom-xl{
+    border: none;
+    width: 180px;
+    border-radius: 5px;
+    padding: 10px;
+}
+.bg-ligh_blue_ballerina{
+    background-color: $light_blue_balleerina;
+}
+.bluebell{
+    color: $bluebell;
+}

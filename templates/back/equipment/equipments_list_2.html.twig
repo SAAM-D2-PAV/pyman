@@ -1,0 +1,118 @@
+{% extends "back/base_back.html.twig" %}
+{% block title %}
+	Matériel
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href=" {{ path('equipments_list') }} ">Materiel</a></li>
+{% endblock %}
+
+
+
+{% block back_main_content %}
+		<div class="row">
+			
+		
+			{% if emptyList %}
+			<div class="col-lg-12 col-md-12 mb-12">
+			<!-- Jumbotron -->
+				<div class="card card-image">
+					<div class="text-white text-center rgba-stylish-strong py-5 px-4">
+						<div class="py-5">
+
+							<!-- Content -->
+							<h3 class="text-warning imperial_primer"><i class="far fa-folder-open"></i> Section vide</h3>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Jumbotron -->
+			{% else %}
+			<div class="col-lg-12 col-md-12 mb-4">
+				<div class="mb-2">
+				{% if missing == true %}
+					<h3 class="amour">Liste du matériel manquant</h3>
+				{% elseif rented == true %}
+					<h3 class="amour">Liste du matériel en prêt</h3>
+				{% else %}
+					<h3 class="amour" id="dashboard2">Accueil matériel</h3>
+					<button class="btn-custom-lg bg-red_flag text-white" onclick=" location.href='{{path('missing_equipments_list')}}'">Matériel manquant</button>
+					<button class="btn-custom-lg bg-pastel_chart_0 text-white" onclick=" location.href='{{path('rented_equipments_list')}}'">Matériel en prêt</button>
+
+				{% endif %}
+					<p class="m-4"> <a href="{{ path('equipments_list') }}" >Afficher par liste</a></p>
+
+				</div>
+
+
+				<div class="container-fluid">
+
+					<div class="row">
+						<div class="col-md-4">
+							<div class="filters-group">
+								<label for="filters-search-input" class="filter-label">Rechercher un matériel</label>
+								<input class="textfield filter__search js-shuffle-search" type="search" id="filters-search-input" />
+							</div>
+						</div>
+					</div>
+					<div class="row mb-5">
+
+							<div class="col-md-12 mt-3">
+								<div class="filters-group">
+									<p class="filter-label mb-2">Filtres</p>
+									<div class="filter-options col-12">
+
+										{% set col = "" %}
+
+										{% for cat in  cats %}
+											<span class="col-2 {{ col }} p-1 font-weight-bold" data-group="{{ cat }}">{{ cat }}</span>
+										{% endfor %}
+
+									</div>
+								</div>
+							</div>
+
+					</div>
+				</div>
+				<div id="grid" class="row my-shuffle-container">
+					{% set timer = 0 %}
+					{% for  equipment in equipmentList %}
+
+
+
+								<div class="col-lg-4 col-md-6 col-sm-6 mb-4 picture-item" data-groups='["{{ equipment.equipmentType.name }}"]'  data-title="{{equipment.name}}">
+
+									<div class="card text-center animate__fadeInUp animate__animated animate__delay-{{ timer }}s">
+										<div class="card-header">
+											{{ equipment.identificationCode }}
+										</div>
+										<div class="card-body">
+											<h5 class="card-title">{{equipment.name}}</h5>
+											<div class="col img-fluid">
+												<img width="50%" src="{{ equipment.mainPicture }}" alt="">
+											</div>
+
+											<span class="picture-item__title" style="display: none">{{equipment.name}} {{equipment.equipmentType.name}} {% for cat in equipment.equipmentCategories %} {{ cat.name }}  {% endfor %} {{ equipment.identificationCode }} {{ equipment.location.name }}</span>
+											<button class="btn btn-primary mt-2" onclick=" location.href='{{path('equipment_show', {type_slug:equipment.equipmentType.slug, slug: equipment.slug, id:equipment.id} )}}'"> Voir +</button>
+										</div>
+										<div class="card-footer text-muted">
+											<h6 class="bg-cyanite text-white rounded p-2">
+												{{ equipment.location.name }}
+											</h6>
+										</div>
+
+									</div>
+
+								</div>
+
+
+
+						{% set timer = timer + 0 %}
+					{% endfor %}
+
+				</div>
+			</div>
+			{% endif %}	
+		</div>
+{% endblock %}

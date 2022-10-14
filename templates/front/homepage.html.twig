@@ -1,0 +1,113 @@
+{% extends "front/base_front.html.twig" %}
+{% block body %}
+
+  <section class="bg-ligh_blue_ballerina header-section">
+    <div class="container text-center">
+      <h1>{{app_version}}</h1>
+      <p class="lead">Gestion des demandes de prestations audiovisuelles</p>
+      <p>Ministères de l'éducation nationale, de la jeunesse et des sports et de l'enseignement supérieur de la recherche et de l'innovation.</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="row mx-auto">
+        <div class="col-lg-12 text-center mb-3">
+          <h2>A propos</h2>
+        </div>
+        <div class="col-xl-6 col-md-6 mt-4 mx-auto">
+            <p class="lead">{{app_name}} est une application développée par le pôle audiovisuel du SAAM D2 (service de l'action administrative et des moyens) de l'administration centrale. <a href="https://www.education.gouv.fr/service-de-l-action-administrative-et-des-moyens-saam-6818">https://www.education.gouv.fr/service-de-l-action-administrative-et-des-moyens-saam-6818</a> </p>
+
+          <p>Le service de l'action administrative et des moyens assure la gestion administrative, logistique et financière de l'administration centrale. Il contribue au fonctionnement des services administratifs du ministère de l'éducation nationale, de l'enseignement supérieur et de la recherche.</p>
+        </div>
+        <div class="col-xl-4 col-md-6">
+            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+            src="{{asset('build/images/SOFTWARE.svg')}}" alt="">
+        </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row mx-auto">
+        <div class="col-lg-12 text-center mb-3">
+          <h2>Principaux intérêts</h2>
+        </div>
+        <div class="col-xl-4 col-md-6">
+            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+            src="{{asset('build/images/TASK.svg')}}" alt="">
+        </div>
+        <div class="col-lg-8">
+          <ol class="list-group list-group-numbered ">
+            <li class="list-group-item">  <h5> <i class="fas fa-check fa-2x bluebell"></i> Centraliser les demandes</h5></li>
+            <li class="list-group-item"> <h5> <i class="fas fa-check fa-2x bluebell"></i> Eviter la perte d'informations</h5> </li>
+            <li class="list-group-item"> <h5> <i class="fas fa-check fa-2x bluebell"></i> Informer tous les agents du pôle audiovisuel de l'avancée d'un projet</h5> </li>
+            <li class="list-group-item"> <h5> <i class="fas fa-check fa-2x bluebell"></i> Suivi rigoureux des projets</h5> </li>
+            <li class="list-group-item"> <h5> <i class="fas fa-check fa-2x bluebell"></i> Classer et archiver les projets par thématiques</h5> </li>
+            <li class="list-group-item"> <h5> <i class="fas fa-check fa-2x bluebell"></i> Créer des statistiques de projets</h5>  </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tech" class="bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2>Tech</h2>
+          <p class="lead">L'application est développée avec Symfony version 5.1.* et PHP 7.2.* (22 février 2021), GDP utilise les technologies suivantes :</p>
+          <ul>
+            <li>[Symfony 5] - Symfony est un ensemble de composants PHP réutilisables et un framework PHP pour les projets web</li>
+            <li>[Twig 3.*] - Moteur de template pour PHP</li>
+            <li>[Webpack] - module JavaScript</li>
+            <li>[Twitter Bootstrap 4 et 5]</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="plugins">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2>Plugins et Librairies CDN</h2>
+          <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Plugin</th>
+      <th scope="col">Doc.</th>
+    </tr>
+  </thead>
+  <tbody class="text-dark">
+    <tr class="table-active">
+      <th scope="row">Font-Awesome</th>
+      <td><a href="https://fontawesome.com/">https://fontawesome.com/</a></td>
+    </tr>
+    <tr>
+      <th scope="row">Animate CSS</th>
+      <td><a href="https://animate.style/">https://animate.style/</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">Materia Bootstrap Theme</th>
+      <td><a href="https://bootswatch.com/materia/">https://bootswatch.com/materia/</a></td>
+    </tr>
+  </tbody>
+</table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">{{app_name}} {{app_version}} - {{app_date}}</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+
+{% endblock %}

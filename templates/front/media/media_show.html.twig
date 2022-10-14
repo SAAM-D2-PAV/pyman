@@ -1,0 +1,61 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('front') }}
+{% endblock %}
+
+{% block body %}
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img class="img-fluid px-6 px-sm-4 mt-1 mb-1"  src="{{asset('build/images/logo_MENJS.png')}}"  alt="logo du menjs" width="150">
+            </a>
+        </div>
+    </nav>
+
+    <h1 class="amour mt-5 mb-5 text-center" id="dashboard2">{{ project.name }}</h1>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-12 mt-4 p-5">
+                {{project.pubPresentation | raw}}
+            </div>
+
+
+            <div class="col-md-4 col-sm-12 mt-4 text-center">
+                {{project.pubVideo | raw}}
+            </div>
+            <div class="col-md-1">
+
+            </div>
+            <!-- Illustrations -->
+            <div class="col-md-3 col-sm-12 p-5 mt-4">
+                <img class="img-fluid px-sm-4" src="{{asset('build/images/SHOOTING.svg')}}" alt="{{ project.pubPresentation }}">
+            </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="container-fluid">
+
+
+
+
+    </div>
+
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('front') }}
+{% endblock %}

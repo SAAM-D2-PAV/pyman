@@ -1,0 +1,133 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('front') }}
+{% endblock %}
+
+{% block body %}
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img class="img-fluid px-6 px-sm-4 mt-1 mb-1"  src="{{asset('build/images/logo_MENJS.png')}}"  alt="logo du menjs" width="150">
+            </a>
+        </div>
+    </nav>
+
+    <h1 class="amour mt-5 mb-2 text-center" id="dashboard2">Médiathèque du Pôle audiovisuel - SAAM D2</h1>
+    <div class="col-12 text-center">
+        <!-- Illustrations -->
+        <div class=" mb-4">
+            <img class="img-fluid px-sm-4" style="width: 8rem;"
+                 src="{{asset('build/images/VIDEOGRAPHER.svg')}}" alt="">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <div class="filters-group">
+                    <label for="filters-search-input" class="filter-label">Rechercher une vidéo</label>
+                    <input class="textfield filter__search js-shuffle-search" type="search" id="filters-search-input" />
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="">
+                <div class="col-12 mt-3">
+                    <div class="filters-group">
+                        <p class="filter-label">Filtres</p>
+                        <div class="btn-group filter-options">
+
+                            {% set col = "bg-blue_flag  light_blue_balleerina" %}
+
+                            {% for cat in  cats %}
+                                <button class="btn-custom-xl mr-1 {{ col }} catBtn" data-group="{{ cat }}">{{ cat }}</button>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-3">
+                    <div class="filters-group">
+                        <p class="filter-label">Trier par :</p>
+                        <div class="btn-group sort-options">
+                            <label class="btn-custom-xl active">
+                                <input type="radio" name="sort-value" value="dom" checked /> Défaut
+                            </label>
+                            <label class="btn-custom-lg ">
+                                <input type="radio" name="sort-value" value="title" /> titre
+                            </label>
+                            <label class="btn-custom-xl ">
+                                <input type="radio" name="sort-value" value="date-created" /> Date
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div id="grid" class="row my-shuffle-container">
+            {% set timer = 0 %}
+            {% for  project in projects %}
+
+                {% if  (project.pubVideoStatus == 1) and (project.pubVideo != null) %}
+
+                        <div class="col-lg-4 col-md-6 col-sm-6 mb-4 picture-item" data-groups='["{{ project.category.name }}"]' data-date-created="{{ project.deliveryDate | date('d/m/Y') }}" data-title="{{project.name}}">
+                            <div class="card text-center animate__fadeInUp animate__animated animate__delay-{{ timer }}s">
+                                <div class="card-header">
+                                    {% if project.category.name == "Séminaire, colloque, conférence, table ronde" %}<i class="double_dragon_skin fa-2x fas fa-chalkboard-teacher"></i></i>{% endif %}
+                                    {% if project.category.name == "Cérémonie" %} <i class="double_dragon_skin fa-2x fas fa-glass-martini-alt"></i>{% endif %}
+                                    {% if project.category.name == "Réunion" %}<i class="double_dragon_skin fa-2x fas fa-business-time"></i>{% endif %}
+                                    {% if project.category.name == "Conférence de presse" %}<i class="yellow_chart_0 fa-2x far fa-newspaper"></i>{% endif %}
+                                    {% if project.category.name == "Remise de rapport" %}<i class="double_dragon_skin fa-2x far fa-folder"></i>{% endif %}
+                                    {% if project.category.name == "Signature de convention" %}<i class="double_dragon_skin fa-2x fas fa-edit"></i>{% endif %}
+                                    {% if project.category.name == "Production" %}<i class=" double_dragon_skin fas fa-2x fa-video"></i>{% endif %}
+                                    {% if project.category.name == "Intégration audiovisuelle" %}<i class=" double_dragon_skin fa-2x fas fa-tools"></i>{% endif %}
+                                    {% if project.category.name == "Autre" %}<i class=" double_dragon_skin fa-2x fas fa-ellipsis-h"></i>{% endif %}
+
+                                    <p>{{project.category.name}}</p>
+                                    <button class="btn-custom-lg bg-bord_chart_0 text-white" onclick=" location.href='{{path('media_show', {slug:project.slug,id:project.id} )}}'"> Voir la vidéo</button>
+
+                                </div>
+
+
+                                <div class="card-body">
+                                    <h5 class="card-title">{{project.name}}</h5>
+                                    <span class="picture-item__title" style="display: none">{{project.name}} {{project.requestBy.department}}</span>
+
+                                    {{ project.pubVideo | raw}}
+
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <h6 class="bg-blue_flag_comp text-white rounded p-2">
+                                            {{project.deliveryDate|date("d/m/Y")}}
+                                    </h6>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                {% endif %}
+
+                {% set timer = timer + 0 %}
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('front') }}
+{% endblock %}

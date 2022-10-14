@@ -1,0 +1,63 @@
+{% extends "back/base_back.html.twig" %}
+
+{# {% form_theme form 'bootstrap_4_layout.html.twig' %} #}
+
+{% block title %}
+   {{ cat | lower}}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href=" {{ path('locations_list') }} ">lieux de tournages et d'interventions</a></li>
+    <li class="breadcrumb-item "> <a href="">{{ cat | lower }}</a> </li>
+{% endblock %}
+
+{% block back_main_content %}
+
+<div class="row">
+
+    
+    <div class="col-12">
+       
+            <h3 class="card-title amour ">{{cat}}</h3>
+            {% if item is defined %}
+                <button class="bg-pastel_red btn-custom-lg text-white" onclick=" location.href=' {{path('location_show',{slug:item.slug})}}'"> {{item.name}}</button>
+            {% endif %}
+            
+            
+      
+    </div>
+
+    <div class="col-md-6 form-shape">
+    {% include "back/_form.html.twig" %}
+    </div>
+    
+    <div class="col-md-6">
+        <div class="col">
+            <div class="">
+                <div class="card mb-4">
+                    
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                src="{{asset('build/images/ADVENTURE.svg')}}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="jumbotron">
+               
+                <p>Liste des lieux enregistrés.
+                </p>
+                 <hr class="my-2">
+                <button class="bg-nasu_purple btn-custom-lg text-white" onclick=" location.href=' {{path('locations_list')}}'"> Liste</button>
+                
+            </div>
+        </div>
+        
+        
+    </div>
+ 
+ </div>   
+{% endblock %}

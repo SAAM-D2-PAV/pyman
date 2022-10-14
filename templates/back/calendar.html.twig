@@ -1,0 +1,114 @@
+{% extends "back/base_back.html.twig" %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    {{ encore_entry_link_tags('back') }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css" integrity="sha256-u40zn9KeZYpMjgYaxWJccb4HnP0i8XI17xkXrEklevE=" crossorigin="anonymous">
+
+{% endblock %}
+
+{% block title %}
+	Calendrier
+{% endblock %}
+{% block breadcrumb %}
+	<li class="breadcrumb-item">
+		<a href="">Agenda</a>
+	</li>
+{% endblock %}
+
+
+{% block back_main_content %}
+    <div class="row">
+        <div class="col-12">
+            <div id="calendarEl"></div>
+        </div>
+        <div class="col-12 mt-3">
+            <h6>Types tâches</h6>
+            <ul class="list-group">
+                <li class="list-group-item "><i class="fas fa-circle light_blue_balleerina"></i> Administrative</li>
+                <li class="list-group-item "><i class="fas fa-circle double_dragon_skin"></i> Captation live (mono ou multi-caméras)</li>
+                <li class="list-group-item "><i class="fas fa-circle aqua_velvet"></i> Installation</li>
+                <li class="list-group-item "><i class="fas fa-circle pastel_chart_0"></i> Interview / témoignage / capsule vidéo</li>
+                <li class="list-group-item "><i class="fas fa-circle bluebell"></i> Photo</li>
+                <li class="list-group-item "><i class="fas fa-circle fuel_town"></i> Post-production audio</li>
+                <li class="list-group-item "><i class="fas fa-circle wildcaribbeangreen"></i> Post-production vidéo</li>
+                <li class="list-group-item "><i class="fas fa-circle bord_chart_0"></i> Repérage technique </li>
+                <li class="list-group-item "><i class="fas fa-circle darkmontainmeadow"></i> Reportage / documentaire </li>
+                <li class="list-group-item "><i class="fas fa-circle casandora_yellow"></i> Sonorisation</li>
+                <li class="list-group-item "><i class="fas fa-circle cyanite"></i> Sonorisation et enregistrement audio</li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js" integrity="sha256-AOrsg7pOO9zNtKymdz4LsI+KyLEHhTccJrZVU4UFwIU=" crossorigin="anonymous"></script>
+    <script>
+
+        // function random_item(items)
+        // {
+        //     return items[Math.floor(Math.random()*items.length)];
+        // }
+       
+        // var items = ['#ff6b6b','#10ac84','#341f97','#ff9f43'];
+
+        //var color = (random_item(items));
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+        var calendarEl = document.getElementById('calendarEl');
+
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek',
+            height: 800,
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,listWeek'
+            },
+            buttonText:{
+                today:    'Aujourd\'hui',
+                month:    'mois',
+                week:     'semaine',
+                day:      'jour',
+                list:     'liste',
+            },
+            locale: 'fr',
+            timeZone: 'Europe/Paris',
+            events: {{ data|raw }},
+            //eventColor: color,
+            selectable: true,
+            firstDay: 1,
+            nowIndicator: true,
+            select: function(info) {
+               
+                
+                let startDate = info.startStr;
+                let endDate = info.endStr;
+            
+                window.location = '/taches/creer?start=' + startDate+'&end='+endDate;
+                
+                
+            },
+            eventClick: function(info) {
+
+                info.jsEvent.preventDefault(); // don't let the browser navigate
+
+                if (info.event.url) {
+                window.open(info.event.url);
+                }
+            }   
+        });
+        calendar.render();
+        });
+
+
+
+    </script>
+{% endblock %}
+

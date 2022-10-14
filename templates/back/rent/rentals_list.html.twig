@@ -1,0 +1,127 @@
+{% extends "back/base_back.html.twig" %}
+{% block title %}
+	Prêt matériel
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">liste des prêts</li>
+{% endblock %}
+
+
+
+{% block back_main_content %}
+		<div class="row">
+			
+		
+        {% if emptyList %}
+			<div class="col-lg-12 col-md-12 mb-12">
+			<!-- Jumbotron -->
+				<div class="card card-image">
+					<div class="text-white text-center rgba-stylish-strong py-5 px-4">
+						<div class="py-5">
+
+							<!-- Content -->
+							<h3 class="text-warning imperial_primer"><i class="far fa-folder-open"></i> Section vide</h3>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Jumbotron -->
+        {% else %}
+			<div class="col-lg-12 col-md-12 mb-12">
+				<div class="mb-2">
+
+					<h3 class="amour">Liste des prêts de matériel</h3>
+					
+					<div class="list-group-item col-sm-2"><a href=" {{path('equipment_rent')}} " class="blue_chart_0"><i class="fas fa-plus-square"></i> Nouveau prêt</a></div>
+			
+				</div>
+
+
+			</div>
+			<div class="card col-9">
+				<div class="table-responsive">
+					<table class="table table-bordered " id="dataTableFull" width="100%" cellspacing="0">
+						<thead class="bg-bord_chart_0 text-white">
+							<tr class="default-color">
+
+								<th>Numéro de prêt</th>
+								<th>Demandé par</th>
+								<th>Commentaire</th>
+								<th>Début du prêt</th>
+                                <th>Fin du prêt</th>
+                                <th>Fait le</th>
+								<th>Matériel</th>
+                                {% if is_granted('ROLE_EDITOR') %}
+								<th>Action</th>
+                                {% endif %}
+								
+
+
+							</tr>
+						</thead>
+						<tbody>
+
+							{% for  rent in rentalsList %}
+							<tr>
+								<td> {{ rent.id }}</td>
+								<td> {{rent.applicant.firstname}} {{rent.applicant.lastname}} </td>
+								<td>{{rent.comment|raw}}</td>
+								<td> {{rent.startDate|date('d/m/Y')}} </td>
+                                <td> 
+									{% if rent.endDate %}
+										{{rent.endDate|date('d/m/Y')}} 
+									{% else %}
+										Non renseignée
+									{% endif %}
+								
+								</td>
+                                <td> {{rent.createdAt|date('d/m/Y')}} </td>
+
+								<td>  {% for equipment in rent.equipment  %}
+										<a href="{{ path('equipment_show',{type_slug:equipment.equipmentType.slug, slug:equipment.slug, id:equipment.id}) }}">{{ equipment.name }}</a>
+									{% endfor %} </td>
+								<td class="text-center">
+
+									
+									 {% if is_granted('ROLE_EDITOR') %}
+									<button class="btn-custom-lg bg-yellow_chart_0" onclick=" location.href='{{ path('equipment_rent',{id:rent.id})}}';"> <i class="fas fa-edit"></i></button>
+									
+									<form method="post" action="{{ path('rent_delete', {'id': rent.id}) }}" onsubmit="return confirm('Valider la suppression de cette réservation ?');">
+									<input type="hidden" name="_method" value="DELETE">
+									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ rent.id) }}">
+									<button class="btn-custom-lg red_flag mt-2"><i class="far fa-trash-alt"></i></button>
+									</form>
+   
+									{% endif %}
+									
+								</td>
+								
+							</tr>
+							{% endfor %}
+							
+						
+						</tbody>
+					</table>
+				</div>
+			</div>
+			 <div class="col-3">
+				<div class="mb-4 card">
+					
+						<h6 class="m-0 p-3 font-weight-bold bg-blue_flag_comp-2 text-white">Prêts de matériels</h6>
+				
+					<div class="card-body">
+						<div class="text-center">
+							<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+								src="{{asset('build/images/SEARCH.svg')}}" alt="">
+						</div>
+					</div>
+					<div class="card-body">
+						<p></p>
+					</div>
+				</div>
+			</div>
+        {% endif %}	
+		</div>
+{% endblock %}

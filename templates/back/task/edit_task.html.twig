@@ -1,0 +1,77 @@
+{% extends "back/base_back.html.twig" %}
+
+{# {% form_theme form 'bootstrap_4_layout.html.twig' %} #}
+
+{% block title %}
+   {{ cat }}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href=" {{ path('tasks_list') }} ">Tâches</a></li>
+    <li class="breadcrumb-item "> <a href="">{{ cat | lower}}</a> </li>
+{% endblock %}
+
+{% block back_main_content %}
+
+    <div class="row">
+
+        <div class="col-md-8">
+            {% if taskCategories is empty and cat == "Ajout d'une tâche"%}
+
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Oh snap!</strong> <a href=" {{path('task_category_create')}} " class="alert-link">Merci de définir une catégorie de tâche</a> Revenez ici ensuite.
+                </div>
+            {% endif %}
+            <h3 class="mb-3 amour">{{cat | upper}}</h3>
+                {% if item != null %}
+                <h6>Sur le projet : {{ project.name }}</h6>
+                <button class="btn-custom-lg bg-darkmontainmeadow text-white mb-4" onclick="location.href='{{ path('project_show', {slug:project.slug,id:project.id}) }}';">Retour au projet</button>
+                {% endif %}
+               
+          
+                {% include "back/task/_task_form.html.twig" %}
+         
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card border-warning">
+                
+            </div>
+            <!-- Illustrations -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{{cat}}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="{{asset('build/images/PROJECT.svg')}}" alt="">
+                    </div>
+                    {% if addTasktoProject is defined %}
+                    {% else %}
+                        <p>Une tâche doit être liée à un <a target="_blank" rel="nofollow" href="{{path('projects_list')}}">projet.</a></p>
+                    {% endif %}
+                    
+                    
+        
+                </div>
+            </div>
+            {% if cat =='Modifier la tâche' %}
+        
+                <button class="btn-custom-lg bg-darkmontainmeadow text-white" onclick="location.href='{{ path('equipment_to_task_show', {id:item.id}) }}';">Ajouter du matériel à cette tâche <i class="fas fa-plus"></i></button>
+            
+            {% endif %}
+        </div>
+        
+         
+       
+    </div> 
+
+{% endblock %} 
+ 
+ 
+ 
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('task') }}
+{% endblock %}

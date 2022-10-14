@@ -1,0 +1,75 @@
+ {% if project.rating == null %}
+    <li class="nav-item">
+        <a class="nav-link text-white btn btn-outline-warning" aria-current="page" href="" data-toggle="modal" data-id={{project.id}} data-target="#ratingModal" id="ratingBtn">Noter le projet</a>
+    </li>   
+{% else %}
+    <li class="nav-item">
+        <a class="nav-link text-white btn btn-outline-success" aria-current="page" href="" data-toggle="modal" data-id={{project.id}} data-target="#ratingModal" id="ratingBtn"> 
+        
+        {% for i in 1 .. project.rating %}
+            <i class="fas fa-star"></i>
+        {% endfor %}
+        {% if project.rating == 1 %}
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+        {% endif %}
+        {% if project.rating == 2 %}
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+        {% endif %}
+        {% if project.rating == 3 %}
+            <i class="far fa-star"></i>
+        {% endif %}
+        </a>
+    </li>    
+{% endif %}
+
+    <!-- Modal -->
+<div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Note du projet</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="ratingForm">
+            <div id="error">
+            
+                
+            </div>
+            <div class="form-group">
+                <input type="text" id="token" name="token" class="custom-control-input" value="{{project.id}}">
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="ratingProject1" name="ratingProject" class="custom-control-input" value="1" {% if project.rating == 1  %}checked{% endif %}>
+                    <label class="custom-control-label" for="ratingProject1">Médiocre (Mauvaises conditions, problèmes techniques, ...)</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="ratingProject2" name="ratingProject" class="custom-control-input" value="2" {% if project.rating == 2  %}checked{% endif %}>
+                    <label class="custom-control-label" for="ratingProject2">Moyen (Problèmes visibles survenus) </label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="ratingProject3" name="ratingProject" class="custom-control-input" value="3" {% if project.rating == 3  %}checked{% endif %}>
+                    <label class="custom-control-label" for="ratingProject3">Bien (Problèmes minimes non compromettants) </label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="ratingProject4" name="ratingProject" class="custom-control-input" value="4" {% if project.rating == 4  %}checked{% endif %}>
+                    <label class="custom-control-label" for="ratingProject4">Très bien  (Aucun problème, retours possitifs) </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="ratingProjectComment">Commentaire</label>
+                <textarea class="form-control"  name="ratingProjectComment" id="ratingProjectComment" rows="3">{{project.note}}</textarea>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" id="ratingP" >Sauvegarder</button>
+      </div>
+    </div>
+  </div>
+</div>

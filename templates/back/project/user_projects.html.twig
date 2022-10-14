@@ -1,0 +1,140 @@
+{% extends "back/base_back.html.twig" %}
+
+{% block title %}
+	Tableau de bord
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item "><a href="{{path('projects_list')}}">Projets</a></li>
+	<li class="breadcrumb-item">
+        <a href="">Tableau de bord des projets</a>
+	</li>
+	
+{% endblock %}
+
+
+{% block back_main_content %}
+   
+   {% set projectArray = [] %}
+    
+    <div class="col-md-12">
+
+        <h2 class="amour mt-5 mb-2 text-center">Tableau de bord des projets</h2>
+       
+
+        <div class="row">
+            <div class="col-sm-12 mb-4">
+                <div class="">
+                    <h4>Filtrer les projets</h4>
+                    
+                    <div class="mb-2">
+                        <i class="fas fa-sort"></i>
+                        {{ knp_pagination_sortable(userProjectsPaginated, ' Trier par dates','deliveryDate') }} 
+                    </div>
+                    {% include "back/_filter_form.html.twig" %}
+                </div>
+                
+            </div>
+            {% set timer = 0 %}
+            {% for  project in userProjectsPaginated %}
+
+                {% if project.status !="Fait"%}
+
+                    {% if project.status !="Annulé" %}
+
+                        <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+                            <div class="card text-center animate__fadeInUp animate__animated animate__delay-{{ timer }}s">
+                                <div class="card-header">
+                                    {% if project.category.name == "Séminaire, colloque, conférence, table ronde" %}<i class="double_dragon_skin fa-2x fas fa-chalkboard-teacher"></i></i>{% endif %}
+                                    {% if project.category.name == "Cérémonie" %} <i class="double_dragon_skin fa-2x fas fa-glass-martini-alt"></i>{% endif %}
+                                    {% if project.category.name == "Réunion" %}<i class="double_dragon_skin fa-2x fas fa-business-time"></i>{% endif %}
+                                    {% if project.category.name == "Conférence de presse" %}<i class="double_dragon_skin fa-2x far fa-newspaper"></i>{% endif %}
+                                    {% if project.category.name == "Remise de rapport" %}<i class="double_dragon_skin fa-2x far fa-folder"></i>{% endif %}
+                                    {% if project.category.name == "Signature de convention" %}<i class="double_dragon_skin fa-2x fas fa-edit"></i>{% endif %}
+                                    {% if project.category.name == "Production" %}<i class=" double_dragon_skin fas fa-2x fa-video"></i>{% endif %}
+                                    {% if project.category.name == "Intégration audiovisuelle" %}<i class=" double_dragon_skin fa-2x fas fa-tools"></i>{% endif %}
+                                    {% if project.category.name == "Autre" %}<i class=" double_dragon_skin fa-2x fas fa-ellipsis-h"></i>{% endif %}
+
+                                    <p>{{project.category.name}}</p>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{project.name}}</h5>
+                                    <p>Vos tâches sur ce projet <i class="fas fa-arrow-circle-down"></i></p>
+                                    <ul class="list-group mb-3">
+                                    
+                                   
+                                    {% for  task in project.tasks %}
+                                        
+                                        {% for subscribedUser in task.owners %}
+
+                                            {% if subscribedUser == user  %}
+                                                <li class="list-group-item">
+                                                    {% if task.status == "Faite" %}
+                                                        <strike>
+                                                    {% endif %}
+                                                        {% if task.status == "Faite" %} <i class="far fa-check-square"></i>{% endif %}
+                                                        {% if task.status == "Annulée" %} <i class="fas fa-ban"></i>{% endif %}
+                                                        <a href="{{ path('task_show',{id:task.id}) }}">{{task.name}}</a>  le {{task.startDate|date("d/m/Y")}}
+                                                        {% if task.startDate <= date()%} 
+                                                            <span class="badge rounded-pill text-white bg-danger">échéance atteinte <i class="far fa-sad-cry"></i></span> 
+                                                        {% endif %}
+
+                                                    {% if task.status == "Faite" %}
+                                                        </strike>
+                                                    {% endif %}    
+                                                    
+                                                    </li>
+                                           
+                                               
+                                            {% endif %}
+
+                                        {% endfor %}
+
+                                    {% endfor %}
+                                    </ul>
+                                    <button class="btn btn-primary" onclick=" location.href='{{path('project_show', {slug:project.slug,id:project.id} )}}'"> Voir le projet</button>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <h6 class="bg-cyanite text-white rounded p-2">
+                                    {% set difference = date( date() ).diff(date(project.deliveryDate)) %}
+                                    {% set leftDays = difference.days %}
+                                        
+                                    {% if project.deliveryDate == date() %}
+
+                                         Aujourd'hui
+
+                                    {% elseif difference.days == 0 %}
+
+                                         Demain
+
+                                    {% elseif project.deliveryDate > date() %}
+                                   
+                                        Échéance du projet : {{ leftDays }} jours - (le {{project.deliveryDate|date("d/m/Y")}})
+                                    
+                                    {% else %}
+
+                                        Passé du  {{project.deliveryDate|date("d/m/Y")}}
+
+                                    {% endif %}
+                                    </h6>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+                {% endif %}
+                
+              {% set timer = timer + 0 %}          
+            {% endfor %}
+        </div>
+
+        <div class="navigation mt-2">
+            {{ knp_pagination_render(userProjectsPaginated,'_pagination.html.twig') }}
+        </div>
+
+    </div>
+
+
+{% endblock %}

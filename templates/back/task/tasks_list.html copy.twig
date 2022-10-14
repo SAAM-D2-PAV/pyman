@@ -1,0 +1,128 @@
+{% extends "back/base_back.html.twig" %}
+{% block title %}
+	Tâches
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item ">liste des tâches</li>
+{% endblock %}
+
+
+
+{% block back_main_content %}
+	
+		<div class="row">
+
+				{% if emptyList %}
+                <div class="col-lg-12 col-md-12 mb-12">
+                <!-- Jumbotron -->
+                    <div class="card card-image" style="background-image: url(https://picsum.photos/id/366/1600/500);">
+                        <div class="text-white text-center rgba-stylish-strong py-5 px-4">
+                            <div class="py-5">
+
+                                <!-- Content -->
+                                <h3 class="text-warning"><i class="far fa-folder-open"></i> Section vide</h3>
+                                <h2 class="card-title h2 my-4 py-2">Veuillez ajouter des tâches</h2>
+                                <p class="mb-4 pb-2 px-md-5 mx-md-5">Il n'y a pas de tâche enregistrée dans votre base de données, veuillez en ajouter pour utiliser pleinement l'application.</p>
+                                
+                                <a class="btn btn-lg default-color-dark text-white" href="#" onclick="location.href='{{ path('task_create')}}';" role="button"><i class="fas fa-clone left"></i> Ajouter</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Jumbotron -->
+				{% else %}
+                    
+                <div class="col-12 mb-5">
+                    <h2>Toutes les tâches</h2>
+                </div>
+                
+		
+                {% set foo = 'primary' %}
+
+				
+                    
+                    <div class="col todo">
+                        <div class="card mb-2 text-center">
+                            <h4>A faire</h4>
+                        </div>
+                        {% for  task in tasks %}
+                            {% if task.status == "A faire" %}
+            
+                            <div class="card mb-3 deep-purple accent-4 text-white">
+                                <div class="card-header ">créée le {{ task.createdAt|date("d/m/Y") }} à {{ task.createdAt|date("h:i:s a") }}</div>
+                                <div class="card-body">
+                                    <h4 class="card-title">{{task.name}}</h4>
+                                    <a href="#" class="card-link text-white">sur le projet : {{task.project.name}}</a>
+                                    <div class="dropdown-divider"></div>
+                
+                                    <button type="button" class="btn btn-outline-primary text-white" onclick="location.href='{{ path('task_show',{id:task.id})}}';">Voir</button>
+                                </div>
+                            </div>
+
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="col todo">
+                        <div class="card mb-2 text-center">
+                            <h4>En cours</h4>
+                        </div>
+                        {% for  task in tasks %}
+                            {% if task.status == "En cours" %} 
+                                {% set foo = 'warning' %}
+                                <div class="card mb-3 amber darken-1">
+                                    <div class="card-header">créée le {{ task.createdAt|date("d/m/Y") }} à {{ task.createdAt|date("h:i:s a") }}</div>
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{task.name}}</h4>
+                                        <a href="#" class="card-link text-black">sur le projet : {{task.project.name}}</a>
+                                        <div class="dropdown-divider"></div>
+                    
+                                        <button type="button" class="btn btn-outline-danger text-black" onclick="location.href='{{ path('task_show',{id:task.id})}}';">Voir</button>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="col todo">
+                        <div class="card mb-2 text-center">
+                            <h4>Terminées</h4>
+                        </div>
+                        {% for  task in tasks %}
+                            {% if task.status == "Faite" %} 
+                                {% set foo = 'success' %}
+                                <div class="card mb-3 teal darken-2 text-white">
+                                    <div class="card-header">créée le {{ task.createdAt|date("d/m/Y") }} à {{ task.createdAt|date("h:i:s a") }}</div>
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{task.name}}</h4>
+                                        <a href="#" class="card-link text-white">sur le projet : {{task.project.name}}</a>
+                                        <div class="dropdown-divider"></div>
+                    
+                                        <button type="button" class="btn btn-outline-success text-white" onclick="location.href='{{ path('task_show',{id:task.id})}}';">Voir</button>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="col">
+                        <!-- Illustrations -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Astuce</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                        src="{{asset('build/images/WORK.svg')}}" alt="">
+                                </div>
+                                <p>Toutes les tâches sont affichées ici, si vous souhaitez les filtrer c'est par <a target="_blank" rel="nofollow" href="">ici.</a></p>
+                    
+                            </div>
+                        </div>
+                    </div>
+				{% endif %}	
+			
+			
+		</div>
+	
+{% endblock %}

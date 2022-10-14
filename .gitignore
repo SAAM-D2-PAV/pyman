@@ -1,0 +1,28 @@
+
+###> symfony/framework-bundle ###
+/.idea
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+deploy
+deploy-2
+/.DS_Store
+/assets/.DS_Store
+.DS_Store
+config/.DS_Store
+.DS_Store
+assets/images/.DS_Store
+src/.DS_Store
+###< symfony/framework-bundle ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
+/doc/uploads

@@ -1,0 +1,188 @@
+{% extends "back/base_back.html.twig" %}
+
+{% block title %}
+	{{task.name}}
+{% endblock %}
+
+{% block breadcrumb %}
+	<li class="breadcrumb-item">
+		<a href=" {{path('project_show',{slug:task.project.slug,id:task.project.id}) }}">{{task.project.name}}</a>
+	</li>
+	<li class="breadcrumb-item "> <a href="">{{task.name}}</a> </li>
+{% endblock %}
+
+
+{% block back_main_content %}
+
+
+{% set foo = 'primary' %}              
+{% if task.status == "En cours" %} {% set foo = 'warning' %} {% endif %}
+{% if task.status == "Faite" %} {% set foo = 'success' %} {% endif %}
+{% if task.status == "Annulée" %} {% set foo = 'danger' %} {% endif %}
+
+<div class="row justify-content-center">
+    <div class="col-12">
+        <div class="col-12">
+            <h2 class="fuel_town animate__animated animate__fadeInDown"> Tâche : <span class="amour">{{task.name}}</span> sur le projet {{task.project.name}} <span class="badge badge-pill badge-{{foo}}">{{task.status}}</span></h2>
+            <caption>Cette tâche est liée au projet <span class="amour">{{task.project.name}}</span> | créée le {{ task.createdAt|date("d/m/Y") }} par {{ task.createdBy.firstname }} </caption>
+            <caption>Modifiée le {{ task.updatedAt | date("d/m/Y") }} par {{task.updatedBy.firstname}} </caption>
+        </div>
+        <div class="col-12">
+            <button type="button" class="btn-custom-xl bg-bluebell text-white mt-2" onclick=" location.href='{{ path('project_show',{slug:task.project.slug,id:task.project.id})}}';">Aller au projet</button>
+            {% if is_granted('TASK_EDIT', task) %}
+            <button type="button" class="btn-custom-xl bg-casandora_yellow" onclick="location.href='{{ path('task_edit',{id:task.id})}}';">Modifier la tâche</button>
+            {% endif %}
+            <button type="button" class="btn-custom-xl bg-blue_flag_comp text-white mt-2" onclick=" location.href='{{ path('task_as_pdf',{id:task.id})}}';">Générer pdf</button>
+        </div>
+    </div>
+    
+    <div class="col-md-6 bg-bluebell text-white project_section wrap">
+        <div class=" mb-3">
+            <div class="mt-3">
+                <h5>Description</h5>
+                <p class="card-text mb-3">{{task.description | raw}}.</p>
+            </div>
+            <h5>Horaires</h5>
+            <ul class="list-group list-group-flush imperial_primer">
+                <li class="list-group-item">Date de début : {{ task.startDate|date("d/m/Y") }} </li>
+                <li class="list-group-item">Date de fin : {{ task.endDate|date("d/m/Y") }}</li>
+                <li class="list-group-item">Heure de début : {{ task.startHour|date("G:i") }}</li>
+                <li class="list-group-item">Heure de fin : {{ task.endHour|date("G:i") }}</li>
+            </ul>
+            <div class="mt-3">
+                <h5 class="casandora_yellow">profil(s) inscrit(s) à cette tâche</h5>
+                {% if task.owners is empty %}
+                    <p>Aucun</p>
+                {% endif %}
+                <ul class="list-group list-group-flush imperial_primer">
+                {% for user in task.owners %}
+                    
+                    <li class="list-group-item">{{user.firstname}}</li>
+            
+                {% endfor %}
+                </ul>      
+            </div>
+            <div class="mt-3">
+                <a href="#" class="double_dragon_skin">Catégorie : {{task.category.name}}</a>
+                <h6 class="casandora_yellow">Lieu :<a href="{{ path('location_show',{id:task.location.id,slug:task.location.slug}) }}"> {{task.location.name}}</a> </h6>
+            </div>
+        </div>
+    </div>
+</div>
+<h2 class="amour mt-3" id="doc"> {{task.getDocuments | length }} document(s) lié(s)  </h2>
+
+<div class="card col">
+        
+        {% if is_granted('TASK_EDIT', task) %}
+            <div class="col-md-12">
+                {% include "back/_upload_form.html.twig" %}
+            </div>
+        {% endif %}
+        <div class="table-responsive">
+            <table class="table table-bordered text-white" id="dataTableFull" width="100%" cellspacing="0">
+                <thead class="bg-fuel_town">
+                    <tr class="default-color">
+                        <th>Fichier</th>
+                        <th>Chargé le</th>
+                        <th>Par</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody class="fuel_town">
+                    
+                    {% for  document in task.getDocuments %}
+                    <tr>
+                        <td>{{document.uploadName}} </td>
+                        <td class="text-center">
+                            {{document.uploadedAt | date('d/m/Y')}} à {{document.uploadedAt | date('h:i:s a')}}
+                        </td>
+                        <td>
+                            {{document.uploadedBy.firstname}}
+                        </td>
+                        <td class="text-center">
+                            <a href=" {{ path('task_document_download',{tid:task.id,id:document.id}) }} ">Télécharger</a>
+                            <form method="post" action="{{ path('task_document_remove', {'tid':task.id, 'id': document.id}) }}" onsubmit="return confirm('Valider la suppression du document ?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ document.id) }}">
+                                <button class="btn-custom-lg bg-amour text-white"><i class="far fa-trash-alt"></i></button>
+                            </form>
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                
+                </tbody>
+            </table>
+        </div>
+   
+</div>
+<h2 class="amour mt-5" id="doc">Matériel </h2>
+<div class="card col">
+        {% if is_granted('TASK_EDIT', task) %}
+            <button type="button" class="btn-custom-xl bg-aqua_velvet text-white mt-4 mb-4" onclick="location.href='{{ path('equipment_to_task_show', {id:task.id}) }}';"><i class="fas fa-plus"></i> Ajouter / supprimer du matériel</button>
+           
+        {% endif %}
+        
+	
+
+         {% if task.equipment is empty %}
+            <h5>Il n'y a rien ici</h5>
+        {% else %}
+             <h5 class="bg-ligh_blue_ballerina wrap">Liste du matériel utilisé pour cette tâche</h5>
+         <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">nom</th>
+                    <th scope="col">ref.</th>
+                    <th scope="col">code d'identification MENESRI</th>
+                    </tr>
+                </thead>
+		        {% for equipment in task.equipment %}
+                
+                <tbody>
+                    <tr>
+                    <th scope="row">{{equipment.id}}</th>
+                    <td>{{equipment.name}}</td>
+                    <td>{{equipment.ref}}</td>
+                    <td>{{equipment.identificationCode}}</td>
+                    </tr>
+                    <tr>
+                </tbody>
+
+
+		        {% endfor %}
+            </table>
+		{% endif %}
+	</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+<div class="col mt-5 text-right">
+    {% if is_granted('ROLE_ADMIN') %}
+    <form method="post" action="{{ path('task_delete', {'id': task.id}) }}" onsubmit="return confirm('Valider la suppression de cette tâche ?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ task.id) }}">
+    <button class="btn-custom-xl bg-amour text-white mt-2"><i class="far fa-trash-alt"></i> Supprimer la tâche</button>
+    </form>
+    {% endif %}
+</div>
+
+		
+
+
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('task') }}
+{% endblock %}

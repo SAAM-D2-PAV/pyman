@@ -1,0 +1,19 @@
+
+
+{{ form_start(form, { 'attr': {'class': ''}}) }}
+
+{{ form_errors(form) }}
+
+{{ form_widget(form, { 'attr': {'class': 'foo ' } }) }}  
+
+<button type="submit" class="btn-custom-lg {{btnLabel}} text-white">
+    <i class="fas fa-{{ico}}"></i>
+    {{ btnText }}
+    
+</button>
+
+{{ form_end(form) }}
+
+
+
+

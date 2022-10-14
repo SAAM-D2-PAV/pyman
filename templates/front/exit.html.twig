@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('front') }}
+{% endblock %}
+
+{% block body %}
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img class="img-fluid px-6 px-sm-4 mt-1 mb-1"  src="{{asset('build/images/logo_MENJS.png')}}"  alt="logo du menjs" width="150">
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+
+
+        <div class="row mt-5 text-center">
+
+            <div class="col-12">
+                <h1 class="font-weight-light">{{ title }}</h1>
+            </div>
+
+
+            <!-- Illustrations -->
+            <div class=" col-md-12 col-sm-12 mb-4">
+                <div class="bg-red_flag pt-1">
+
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="{{asset('build/images/'~ picture)}}" alt="">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('front') }}
+{% endblock %}

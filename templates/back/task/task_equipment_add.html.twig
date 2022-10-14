@@ -1,0 +1,172 @@
+{% extends "back/base_back.html.twig" %}
+
+{# {% form_theme form 'bootstrap_4_layout.html.twig' %} #}
+
+{% block title %}
+   
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href=" {{ path('tasks_list') }} ">tâches</a></li>
+    <li class="breadcrumb-item ">{{ cat }}</li>
+{% endblock %}
+
+{% block back_main_content %}
+<div class="row">
+			
+
+			<div class="card-body w-75 col-lg-12 col-md-12 mb-12 ">
+				<div class="card-body">
+					<h3 class="card-title amour">{{cat}}</h3>
+					<button type="button" class="btn-custom-xl bg-casandora_yellow " onclick="location.href='{{ path('task_show', { id:task.id} ) }}';">Voir la tâche</button>
+				</div>
+			</div>
+		
+				
+
+			<div class="col">
+				<div class="card">
+					<div class="table-responsive">
+						<table class="table table-bordered" id="dataTableFull" width="100%" cellspacing="0">
+							<thead class="bg-wildcaribbeangreen">
+								<tr class="default-color">
+									<th>Nom</th>
+									<th>Type</th>
+									<th>Catégorie(s)</th>
+									<th>Code MENESRI</th>
+									<th>Lieu</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								{% for  equipment in equipmentList %}
+
+									{% set used = false %}
+									{% set t = "" %}
+									{% set cls = '' %}
+									{% set equipmentStatus = "add" %}
+
+									{% for otherTask in equipment.tasks  %}
+
+										{% if (otherTask.startDate >= task.startDate and  otherTask.startDate <= task.endDate) or (otherTask.endDate >= task.startDate and otherTask.endDate <= task.endDate)  %}
+											{% if otherTask.id  != task.id %}
+
+												{% set used = true %}
+												{% set t = otherTask.name %}
+
+											{% endif %}
+										{% endif %}
+
+
+									{% endfor %}
+
+									<tr>
+										<td><a href="{{path('equipment_show', {type_slug:equipment.equipmentType.slug, slug: equipment.slug, id:equipment.id} )}}">{{equipment.name}}</a></td>
+										<td><a href=" {{path('equipment_type', {slug: equipment.equipmentType.slug})}} " class="card-link">{{equipment.equipmentType.name}}</a></td>
+										<td>
+											{% for category in equipment.equipmentCategories %}
+												<a href="{{ path('equipment_category', {slug: category.slug}) }}" class="card-link">{{category.name}}</a>
+											{% endfor %}
+										</td>
+										<td>{{equipment.identificationCode}}</td>
+										<td>{{equipment.location.name}}</td>
+										<td>
+												{% if equipment.missing == 1 or equipment.status == "défectueux" %}
+
+													{% set equipmentStatus = "manquant / défectueux" %}
+
+												{% elseif equipment.rent != null %}
+
+													{% set equipmentStatus =  "en prêt"%}
+
+												{% elseif used == true  %}
+													{% set equipmentStatus = "utilisé sur ce créneau" %}
+												{% else %}
+													{% for eq in task.equipment %}
+														{% if eq.id == equipment.id %}
+
+															{% set equipmentStatus = "added" %}
+
+														{% endif %}
+													{% endfor %}
+												{% endif %}
+											{#Affichage#}
+											{% if  equipmentStatus == "add" %}
+												<button type="button" id="equ-{{equipment.id}}" onclick="equipmentAdd( {{task.id}},{{equipment.id}} )" class="btn-custom-sm bg-nasu_purple text-white {{ equipmentStatus }}"> <i class="far fa-plus-square"></i></button>
+
+											{% elseif equipmentStatus == "added" %}
+												<button type="button" id="equ-{{equipment.id}}" onclick="equipmentAdd( {{task.id}},{{equipment.id}} )" class="btn-custom-sm bg-amour text-white {{ equipmentStatus }}"> <i class="far fa-trash-alt"></i></button>
+											{% else %}
+												{{ equipmentStatus }}
+											{% endif %}
+										</td>
+									</tr>
+								{% endfor %}
+								
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('task') }}
+	<script>
+
+		//onClick add
+		function equipmentAdd(tid,eid) {
+
+			let elm = document.getElementById('equ-'+eid);
+
+			if(elm.className === 'btn-custom-sm bg-nasu_purple text-white add'){
+				// on ajoute le matériel
+				ajaxCaller.launch('addEq_ToTask', {tid,eid});
+				//on change l'icone
+				elm.innerHTML= '<i class="far fa-trash-alt"></i>';
+				//on change les classes
+				elm.className = 'btn-custom-sm bg-amour text-white added';
+
+			} else {
+				//on retire le matériel
+				ajaxCaller.launch('RemEq_ToTask', {tid,eid});
+				//on change l'icone
+				elm.innerHTML= '<i class="far fa-plus-square"></i>';
+				//on change les classes
+				elm.className = 'btn-custom-sm bg-nasu_purple text-white add';
+			}
+		}
+		//onClick del
+		function equipmentRemove(tid,eid){
+			ajaxCaller.launch('RemEq_ToTask', {tid,eid});
+			$("#equRem-"+eid).html('<i class="far fa-plus-square"></i>').addClass('bg-nasu_purple');
+		}
+
+		let ajaxCaller = {
+			launch: function(value, param) {
+
+				let response = "";
+				param = param || {};
+
+				$.ajax({
+					dataType: "json",
+					async: false,
+					type: 'GET',
+					data: {action: value, parameter: param},
+					url: '/ajaxCtl'
+				}).done(function (data) {
+					response = data;
+
+				}).fail(function (data, textStatus, jqXHR) {
+					response = "error";
+				});
+
+				return response;
+			}
+		}
+
+	</script>
+
+{% endblock %}

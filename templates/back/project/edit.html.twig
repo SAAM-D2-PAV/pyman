@@ -1,0 +1,71 @@
+{% extends "back/base_back.html.twig" %}
+
+{# {% form_theme form 'bootstrap_4_layout.html.twig' %} #}
+
+{% block title %}
+   {{cat}}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href=" {{ path('projects_list') }} ">Projets</a></li>
+    <li class="breadcrumb-item "><a href="">{{ cat }}</a> </li>
+{% endblock %}
+
+{% block back_main_content %}
+
+    <div class="row">
+
+        <div class="col-12 mb-4">
+               
+            <h3 class="amour">{{cat | upper}}</h3>
+            {% if item != null %}
+                <button class="btn-custom-lg bg-darkmontainmeadow text-white" onclick="location.href='{{ path('project_show', {slug:item.slug,id:item.id}) }}';">Retour au projet</button>
+            {% endif %}
+               
+        </div>
+
+        <div class="col-md-6">
+       
+            {% if projectCategories is empty and cat == "Ajout d'un projet"%}
+
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Oh snap!</strong> <a href=" {{path('project_category_create')}} " class="alert-link">Merci de définir une catégorie de projet</a> Revenez ici ensuite.
+                </div>
+            {% endif %}
+            
+            {% include "back/_form.html.twig" %}
+            
+        </div>
+        
+        <div class="col-md-6">
+
+            <div class="col">
+                <div class="">
+                    <div class="card mb-4">
+                        
+                        <div class="card-body">
+                            <div class="text-center">
+                                {% if cat == "Ajout d'une catégorie de projet" %}
+                                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                    src="{{asset('build/images/BUILDING_BLOCK.svg')}}" alt="">
+                                {% else %}
+                                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                    src="{{asset('build/images/PROJECT.svg')}}" alt="">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+ </div>   
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('project') }}
+{% endblock %}

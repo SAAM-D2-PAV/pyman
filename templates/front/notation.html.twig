@@ -1,0 +1,79 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('front') }}
+{% endblock %}
+
+{% block body %}
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img class="img-fluid px-6 px-sm-4 mt-1 mb-1"  src="{{asset('build/images/logo_MENJS.png')}}"  alt="logo du menjs" width="150">
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+
+
+        <div class="row mt-5">
+
+            <div class="col-12">
+                <h1 class="font-weight-light">{{ projectToRate.project.name }}</h1>
+                <div class="text-center">
+                    <h5 class="font-weight-light bg-blue_flag_comp p-2 text-white" style="width: 200px">Retour d'expérience</h5>
+                </div>
+
+            </div>
+            
+            <div class="col-md-7 col-sm-12 form-shape">
+                {{ form_start(form, { 'attr':
+                    {
+                        'class': '_form',
+
+                    }
+                } ) }}
+
+                {{ form_errors(form) }}
+
+
+                {{ form_label(form.note, 'La prestation réalisée correspond-elle aux résultats attendus ?', {'label_attr': {'class': ' font-weight-bold mt-4'}}) }}
+                {{ form_widget(form.note)}}
+
+                {{ form_label(form.comment, 'Commentaires / précisions',
+                    {'label_attr':
+                        {
+                            'class': 'font-weight-bold mt-4'
+                        }
+                    }
+                ) }}
+                {{ form_widget(form.comment)}}
+
+                <button type="submit" class="btn-custom-lg {{btnLabel}} text-white submitButton mt-5" id="rateSubmitBtn">
+                    <i class="fas fa-{{ico}}"></i>
+                    {{ btnText }}
+
+                </button>
+                {{ form_end(form) }}
+            </div>
+            <!-- Illustrations -->
+            <div class=" col-md-5 col-sm-12 mb-4">
+                <div class="bg-red_flag pt-1">
+                    <!--<h6 class="m-0 font-weight-normal text-center text-white">{{cat}}</h6>-->
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="{{asset('build/images/RATE_2.svg')}}" alt="">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('front') }}
+{% endblock %}

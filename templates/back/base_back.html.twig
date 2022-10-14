@@ -1,0 +1,70 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('back') }}
+	<!-- Material Design Bootstrap -->
+
+	
+{% endblock %}
+
+
+{% block navigation %}
+	<!-- Image and text -->
+	{% include "front/_main_navbar.html.twig" %}
+	{# <nav class="navbar navbar-light bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="{{path('homepage')}}">
+				{{app_name}}
+			</a>
+		</div>
+	</nav> #}
+{% endblock %}
+
+{% block back_navbar %}
+
+	{% if app.request.get('_route') != 'dashboard' %}
+		{% include "back/_back_navbar.html.twig" %}
+	{% endif %}
+	
+{% endblock %}
+
+{% block flashMessage %}
+
+	{# read and display all flash messages #}
+	{% for label, messages in app.flashes %}
+		{% for message in messages %}
+
+			<div class="alert alert-dismissible alert-{{ label }}">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				{{ message }}
+			</div>
+		{% endfor %}
+	{% endfor %}
+
+{% endblock %}
+
+{% block breadcrumbWrapper %}
+
+	<div>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<a href="{{path('dashboard')}}">Tableau de bord</a>
+			</li>
+			{{parent()}}
+			
+		</ol>
+	</div>
+{% endblock %}
+
+
+{% block back_main_content %}
+	<div class="col-12">
+		
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('back') }}
+{% endblock %}

@@ -1,0 +1,579 @@
+{% extends "back/base_back.html.twig" %}
+
+{% block title %}
+	{{project.name}}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item "><a href="{{path('projects_list')}}">Projets</a></li>
+	<li class="breadcrumb-item "> <a href="">{{project.name | lower}}</a> </li>
+{% endblock %}
+
+
+{% block back_main_content %}
+
+{% set foo = 'primary' %}       
+{% if project.status == "En cours" %} {% set foo = 'warning' %} {% endif %}
+{% if project.status == "Fait" %} {% set foo = 'success' %} {% endif %}
+{% if project.status == "Annulé" %} {% set foo = 'danger' %} {% endif %}
+{% if project.status == "Refusé" %} {% set foo = 'danger' %} {% endif %}
+<div class="col-12">
+    <h3 class="bluebell text-center mb-5">Projet {{ project.category.name }}</h3>
+    <h2 class="amour animate__animated animate__fadeInDown">{{project.name | upper}} <span class="badge badge-pill badge-{{foo}}">{{project.status}}</span> </h2>
+    <h3>Porté par {{project.requestBy.department}}</h3> {{ project.requestBy.firstname }} {{ project.requestBy.lastname }}
+    <div class="col-3"></div>
+    <div class="col-6">
+        <ul class="navbar-nav">
+            {% if is_granted('ROLE_EDITOR') %}
+                {% if project.status == "Fait" %}
+
+                    {% if project.applicantRating == null  %}
+                            <li class="nav-item">
+                                <a class="nav-link btn-custom-xl bg-double_dragon_skin text-center text-white" data-ticket="{{ project.id }}" id="notation-ticket" aria-current="page" href="" >Demande de notation</a>
+                            </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link btn-custom-xl bg-double_dragon_skin text-center text-white" aria-current="page" href="{{ path('project_applicant_rating_ticket',{id:project.id}) }}" >Voir la notation</a>
+                        </li>
+                    {% endif %}
+
+
+                    {% if project.rating == null %}
+                        <li class="nav-item mt-1">
+                            <a class="nav-link btn-custom-xl bg-wildcaribbeangreen text-center text-white" aria-current="page" href="" data-toggle="modal" data-id={{project.id}} data-target="#ratingModal" id="ratingBtn">Noter le projet</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item mt-1">
+                            <a class="nav-link btn-custom-xl bg-wildcaribbeangreen text-center text-white" aria-current="page" href="" data-toggle="modal" data-id={{project.id}} data-target="#ratingModal" id="ratingBtn">
+
+                                {% for i in 1 .. project.rating %}
+                                    <i class="fas fa-star"></i>
+                                {% endfor %}
+                                {% if project.rating == 1 %}
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                                {% if project.rating == 2 %}
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                                {% if project.rating == 3 %}
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        </ul>
+    </div>
+
+
+    <nav class="navbar navbar-expand-sm bg-nasu_purple pt-3 fixed-bottom">
+        <div class="container-fluid">
+            
+            {% if is_granted('ROLE_EDITOR') %}
+                <button type="button" class="btn-custom-xl bg-double_dragon_skin" onclick="location.href='{{ path('project_edit',{id:project.id})}}';">Modifier le projet</button>
+                <button type="button" class="btn-custom-xl bg-blue_flag_comp-2 text-white" onclick=" location.href='{{ path('project_as_pdf',{id:project.id})}}';">Exporter en pdf</button>
+            {% endif %}
+            <div class="nav-proj" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" aria-current="page" href="#pres">Présentation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#doc">Documentation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#actu">Actualité</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#tasks">Tâches</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<!-- Modal -->
+<div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Note du projet</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="ratingForm">
+            <div id="error">
+            
+                
+            </div>
+            <div class="form-group">
+                <input type="text" id="token" name="token" class="custom-control-input" value="{{project.id}}">
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="ratingProject1" name="ratingProject" class="custom-control-input" value="1" {% if project.rating == 1  %}checked{% endif %}>
+                    <label class="custom-control-label" for="ratingProject1">Médiocre (Mauvaises conditions, problèmes techniques, ...)</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="ratingProject2" name="ratingProject" class="custom-control-input" value="2" {% if project.rating == 2  %}checked{% endif %}>
+                    <label class="custom-control-label" for="ratingProject2">Moyen (Problèmes visibles survenus) </label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="ratingProject3" name="ratingProject" class="custom-control-input" value="3" {% if project.rating == 3  %}checked{% endif %}>
+                    <label class="custom-control-label" for="ratingProject3">Bien (Problèmes minimes non compromettants) </label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="ratingProject4" name="ratingProject" class="custom-control-input" value="4" {% if project.rating == 4  %}checked{% endif %}>
+                    <label class="custom-control-label" for="ratingProject4">Très bien  (Aucun problème, retours positifs) </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="ratingProjectComment">Commentaire</label>
+                <textarea class="form-control"  name="ratingProjectComment" id="ratingProjectComment" rows="3">{{project.note}}</textarea>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" id="ratingP" >Sauvegarder</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="row project_section">
+
+    <div class="col-12 mb-5" >
+            <h2 class="amour" id="pres"> Présentation  </h2>
+    </div>
+
+    <div class="col-12 mb-5">
+      <div class="row">
+          <div class="col-md-4 col-sm-12 mb-1">
+            <div class="text-white bg-wildcaribbeangreen wrap">
+              <div class="card-content">
+                <div class="card-body">
+                  <div class="media d-flex">
+                    <div class="align-self-center">
+                      <i class="icon-pencil font-large-2 float-left"></i>
+                    </div>
+                    <div class="media-body text-right">
+                        <span>Projet créé le</span>
+                      <h3>{{project.createdAt | date("d/m/Y")}}</h3>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-12 mb-1">
+            <div class="text-white bg-casandora_yellow wrap">
+              <div class="card-content">
+                <div class="card-body">
+                  <div class="media d-flex">
+                    <div class="align-self-center">
+                      <i class="icon-graph success font-large-2 float-left"></i>
+                    </div>
+                    <div class="media-body text-right">
+                      <h3>{{project.tasks | length}}</h3>
+                      <span>tâche(s)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-12 mb-1">
+            <div class="text-white bg-aqua_velvet wrap">
+              <div class="card-content">
+                <div class="card-body">
+                  <div class="media d-flex">
+                    <div class="align-self-center">
+                      <i class="icon-pointer danger font-large-2 float-left"></i>
+                    </div>
+                    <div class="media-body text-right">
+                        <span>Statut</span>
+                      <h3> {{ project.status}} </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="col-12 mb-5">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 mb-1">
+                <!-- Illustrations -->
+                <div class="card">
+                    <h6 class="m-0 p-3 bg-bluebell text-white">{% if project.requestBy %} Contact :<br/><br/><i class="far fa-envelope"></i> {{project.requestBy.email}} <br/> <i class="fas fa-phone"></i> {{project.requestBy.phone}}{% endif %} <br/><br/> Créé le {{ project.createdAt|date("d/m/Y") }} par {{project.createdBy.firstname}}. </h6>
+                    {% if project.updatedAt != null %}
+                        <h6 class="m-0 p-3 bg-bluebell text-white">Mis à jour le :  {{ project.updatedAt|date("d/m/Y") }} par {{project.updatedBy.firstname}}.</h6>
+                    {% endif %}
+
+
+                    <div class="text-center p-3">
+                        <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                 src="{{asset('build/images/WORK.svg')}}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 mb-1">
+                <div class="card">
+                    <h6 class="m-0 p-3 font-weight-bold bg-aqua_velvet text-white">Description du projet</h6>
+                    <div class="p-3">
+                        {{project.information | raw }}
+                    </div>
+                    <div class="p-3">
+                        <h5>Lien vidéo</h5>
+                        {% if project.url == null %}aucun{% endif %}
+
+                        <p><a href="{{project.url}}" target=_blank>{{project.url}}</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 mb-1">
+                <div class="text-center">
+                    <div class="card">
+
+                        <h6 class="m-0 p-3 font-weight-bold bg-amour text-white"> Date d'échéance de ce projet</h6>
+                        <div class="">
+                            <div class="text-center p-3">
+                                <h5 class="pastel_red">{{project.deliveryDate |date("d/m/Y") }}</h5>
+                                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                     src="{{asset('build/images/DATE.svg')}}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-12">
+
+
+        <div class="col-12 mb-5" >
+            <h2 class="amour" id="doc"> {{project.getDocuments | length }} document(s) lié(s)  </h2>
+        </div>
+        <div class="card col">
+            {% if is_granted('ROLE_EDITOR') %}
+                {% include "back/_upload_form.html.twig" %}
+            {% endif %}
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTableFull" width="100%" cellspacing="0">
+                    <thead class="bg-cyanite">
+                        <tr class="default-color">
+                            <th>Fichier</th>
+                            <th>Chargé le</th>
+                            <th>Par</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for  document in project.getDocuments %}
+                        <tr>
+                            
+                            {# <td><a href="{{ asset('uploads/documents/' ~ document.uploadName) }}" target="_blank">{{document.uploadName}}  (PDF)</a></td> #}
+                            <td>{{document.uploadName}}</td>
+                            <td class="text-center">
+                                {{document.uploadedAt | date('d/m/Y')}} à {{document.uploadedAt | date('h:i:s a')}}
+                            </td>
+                            <td>
+                                {{document.uploadedBy.firstname}}
+                            </td>
+                            <td class="text-center">
+                                <a href=" {{ path('project_document_download',{pid:project.id,id:document.id}) }} ">Télécharger</a>
+                                <form method="post" action="{{ path('project_document_remove', {'pid':project.id, 'id': document.id}) }}" onsubmit="return confirm('Valider la suppression du document ?');">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ document.id) }}">
+                                    <button class="btn-custom-lg bg-amour text-white"><i class="far fa-trash-alt"></i></button>
+                                </form>
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-4">
+    </div>
+    
+</div>
+
+<div class="col-12 mb-5 mt-5 text-center">
+    <h2 class="amour" id="actu">  {% if (comments) is empty %} Pas d'actualité sur ce {% else %}  Actualité du
+         {% endif %} projet</h2>
+    {% if is_granted('ROLE_EDITOR') %}
+    <button type="button" class=" btn-custom-xl bg-darkmontainmeadow" onclick="location.href='{{ path('project_comment_add',{id:project.id})}}';">Ajouter une actualité</button>
+    {% endif %}
+</div>
+<div class="row">
+
+        {% if (comments) is not empty %}
+        <div class="col-12 pt-4 pb-4 bg-bluebell rounded">
+            {% set count = 0 %}
+            {% for comment in comments %}
+                {% if count is even  %}
+                    <div class="col-12 mb-1">
+               {% else %}
+                   <div class="col-12 mb-1 text-right">
+               {% endif %}
+                    <div class="card">
+                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-title">{{ comment.title }}</h6>
+                            
+                            <div class="card-text m-3">
+                               {{ comment.content | raw }}
+                            </div>
+                            <p class="card-title">Posté par : {{comment.createdBy.firstname}}</p>
+                            <p class="nasu_purple">le {{ comment.createdAt|date('d/m/Y') }} à {{ comment.createdAt|date("G:i") }}</p>
+                          
+                            <div class="dropdown-divider"></div>
+                             {% if is_granted('COMMENT_EDIT', comment) %}
+                            <button type="button" class="btn-custom-xl bg-double_dragon_skin" onclick=" location.href='{{ path('project_comment_edit', {id:comment.id,pid:comment.project.id})}} '">Modifier</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% set count = count + 1 %}
+            {% endfor %}
+            <div class="navigation text-center mt-2 ml-3">
+                {{ knp_pagination_render(comments,'_pagination.html.twig') }}
+            </div>
+         </div>
+        {% endif %}   
+   
+</div>
+
+
+<div class="row project_section">
+    <div class="col-12 mt-2">
+        <h2 class="amour" id="tasks"> {{project.tasks | length }} tâches sur ce projet </h2>
+         {% if is_granted('ROLE_EDITOR') %}
+        <button type="button" class=" btn-custom-xl bg-casandora_yellow" onclick="location.href='{{ path('task_project_add',{id:project.id})}}';">Ajouter une tâche</button>
+        {% endif %}
+    </div>
+{% if (project.tasks | length) != 0 %}
+    {% set tdt = 0 %}
+    {% set prt = 0 %} 
+    {% set ovt = 0 %}
+    {% for  task in project.tasks %}
+        {% if task.status == "A faire" %}
+                {% set tdt = tdt + 1 %}
+        {% elseif task.status == "En cours"  %}
+            {% set prt = prt + 1 %}
+        {% elseif task.status == "Faite"  %}
+            {% set ovt = ovt + 1 %}
+        {% endif %}
+    {% endfor %}
+    
+    
+        
+        <div class="col-12 project_section">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tâches terminées
+                    </div>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{( ovt * 100 / (project.tasks | length) )|number_format  }} %</div>
+                        </div>
+                        <div class="col">
+                            <div class="progress progress-sm mr-2">
+                                <div class="progress-bar bg-info" role="progressbar"
+                                    style="width: {{( ovt * 100 / (project.tasks | length) )|number_format  }}%" aria-valuenow="{{( ovt * 100 / (project.tasks | length) )|number_format  }}" aria-valuemin="0"
+                                    aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="col-md-3 col-sm-12 todo">
+            <div class="card mb-2 text-center p-2">
+                <h4 class="imperial_primer">A faire</h4>
+            </div>
+            {% for  task in project.tasks %}
+                {% if task.status == "A faire" %}
+                    
+                    <div class=" mb-3 bg-cyanite text-white">
+                        <div class="card-header ">créée le {{ task.createdAt|date("d/m/Y") }}</div>
+                        <div class="card-body text-center">
+                            <h4 class="card-title">{{task.name}} le {{task.startDate|date("d/m/Y")}}</h4>
+                            <div class="dropdown-divider"></div>
+                           
+                                {% for owner in task.owners %}
+                                    <p> {{owner.firstname}} </p>
+                                {% endfor %}
+                          
+
+                            <button type="button" class=" btn-custom-lg bg-nasu_purple text-white" onclick="location.href='{{ path('task_show',{id:task.id})}}';">Voir</button>
+                             {% if is_granted('ROLE_EDITOR') %}
+
+                                <div class="col text-center mt-1">
+                                
+                                    <button type="button" id="{{task.id}}" onclick="changeStatus({{task.id}})" class=" btn-custom-lg bg-nasu_purple text-white" > <i class="fas fa-arrow-alt-circle-right fa-2x"></i></button>
+                                
+                                </div>
+                            
+                            {% endif %}
+                        </div>
+                    </div>
+
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-md-3 col-sm-12 todo">
+            <div class="card mb-2 text-center p-2">
+                <h4 class="imperial_primer">En cours</h4>
+            </div>
+            {% for  task in project.tasks %}
+                {% if task.status == "En cours" %} 
+                
+                    <div class=" mb-3 bg-casandora_yellow">
+                        <div class="card-header">créée le {{ task.createdAt|date("d/m/Y") }}</div>
+                        <div class="card-body text-center">
+                            <h4 class="card-title">{{task.name}} le {{task.startDate|date("d/m/Y")}}</h4>
+                            <div class="dropdown-divider"></div>
+
+                            <button type="button" class="btn-custom-lg bg-double_dragon_skin text-black" onclick="location.href='{{ path('task_show',{id:task.id})}}';">Voir</button>
+                            {% if is_granted('ROLE_EDITOR') %}
+                             
+                                <div class="col text-center mt-1">
+                            
+                                    <button type="button" id="{{task.id}}" onclick="changeStatus({{task.id}})" class="statusUpdate btn-custom-lg  bg-double_dragon_skin text-black"> <i class="fas fa-arrow-alt-circle-right fa-2x"></i></button>
+
+                                </div>
+                            
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-md-3 col-sm-12 todo">
+            <div class="card mb-2 text-center p-2">
+                <h4 class="imperial_primer">Terminées</h4>
+            </div>
+            {% for  task in project.tasks %}
+                {% if task.status == "Faite" %} 
+                
+                    <div class=" mb-3 bg-darkmontainmeadow text-white">
+                        <div class="card-header">créée le {{ task.createdAt|date("d/m/Y") }}</div>
+                        <div class="card-body text-center">
+                            <h4 class="card-title">{{task.name}} le {{task.startDate|date("d/m/Y")}}</h4>
+                            <div class="dropdown-divider"></div>
+
+                            <button type="button" class="btn-custom-lg bg-wildcaribbeangreen text-white" onclick="location.href='{{ path('task_show',{id:task.id})}}';">Voir</button>
+                            {% if is_granted('ROLE_EDITOR') %}
+                             
+    
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-md-3 col-sm-12 todo todo-end">
+            <div class="card mb-2 text-center p-2">
+                <h4 class="imperial_primer">Annulées</h4>
+            </div>
+            {% for  task in project.tasks %}
+                {% if task.status == "Annulée" %} 
+                
+                    <div class=" mb-3 bg-amour text-white">
+                        <div class="card-header">créée le {{ task.createdAt|date("d/m/Y") }}</div>
+                        <div class="card-body text-center">
+                            <h4 class="card-title">{{task.name}} le {{task.startDate|date("d/m/Y")}}</h4>
+                            <div class="dropdown-divider"></div>
+
+                            <button type="button" class="btn-custom-lg bg-casandora_yellow" onclick="location.href='{{ path('task_show',{id:task.id})}}';">Voir</button>
+                            {% if is_granted('ROLE_EDITOR') %}
+                             
+                            
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    
+{% endif %} 
+</div>
+    <div class="col-12 m-5 text-right">
+        {% if project.status == "Annulé" %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <form method="post" action="{{ path('project_delete', {'id': project.id,'slug':project.slug}) }}" onsubmit="return confirm('Valider la suppression de ce projet ?');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ project.id) }}">
+                    <button class="btn-custom-lg bg-amour text-white mt-2"><i class="far fa-trash-alt"></i></button>
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('project') }}
+    <script>
+
+       //onClick
+        function changeStatus(id) {
+            ajaxCaller3.launch('status_update', id);
+        }
+
+        let ajaxCaller3 = {
+            launch: function(value, param) {
+                
+                let response = "";
+                param = param || {};
+
+                $.ajax({
+                    dataType: "json",
+                    async: false,
+                    type: 'GET',
+                    data: {action: value, parameter: param},
+                    url: '/ajaxCtl'
+                }).done(function (data) {
+                    response = data;
+                    location.reload();
+                }).fail(function (data, textStatus, jqXHR) {
+                    response = "error";
+                });
+                
+                return response;
+            }
+        }
+
+    </script>
+   
+{% endblock %}

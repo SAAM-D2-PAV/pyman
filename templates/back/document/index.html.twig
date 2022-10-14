@@ -1,0 +1,91 @@
+{% extends "back/base_back.html.twig" %}
+
+{% block title %}
+    Documents
+{% endblock %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="">documents</a>
+    </li>
+{% endblock %}
+{% block back_main_content %}
+
+    <h3> <strong> {{ docsCount }} </strong> documents chargés.</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTableFull" width="100%" cellspacing="0">
+            <thead class="bg-nasu_purple text-white">
+            <tr class="default-color">
+
+                <th>
+                  Nom
+                </th>
+                <th>
+                  Date de chargement
+                </th>
+                <th>
+                   Chargé par
+                </th>
+                <th>
+                    Projet
+                </th>
+                <th>
+                    Tâche
+                </th>
+                <th>
+                  Matériel
+                </th>
+
+
+            </tr>
+
+            </thead>
+            <tbody>
+
+            {% for  document in docs %}
+                <tr>
+                    <td>
+                      {{document.uploadName}}
+                    </td>
+                    <td>
+                        {{document.uploadedAt | date('d/m/Y')}} à {{document.uploadedAt | date('h:i:s a')}}
+                    </td>
+                    <td>
+                        {{document.uploadedBy.firstname}}
+                    </td>
+
+                    <td class="">
+                        {% if document.project %}
+                            <a href="{{ path('project_show',{slug:document.project.slug,id:document.project.id}) }}"> {{ document.project.name}} </a>
+
+                        {% else %}
+                            XXX
+                        {% endif %}
+                    </td>
+
+                    <td class="">
+                        {% if document.task %}
+                            <a href="{{ path('task_show',{id:document.task.id}) }}"> {{ document.task.name}} du projet {{ document.task.project.name }}</a>
+                        {% else %}
+                            XXX
+                        {% endif %}
+
+                    </td>
+
+                    <td class="">
+                        {% if document.Equipment %}
+                            <a href="{{path('equipment_show', {type_slug:document.Equipment.equipmentType.slug, slug: document.Equipment.slug, id:document.Equipment.id} )}}">{{document.Equipment.name}}</a>
+                        {% else %}
+                            XXX
+                        {% endif %}
+                    </td>
+
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    <div class="navigation">
+        {{ knp_pagination_render(docs,'_pagination.html.twig') }}
+    </div>
+{% endblock %}

@@ -1,0 +1,228 @@
+
+{% set todoCpt = 0 %}
+{% set inProgressCpt = 0 %}
+
+{% for task in ttasks %}
+
+	{% if task.status == "A faire" %}
+		{% set todoCpt = todoCpt + 1 %}	
+	{% endif %}
+	{% if task.status == "En cours" %}
+		{% set inProgressCpt = inProgressCpt + 1 %}	
+	{% endif %}
+	
+{% endfor %}
+
+{% set d = date() %}
+
+<nav id="sidebar">
+	<div class="custom-menu">
+		<button type="button" id="sidebarCollapse" class="btn btn-primary">
+			<i class="fas fa-bars"></i>
+			<span class="sr-only">Toggle Menu</span>
+		</button>
+	</div>
+	<div class="p-4 pt-5">
+		
+		<ul class="list-unstyled components mb-5">
+			<li class="header">
+				<a href=" {{path('dashboard')}} "><i class="fa-solid fa-chalkboard"></i> Tableau de bord </a>
+			<li>
+			<a href=" {{path('calendar')}} "><i class="far fa-calendar"></i> Agenda</a>
+			<a href=" {{path('stats_show')}} "><i class="fas fa-chart-area"></i> Statistiques</a>
+			<li class="header fuel_town"><i class="far fa-circle amour"></i> Projets</li>
+			<li>
+				
+				<ul class=" list-unstyled">
+
+					<li>
+						<a href=" {{path('home_projects_2',{id:app.user.id})}} "><i class="fas fa-home"></i> Accueil projets </a>
+					</li>
+					<li>
+						<a href=" {{path('projects_list')}} "><i class="fas fa-project-diagram"></i> A faire / en cours</a>
+					</li>
+					<li>
+						<a href=" {{ path('completed_projects_list', {date:d|date("Y") }) }} "><i class="far fa-stop-circle"></i> Clos</a>
+					</li>
+					
+					
+					<li>
+						<a href="#projectCategory" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-filter"></i></i> Catégories</a>
+						<ul class="collapse list-unstyled" id="projectCategory">
+							<li>
+								<a href=" {{path('project_categories_list')}} "><i class="fas fa-list"></i> Liste des catégories</a>
+							</li>
+							{% if is_granted('ROLE_EDITOR') %}
+							<li>
+								<a href=" {{path('project_category_create')}} "><i class="fas fa-plus"></i> Ajouter une catégorie</a>
+							</li>
+							{% endif %}
+						</ul>
+					</li>
+					{% if is_granted('ROLE_EDITOR') %}
+					<li class="newBtn bg-aqua_velvet">
+						<a href=" {{path('project_create')}} "><i class="fas fa-plus-square"></i> Nouveau projet</a>
+					</li>
+					{% endif %}
+				</ul>
+			</li>
+
+
+
+
+			<li class="header fuel_town"><i class="far fa-circle double_dragon_skin"></i> Tâches</li>
+			<li>
+				
+				<ul class=" list-unstyled">
+
+					
+					<li>
+						<a href=" {{path('tasks_list',{date:d|date("Y") })}} "><i class="fas fa-list"></i> Toutes les tâches</a>
+					</li>
+					<li>
+						<a href=" {{path('todo_tasks_list')}} ">
+							<i class="far fa-list-alt"></i> 
+							A faire <span class="badge badge-pill aqua_velvet"> {{ todoCpt }}</span>
+						</a>
+					</li>
+					<li>
+						<a href=" {{path('inprogress_tasks_list')}} ">
+							<i class="fas fa-tasks"></i>
+							En cours <span class="badge badge-pill double_dragon_skin"> {{ inProgressCpt }}</span>
+						</a>
+					</li>
+					
+					<li>
+						<a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-filter"></i></i> Catégories</a>
+						<ul class="collapse list-unstyled" id="pageSubmenu2">
+							<li>
+								<a href=" {{path('task_categories_list') }} "><i class="fas fa-list"></i> Liste des catégories</a>
+							</li>
+							{% if is_granted('ROLE_EDITOR') %}
+							<li>
+								<a href=" {{path('task_category_create')}} "><i class="fas fa-plus"></i> Ajouter une catégorie</a>
+							</li>
+							{% endif %}
+						</ul>
+					</li>
+					{% if is_granted('ROLE_EDITOR') %}
+					<li class="newBtn  bg-aqua_velvet">
+						<a href="{{path('task_create')}}"><i class="fas fa-plus-square"></i> Nouvelle tâche</a>
+					</li>
+					{% endif %}
+				</ul>
+			</li>
+			{% if is_granted('ROLE_EDITOR') %}
+			<li class="header fuel_town"><i class="far fa-circle aqua_velvet"></i> Contacts</li>
+			<li>
+				
+				<ul class=" list-unstyled">
+
+					
+					<li>
+						<a href=" {{path('applicants_list')}} "><i class="fas fa-list"></i> Tous les contacts</a>
+					</li>
+					<li>
+						<a href=" {{path('applicant_create')}} "><i class="fas fa-plus"></i> Ajouter</a>
+					</li>
+					
+				</ul>
+			</li>
+			{% endif %}
+			
+			<div class="sidebarBottom">
+				<div class="dropdown-divider"></div>
+				<li class="header fuel_town"><i class="far fa-circle bluebell"></i> Paramètres</li>
+				{% if is_granted('ROLE_OWNER') %}
+					<li>
+
+						<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle "><i class="fas fa-camera-retro"></i> Matériel</a>
+						<ul class="collapse list-unstyled" id="homeSubmenu">
+							<li>
+								<a href=" {{path('equipments_list')}} "><i class="fas fa-list"></i> Liste</a>
+							</li>
+							<li>
+								<a href=" {{path('missing_equipments_list')}} "><i class="fas fa-list"></i> Matériel manquant</a>
+							</li>
+							<li>
+									<a href=" {{path('rented_equipments_list')}} "><i class="fas fa-tasks"></i> Matériel en prêt</a>
+								</li>
+							{% if is_granted('ROLE_EDITOR') %}
+							<li>
+								<a href=" {{path('equipment_create')}} "><i class="fas fa-plus"></i> Ajouter un matériel</a>
+							</li>
+							<li>
+								<a href=" {{path('equipment_rent')}} "><i class="fas fa-plus"></i> Nouvelle demande de prêt</a>
+							</li>
+								
+							{% endif %}
+							<li>
+								<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-search-plus"></i> Types</a>
+								<ul class="collapse list-unstyled" id="pageSubmenu">
+									{% if is_granted('ROLE_EDITOR') %}
+									<li>
+										<a href=" {{path('equipment_type_create')}} "><i class="fas fa-plus"></i> Ajouter un type</a>
+									</li>
+									{% endif %}
+									{% for type in equipmentType %}
+									<li>
+										<a href=" {{path('equipment_type', {slug:type.slug })}} "><i class="far fa-circle"></i> {{type.name}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li>
+								<a href="#catMatSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-filter"></i></i> Catégories</a>
+								<ul class="collapse list-unstyled" id="catMatSubmenu">
+									{% if is_granted('ROLE_EDITOR') %}
+									<li>
+										<a href=" {{path('equipment_category_create')}} "><i class="fas fa-plus"></i> Ajouter une catégorie</a>
+									</li>
+									{% endif %}
+									{% for cat in equipmentCategory %}
+									<li>
+										<a href=" {{path('equipment_category', {slug: cat.slug})}} "><i class="far fa-circle"></i> {{cat.name}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+
+						</ul>
+					</li>
+				{% endif %}
+					<li>
+
+					<a href="#placeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle "><i class="fas fa-map-marker-alt"></i> Espaces</a>
+					<ul class="collapse list-unstyled" id="placeSubmenu">
+						<li>
+							<a href=" {{path('locations_list')}} "><i class="fas fa-list"></i> Liste</a>
+						</li>
+						{% if is_granted('ROLE_EDITOR') %}
+						<li>
+							<a href=" {{path('location_create')}} "><i class="fas fa-plus"></i> Ajouter un espace</a>
+						</li>
+						{% endif %}
+						
+					</ul>
+				</li>
+				{% if is_granted('ROLE_ADMIN') %}
+					<li>
+						<a href=" {{path('documents_show')}} "><i class="fa-regular fa-file"></i> Documents</a>
+					</li>
+					<li>
+						<a href="#userSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle "><i class="fas fa-user"></i> Profils</a>
+						<ul class="collapse list-unstyled" id="userSubmenu">
+							<li>
+								<a href=" {{path('users_list')}} "><i class="fas fa-list"></i> Liste</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href=" {{path('logsEvent_show')}} "><i class="fas fa-history"></i> Logs</a>
+					</li>
+				{% endif %}
+				<div class="dropdown-divider"></div>
+			</div>
+		</ul>
+	</div>
+</nav>

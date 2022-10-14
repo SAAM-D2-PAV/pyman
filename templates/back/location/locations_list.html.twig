@@ -1,0 +1,70 @@
+{% extends "back/base_back.html.twig" %}
+{% block title %}
+	Lieux de tournage
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item "> <a href="{{path('locations_list')}}">lieux de tournages et d'interventions</a></li>
+{% endblock %}
+
+{% block back_main_content %}
+
+
+		<div class="row">
+
+				{% if emptyList %}
+                <div class="col-lg-12 col-md-12 mb-12">
+                <!-- Jumbotron -->
+                    <div class="card card-image">
+                        <div class="text-white text-center rgba-stylish-strong py-5 px-4">
+                            <div class="py-5">
+
+                                <!-- Content -->
+                                <h3 class="text-warning imperial_primer"><i class="far fa-folder-open"></i> Section vide</h3>
+                                <h2 class="card-title h2 my-4 py-2 imperial_primer">Veuillez ajouter des lieux de prestations</h2>
+                                
+                                
+                                <a class="btn-custom-xl bg-imperial_primer text-white" href="#" onclick=" location.href='{{path('location_create')}}' " role="button"><i class="fas fa-clone left"></i> Ajouter</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Jumbotron -->
+				{% else %}
+                <div class="col-12">
+                    <h2 class="amour">Tous les lieux</h2> 
+                    <div class=" project_section">
+
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTableFull" width="100%" cellspacing="0">
+                                    <thead class="bg-nasu_purple text-white">
+                                        <tr class="default-color">
+                                            <th>Nom</th>
+                                            <th>Site</th>
+                                            <th>Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        {% for  location in locationList %}
+                                        <tr>
+                                            <td><a href=" {{path('location_show', {slug:location.slug})}} "> {{ location.name }}</a></td>
+                                            <td>{{location.located}}</td>
+                                            <td>{{ location.type }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                {% endif %}
+		</div>
+
+{% endblock %}

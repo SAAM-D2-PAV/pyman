@@ -1,0 +1,62 @@
+{% extends "back/base_back.html.twig" %}
+
+{# {% form_theme form 'bootstrap_4_layout.html.twig' %} #}
+
+{% block title %}
+   {{cat | lower}}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href=" {{ path('applicants_list') }} ">contacts</a></li>
+    <li class="breadcrumb-item"> <a href="">{{ cat | lower }}</a> </li>
+{% endblock %}
+
+{% block back_main_content %}
+
+    <div class="row">
+
+        <div class="col-12 mb-4">
+
+            <h3 class="card-title amour ">{{cat}}</h3>
+        
+        </div>
+
+        <div class="col-md-6">
+            
+            {% include "back/_form.html.twig" %}
+            
+        </div>
+
+        <div class="col-md-6">
+            <div class="col">
+            <div class="">
+                <div class="card mb-4">
+                    
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                src="{{asset('build/images/BUILDING_BLOCK.svg')}}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="jumbotron">
+                <h2 class="h1-responsive">{{cat}}</h2>
+               
+                <hr class="my-2">
+               
+                <button class="bg-nasu_purple btn-custom-lg text-white" onclick=" location.href=' {{path('applicants_list')}}'"> Liste des contacts</button>
+            </div>
+        </div>
+        </div>
+         
+ </div>   
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('applicant') }}    
+{% endblock %}

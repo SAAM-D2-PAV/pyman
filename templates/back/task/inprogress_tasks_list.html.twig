@@ -1,0 +1,19 @@
+{% extends "back/base_back.html.twig" %}
+{% block title %}
+	Tâches
+{% endblock %}
+
+{% block breadcrumb %}
+	<li class="breadcrumb-item "> <a href="{{path('tasks_list')}}">Tâches</a> </li>
+    <li class="breadcrumb-item "> <a href="">tâches en cours</a> </li>
+{% endblock %}
+
+
+
+{% block back_main_content %}
+	
+		<div class="row">
+            {% include "back/task/_taskList.html.twig" %}
+		</div>
+	
+{% endblock %}

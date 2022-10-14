@@ -1,0 +1,30 @@
+{% extends "front/base_front.html.twig" %}
+
+{% block title %}Modification de mot de passe{% endblock %}
+
+{% block body %}
+
+    <div class="row justify-content-center">
+
+        <div class="col-xl-6 col-lg-6 col-md-6">
+
+            <div class="card border-0 shadow" style="margin-top:15%;">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                        <div class="col-lg-12">
+                            <div class="p-5">
+                                <h2>Modification de mot de passe</h2>
+                                <p>Hello </p>
+                                <p>Un e-mail a été envoyé contenant un lien sur lequel vous pouvez cliquer pour réinitialiser votre mot de passe.</p> 
+                                {# <p>Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p> #}
+                                <p>Si vous ne recevez pas d'e-mail, veuillez vérifier votre dossier spam ou <a href="{{ path('app_forgot_password_request') }}">réessayez</a>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

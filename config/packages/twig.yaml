@@ -1,0 +1,12 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    form_themes:
+        - bootstrap_4_layout.html.twig
+    globals:
+        app_name: 'Pyman'
+        app_version: 'Beta'
+        app_date: "oct. 2022"
+        app_theme: "w"
+        default_admin_email: audiovideo.ac@education.gouv.fr
+    date:
+        timezone: Europe/Paris
