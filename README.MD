@@ -50,7 +50,7 @@ MAILER_DSN=smtp://localhost or your smtp server (you can use mailtrap)
 
 
 ![Modèle de données][model-db]
-
+![Schéma de données][schema-db]
 
 
 ```sh
@@ -203,4 +203,5 @@ package.json
    [model-db]: ./doc/modelisation-db.jpg "Modèle de données"
    [CKEditor]: <https://symfony.com/bundles/FOSCKEditorBundle/current/installation.html>
    [API Plateform]: https://api-platform.com/docs
+   [schema-db]: ./doc/pyman_dbschema.svg  "schéma de données"
 
