@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg
+PUBLIC "-//W3C//DTD SVG 1.1//EN"
+       "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg viewBox="980 2 2583 1197" width="1603px" height="1195px" xmlns="http://www.w3.org/2000/svg" version="1.1">
+   <line x1="1227" y1="169" x2="1237" y2="169" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="1552" y1="279" x2="1562" y2="279" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="1237" y1="169" x2="1552" y2="279" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="1234.5" y1="169" x2="1230.9644660941" y2="172.53553390593" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="1234.5" y1="169" x2="1230.9644660941" y2="165.46446609407" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="1557" y1="279" x2="1553.4644660941" y2="282.53553390593" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="1557" y1="279" x2="1553.4644660941" y2="275.46446609407" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="1227" y1="189" x2="1237" y2="189" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="2046" y1="259" x2="2056" y2="259" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="1237" y1="189" x2="2046" y2="259" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="1234.5" y1="189" x2="1230.9644660941" y2="192.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="1234.5" y1="189" x2="1230.9644660941" y2="185.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2051" y1="259" x2="2047.4644660941" y2="262.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2051" y1="259" x2="2047.4644660941" y2="255.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="1558" y1="642" x2="1548" y2="642" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="1552" y1="279" x2="1562" y2="279" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="1548" y1="642" x2="1552" y2="279" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="1550.5" y1="642" x2="1554.0355339059" y2="645.53553390593" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="1550.5" y1="642" x2="1554.0355339059" y2="638.46446609407" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="1557" y1="279" x2="1553.4644660941" y2="282.53553390593" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="1557" y1="279" x2="1553.4644660941" y2="275.46446609407" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="1790" y1="722" x2="1800" y2="722" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="2294" y1="481" x2="2304" y2="481" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="1800" y1="722" x2="2294" y2="481" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="1797.5" y1="722" x2="1793.9644660941" y2="725.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="1797.5" y1="722" x2="1793.9644660941" y2="718.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2299" y1="481" x2="2295.4644660941" y2="484.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2299" y1="481" x2="2295.4644660941" y2="477.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="1790" y1="702" x2="1800" y2="702" style="stroke:#bbb;stroke-width:1;"/>
+   <line x1="2046" y1="259" x2="2056" y2="259" style="stroke:#bbb;stroke-width:1;"/>
+   <line x1="1800" y1="702" x2="2046" y2="259" style="stroke:#bbb;stroke-width:1;"/>
+   <line x1="1797.5" y1="702" x2="1793.9644660941" y2="705.53553390593" style="stroke:#bbb;stroke-width:2;"/>
+   <line x1="1797.5" y1="702" x2="1793.9644660941" y2="698.46446609407" style="stroke:#bbb;stroke-width:2;"/>
+   <line x1="2051" y1="259" x2="2047.4644660941" y2="262.53553390593" style="stroke:#bbb;stroke-width:2;"/>
+   <line x1="2051" y1="259" x2="2047.4644660941" y2="255.46446609407" style="stroke:#bbb;stroke-width:2;"/>
+   <line x1="2268" y1="1092" x2="2258" y2="1092" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="1410" y1="937" x2="1400" y2="937" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="2258" y1="1092" x2="1410" y2="937" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="2260.5" y1="1092" x2="2264.0355339059" y2="1095.5355339059" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2260.5" y1="1092" x2="2264.0355339059" y2="1088.4644660941" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="1405" y1="937" x2="1408.5355339059" y2="940.53553390593" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="1405" y1="937" x2="1408.5355339059" y2="933.46446609407" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2268" y1="1052" x2="2258" y2="1052" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="2118" y1="926" x2="2108" y2="926" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="2258" y1="1052" x2="2118" y2="926" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="2260.5" y1="1052" x2="2264.0355339059" y2="1055.5355339059" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="2260.5" y1="1052" x2="2264.0355339059" y2="1048.4644660941" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="2113" y1="926" x2="2116.5355339059" y2="929.53553390593" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="2113" y1="926" x2="2116.5355339059" y2="922.46446609407" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="2106" y1="848" x2="2116" y2="848" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="2258" y1="852" x2="2268" y2="852" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="2116" y1="848" x2="2258" y2="852" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="2113.5" y1="848" x2="2109.9644660941" y2="851.53553390593" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2113.5" y1="848" x2="2109.9644660941" y2="844.46446609407" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2263" y1="852" x2="2259.4644660941" y2="855.53553390593" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2263" y1="852" x2="2259.4644660941" y2="848.46446609407" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="1874" y1="868" x2="1864" y2="868" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="1794" y1="883" x2="1784" y2="883" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="1864" y1="868" x2="1794" y2="883" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="1866.5" y1="868" x2="1870.0355339059" y2="871.53553390593" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="1866.5" y1="868" x2="1870.0355339059" y2="864.46446609407" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="1789" y1="883" x2="1792.5355339059" y2="886.53553390593" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="1789" y1="883" x2="1792.5355339059" y2="879.46446609407" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2025" y1="202" x2="2035" y2="202" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="2046" y1="259" x2="2056" y2="259" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="2035" y1="202" x2="2046" y2="259" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="2032.5" y1="202" x2="2028.9644660941" y2="205.53553390593" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2032.5" y1="202" x2="2028.9644660941" y2="198.46446609407" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2051" y1="259" x2="2047.4644660941" y2="262.53553390593" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2051" y1="259" x2="2047.4644660941" y2="255.46446609407" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="1806" y1="499" x2="1796" y2="499" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="1804" y1="279" x2="1794" y2="279" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="1796" y1="499" x2="1804" y2="279" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="1798.5" y1="499" x2="1802.0355339059" y2="502.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="1798.5" y1="499" x2="1802.0355339059" y2="495.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="1799" y1="279" x2="1802.5355339059" y2="282.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="1799" y1="279" x2="1802.5355339059" y2="275.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2038" y1="519" x2="2048" y2="519" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="2294" y1="481" x2="2304" y2="481" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="2048" y1="519" x2="2294" y2="481" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="2045.5" y1="519" x2="2041.9644660941" y2="522.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2045.5" y1="519" x2="2041.9644660941" y2="515.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2299" y1="481" x2="2295.4644660941" y2="484.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2299" y1="481" x2="2295.4644660941" y2="477.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2038" y1="539" x2="2048" y2="539" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="2046" y1="259" x2="2056" y2="259" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="2048" y1="539" x2="2046" y2="259" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="2045.5" y1="539" x2="2041.9644660941" y2="542.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2045.5" y1="539" x2="2041.9644660941" y2="535.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2051" y1="259" x2="2047.4644660941" y2="262.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2051" y1="259" x2="2047.4644660941" y2="255.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="1562" y1="299" x2="1552" y2="299" style="stroke:#333;stroke-width:1;"/>
+   <line x1="1442" y1="294" x2="1432" y2="294" style="stroke:#333;stroke-width:1;"/>
+   <line x1="1552" y1="299" x2="1442" y2="294" style="stroke:#333;stroke-width:1;"/>
+   <line x1="1554.5" y1="299" x2="1558.0355339059" y2="302.53553390593" style="stroke:#333;stroke-width:2;"/>
+   <line x1="1554.5" y1="299" x2="1558.0355339059" y2="295.46446609407" style="stroke:#333;stroke-width:2;"/>
+   <line x1="1437" y1="294" x2="1440.5355339059" y2="297.53553390593" style="stroke:#333;stroke-width:2;"/>
+   <line x1="1437" y1="294" x2="1440.5355339059" y2="290.46446609407" style="stroke:#333;stroke-width:2;"/>
+   <line x1="1794" y1="439" x2="1804" y2="439" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="2046" y1="259" x2="2056" y2="259" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="1804" y1="439" x2="2046" y2="259" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="1801.5" y1="439" x2="1797.9644660941" y2="442.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="1801.5" y1="439" x2="1797.9644660941" y2="435.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2051" y1="259" x2="2047.4644660941" y2="262.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2051" y1="259" x2="2047.4644660941" y2="255.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="1794" y1="419" x2="1804" y2="419" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="2046" y1="259" x2="2056" y2="259" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="1804" y1="419" x2="2046" y2="259" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="1801.5" y1="419" x2="1797.9644660941" y2="422.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="1801.5" y1="419" x2="1797.9644660941" y2="415.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2051" y1="259" x2="2047.4644660941" y2="262.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2051" y1="259" x2="2047.4644660941" y2="255.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="1562" y1="479" x2="1552" y2="479" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="1448" y1="444" x2="1438" y2="444" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="1552" y1="479" x2="1448" y2="444" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="1554.5" y1="479" x2="1558.0355339059" y2="482.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="1554.5" y1="479" x2="1558.0355339059" y2="475.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="1443" y1="444" x2="1446.5355339059" y2="447.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="1443" y1="444" x2="1446.5355339059" y2="440.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="1975" y1="67" x2="1965" y2="67" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="2046" y1="259" x2="2056" y2="259" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="1965" y1="67" x2="2046" y2="259" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="1967.5" y1="67" x2="1971.0355339059" y2="70.535533905933" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="1967.5" y1="67" x2="1971.0355339059" y2="63.464466094067" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2051" y1="259" x2="2047.4644660941" y2="262.53553390593" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2051" y1="259" x2="2047.4644660941" y2="255.46446609407" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2304" y1="501" x2="2294" y2="501" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="2315" y1="326" x2="2325" y2="326" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="2294" y1="501" x2="2315" y2="326" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="2296.5" y1="501" x2="2300.0355339059" y2="504.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2296.5" y1="501" x2="2300.0355339059" y2="497.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2320" y1="326" x2="2316.4644660941" y2="329.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2320" y1="326" x2="2316.4644660941" y2="322.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2304" y1="741" x2="2294" y2="741" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="1804" y1="279" x2="1794" y2="279" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="2294" y1="741" x2="1804" y2="279" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="2296.5" y1="741" x2="2300.0355339059" y2="744.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2296.5" y1="741" x2="2300.0355339059" y2="737.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="1799" y1="279" x2="1802.5355339059" y2="282.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="1799" y1="279" x2="1802.5355339059" y2="275.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2304" y1="521" x2="2294" y2="521" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="1410" y1="937" x2="1400" y2="937" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="2294" y1="521" x2="1410" y2="937" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="2296.5" y1="521" x2="2300.0355339059" y2="524.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2296.5" y1="521" x2="2300.0355339059" y2="517.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="1405" y1="937" x2="1408.5355339059" y2="940.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="1405" y1="937" x2="1408.5355339059" y2="933.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="2304" y1="781" x2="2294" y2="781" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="2298" y1="259" x2="2288" y2="259" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="2294" y1="781" x2="2298" y2="259" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="2296.5" y1="781" x2="2300.0355339059" y2="784.53553390593" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="2296.5" y1="781" x2="2300.0355339059" y2="777.46446609407" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="2293" y1="259" x2="2296.5355339059" y2="262.53553390593" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="2293" y1="259" x2="2296.5355339059" y2="255.46446609407" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="2304" y1="761" x2="2294" y2="761" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="2298" y1="259" x2="2288" y2="259" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="2294" y1="761" x2="2298" y2="259" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="2296.5" y1="761" x2="2300.0355339059" y2="764.53553390593" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="2296.5" y1="761" x2="2300.0355339059" y2="757.46446609407" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="2293" y1="259" x2="2296.5355339059" y2="262.53553390593" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="2293" y1="259" x2="2296.5355339059" y2="255.46446609407" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="2107" y1="786" x2="2117" y2="786" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="2258" y1="852" x2="2268" y2="852" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="2117" y1="786" x2="2258" y2="852" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="2114.5" y1="786" x2="2110.9644660941" y2="789.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2114.5" y1="786" x2="2110.9644660941" y2="782.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2263" y1="852" x2="2259.4644660941" y2="855.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2263" y1="852" x2="2259.4644660941" y2="848.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2107" y1="766" x2="2117" y2="766" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="2294" y1="481" x2="2304" y2="481" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="2117" y1="766" x2="2294" y2="481" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="2114.5" y1="766" x2="2110.9644660941" y2="769.53553390593" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2114.5" y1="766" x2="2110.9644660941" y2="762.46446609407" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2299" y1="481" x2="2295.4644660941" y2="484.53553390593" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2299" y1="481" x2="2295.4644660941" y2="477.46446609407" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="2336" y1="54" x2="2326" y2="54" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="2294" y1="481" x2="2304" y2="481" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="2326" y1="54" x2="2294" y2="481" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="2328.5" y1="54" x2="2332.0355339059" y2="57.535533905933" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2328.5" y1="54" x2="2332.0355339059" y2="50.464466094067" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2299" y1="481" x2="2295.4644660941" y2="484.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2299" y1="481" x2="2295.4644660941" y2="477.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="2336" y1="74" x2="2326" y2="74" style="stroke:#cb0;stroke-width:1;"/>
+   <line x1="2298" y1="259" x2="2288" y2="259" style="stroke:#cb0;stroke-width:1;"/>
+   <line x1="2326" y1="74" x2="2298" y2="259" style="stroke:#cb0;stroke-width:1;"/>
+   <line x1="2328.5" y1="74" x2="2332.0355339059" y2="77.535533905933" style="stroke:#cb0;stroke-width:2;"/>
+   <line x1="2328.5" y1="74" x2="2332.0355339059" y2="70.464466094067" style="stroke:#cb0;stroke-width:2;"/>
+   <line x1="2293" y1="259" x2="2296.5355339059" y2="262.53553390593" style="stroke:#cb0;stroke-width:2;"/>
+   <line x1="2293" y1="259" x2="2296.5355339059" y2="255.46446609407" style="stroke:#cb0;stroke-width:2;"/>
+   <rect width="232" height="20" x="1206" y="414" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="1211" y="428" style="fill:#fff;" font-family="Arial" font-size="16px"> applicant</text>
+   <rect width="232" height="20" x="1206" y="434" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1211" y="448" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="1206" y="454" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1211" y="468" style="fill:black;" font-family="Arial" font-size="16px">firstname</text>
+   <rect width="232" height="20" x="1206" y="474" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1211" y="488" style="fill:black;" font-family="Arial" font-size="16px">lastname</text>
+   <rect width="232" height="20" x="1206" y="494" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1211" y="508" style="fill:black;" font-family="Arial" font-size="16px">email</text>
+   <rect width="232" height="20" x="1206" y="514" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1211" y="528" style="fill:black;" font-family="Arial" font-size="16px">phone</text>
+   <rect width="232" height="20" x="1206" y="534" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1211" y="548" style="fill:black;" font-family="Arial" font-size="16px">office</text>
+   <rect width="232" height="20" x="1206" y="554" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1211" y="568" style="fill:black;" font-family="Arial" font-size="16px">job</text>
+   <rect width="232" height="20" x="1206" y="574" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1211" y="588" style="fill:black;" font-family="Arial" font-size="16px">department</text>
+   <rect width="232" height="20" x="995" y="119" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="1000" y="133" style="fill:#fff;" font-family="Arial" font-size="16px"> comment</text>
+   <rect width="232" height="20" x="995" y="139" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1000" y="153" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="995" y="159" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1000" y="173" style="fill:black;" font-family="Arial" font-size="16px">project_id</text>
+   <rect width="232" height="20" x="995" y="179" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1000" y="193" style="fill:black;" font-family="Arial" font-size="16px">created_by_id</text>
+   <rect width="232" height="20" x="995" y="199" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1000" y="213" style="fill:black;" font-family="Arial" font-size="16px">title</text>
+   <rect width="232" height="20" x="995" y="219" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1000" y="233" style="fill:black;" font-family="Arial" font-size="16px">content</text>
+   <rect width="232" height="20" x="995" y="239" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1000" y="253" style="fill:black;" font-family="Arial" font-size="16px">created_at</text>
+   <rect width="232" height="20" x="995" y="259" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1000" y="273" style="fill:black;" font-family="Arial" font-size="16px">updated_at</text>
+   <rect width="232" height="20" x="995" y="279" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1000" y="293" style="fill:black;" font-family="Arial" font-size="16px">slug</text>
+   <rect width="232" height="20" x="1219" y="50" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="1224" y="64" style="fill:#fff;" font-family="Arial" font-size="16px"> doctrine_migration_versions</text>
+   <rect width="232" height="20" x="1219" y="70" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1224" y="84" style="fill:black;" font-family="Arial" font-size="16px">version</text>
+   <rect width="232" height="20" x="1219" y="90" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1224" y="104" style="fill:black;" font-family="Arial" font-size="16px">executed_at</text>
+   <rect width="232" height="20" x="1219" y="110" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1224" y="124" style="fill:black;" font-family="Arial" font-size="16px">execution_time</text>
+   <rect width="232" height="20" x="1558" y="592" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="1563" y="606" style="fill:#fff;" font-family="Arial" font-size="16px"> document</text>
+   <rect width="232" height="20" x="1558" y="612" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1563" y="626" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="1558" y="632" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1563" y="646" style="fill:black;" font-family="Arial" font-size="16px">project_id</text>
+   <rect width="232" height="20" x="1558" y="652" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1563" y="666" style="fill:black;" font-family="Arial" font-size="16px">upload_name</text>
+   <rect width="232" height="20" x="1558" y="672" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1563" y="686" style="fill:black;" font-family="Arial" font-size="16px">uploaded_at</text>
+   <rect width="232" height="20" x="1558" y="692" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1563" y="706" style="fill:black;" font-family="Arial" font-size="16px">uploaded_by_id</text>
+   <rect width="232" height="20" x="1558" y="712" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1563" y="726" style="fill:black;" font-family="Arial" font-size="16px">task_id</text>
+   <rect width="232" height="20" x="2268" y="822" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="836" style="fill:#fff;" font-family="Arial" font-size="16px"> equipment</text>
+   <rect width="232" height="20" x="2268" y="842" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="856" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="2268" y="862" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="876" style="fill:black;" font-family="Arial" font-size="16px">name</text>
+   <rect width="232" height="20" x="2268" y="882" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="896" style="fill:black;" font-family="Arial" font-size="16px">ref</text>
+   <rect width="232" height="20" x="2268" y="902" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="916" style="fill:black;" font-family="Arial" font-size="16px">model</text>
+   <rect width="232" height="20" x="2268" y="922" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="936" style="fill:black;" font-family="Arial" font-size="16px">brand</text>
+   <rect width="232" height="20" x="2268" y="942" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="956" style="fill:black;" font-family="Arial" font-size="16px">serial_number</text>
+   <rect width="232" height="20" x="2268" y="962" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="976" style="fill:black;" font-family="Arial" font-size="16px">identification_code</text>
+   <rect width="232" height="20" x="2268" y="982" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="996" style="fill:black;" font-family="Arial" font-size="16px">status</text>
+   <rect width="232" height="20" x="2268" y="1002" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="1016" style="fill:black;" font-family="Arial" font-size="16px">specifications</text>
+   <rect width="232" height="20" x="2268" y="1022" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="1036" style="fill:black;" font-family="Arial" font-size="16px">slug</text>
+   <rect width="232" height="20" x="2268" y="1042" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="1056" style="fill:black;" font-family="Arial" font-size="16px">equipment_type_id</text>
+   <rect width="232" height="20" x="2268" y="1062" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="1076" style="fill:black;" font-family="Arial" font-size="16px">main_picture</text>
+   <rect width="232" height="20" x="2268" y="1082" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="1096" style="fill:black;" font-family="Arial" font-size="16px">location_id</text>
+   <rect width="232" height="20" x="2268" y="1102" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="1116" style="fill:black;" font-family="Arial" font-size="16px">created_at</text>
+   <rect width="232" height="20" x="2268" y="1122" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="1136" style="fill:black;" font-family="Arial" font-size="16px">updated_at</text>
+   <rect width="232" height="20" x="2268" y="1142" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="1156" style="fill:black;" font-family="Arial" font-size="16px">missing</text>
+   <rect width="232" height="20" x="2268" y="1162" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2273" y="1176" style="fill:black;" font-family="Arial" font-size="16px">note</text>
+   <rect width="232" height="20" x="1552" y="853" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="1557" y="867" style="fill:#fff;" font-family="Arial" font-size="16px"> equipment_category</text>
+   <rect width="232" height="20" x="1552" y="873" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1557" y="887" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="1552" y="893" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1557" y="907" style="fill:black;" font-family="Arial" font-size="16px">name</text>
+   <rect width="232" height="20" x="1552" y="913" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1557" y="927" style="fill:black;" font-family="Arial" font-size="16px">information</text>
+   <rect width="232" height="20" x="1552" y="933" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1557" y="947" style="fill:black;" font-family="Arial" font-size="16px">slug</text>
+   <rect width="232" height="20" x="1874" y="818" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="1879" y="832" style="fill:#fff;" font-family="Arial" font-size="16px"> equipment_equipment_category</text>
+   <rect width="232" height="20" x="1874" y="838" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1879" y="852" style="fill:black;" font-family="Arial" font-size="16px">equipment_id</text>
+   <rect width="232" height="20" x="1874" y="858" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1879" y="872" style="fill:black;" font-family="Arial" font-size="16px">equipment_category_id</text>
+   <rect width="232" height="20" x="1876" y="896" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="1881" y="910" style="fill:#fff;" font-family="Arial" font-size="16px"> equipment_type</text>
+   <rect width="232" height="20" x="1876" y="916" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1881" y="930" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="1876" y="936" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1881" y="950" style="fill:black;" font-family="Arial" font-size="16px">name</text>
+   <rect width="232" height="20" x="1876" y="956" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1881" y="970" style="fill:black;" font-family="Arial" font-size="16px">information</text>
+   <rect width="232" height="20" x="1876" y="976" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1881" y="990" style="fill:black;" font-family="Arial" font-size="16px">slug</text>
+   <rect width="232" height="20" x="1168" y="907" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="1173" y="921" style="fill:#fff;" font-family="Arial" font-size="16px"> location</text>
+   <rect width="232" height="20" x="1168" y="927" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1173" y="941" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="1168" y="947" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1173" y="961" style="fill:black;" font-family="Arial" font-size="16px">name</text>
+   <rect width="232" height="20" x="1168" y="967" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1173" y="981" style="fill:black;" font-family="Arial" font-size="16px">number</text>
+   <rect width="232" height="20" x="1168" y="987" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1173" y="1001" style="fill:black;" font-family="Arial" font-size="16px">street</text>
+   <rect width="232" height="20" x="1168" y="1007" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1173" y="1021" style="fill:black;" font-family="Arial" font-size="16px">city</text>
+   <rect width="232" height="20" x="1168" y="1027" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1173" y="1041" style="fill:black;" font-family="Arial" font-size="16px">information</text>
+   <rect width="232" height="20" x="1168" y="1047" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1173" y="1061" style="fill:black;" font-family="Arial" font-size="16px">slug</text>
+   <rect width="232" height="20" x="1168" y="1067" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1173" y="1081" style="fill:black;" font-family="Arial" font-size="16px">located</text>
+   <rect width="232" height="20" x="1168" y="1087" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1173" y="1101" style="fill:black;" font-family="Arial" font-size="16px">type</text>
+   <rect width="232" height="20" x="1168" y="1107" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1173" y="1121" style="fill:black;" font-family="Arial" font-size="16px">created_at</text>
+   <rect width="232" height="20" x="1168" y="1127" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1173" y="1141" style="fill:black;" font-family="Arial" font-size="16px">updated_at</text>
+   <rect width="232" height="20" x="1793" y="152" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="1798" y="166" style="fill:#fff;" font-family="Arial" font-size="16px"> log</text>
+   <rect width="232" height="20" x="1793" y="172" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1798" y="186" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="1793" y="192" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1798" y="206" style="fill:black;" font-family="Arial" font-size="16px">user_id</text>
+   <rect width="232" height="20" x="1793" y="212" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1798" y="226" style="fill:black;" font-family="Arial" font-size="16px">log</text>
+   <rect width="232" height="20" x="1806" y="449" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="1811" y="463" style="fill:#fff;" font-family="Arial" font-size="16px"> log_event</text>
+   <rect width="232" height="20" x="1806" y="469" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1811" y="483" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="1806" y="489" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1811" y="503" style="fill:black;" font-family="Arial" font-size="16px">project_id</text>
+   <rect width="232" height="20" x="1806" y="509" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1811" y="523" style="fill:black;" font-family="Arial" font-size="16px">task_id</text>
+   <rect width="232" height="20" x="1806" y="529" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1811" y="543" style="fill:black;" font-family="Arial" font-size="16px">created_by_id</text>
+   <rect width="232" height="20" x="1806" y="549" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1811" y="563" style="fill:black;" font-family="Arial" font-size="16px">created_at</text>
+   <rect width="232" height="20" x="1806" y="569" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1811" y="583" style="fill:black;" font-family="Arial" font-size="16px">type</text>
+   <rect width="232" height="20" x="1562" y="249" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="263" style="fill:#fff;" font-family="Arial" font-size="16px"> project</text>
+   <rect width="232" height="20" x="1562" y="269" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="283" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="1562" y="289" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="303" style="fill:black;" font-family="Arial" font-size="16px">category_id</text>
+   <rect width="232" height="20" x="1562" y="309" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="323" style="fill:black;" font-family="Arial" font-size="16px">name</text>
+   <rect width="232" height="20" x="1562" y="329" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="343" style="fill:black;" font-family="Arial" font-size="16px">created_at</text>
+   <rect width="232" height="20" x="1562" y="349" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="363" style="fill:black;" font-family="Arial" font-size="16px">information</text>
+   <rect width="232" height="20" x="1562" y="369" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="383" style="fill:black;" font-family="Arial" font-size="16px">delivery_date</text>
+   <rect width="232" height="20" x="1562" y="389" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="403" style="fill:black;" font-family="Arial" font-size="16px">slug</text>
+   <rect width="232" height="20" x="1562" y="409" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="423" style="fill:black;" font-family="Arial" font-size="16px">created_by_id</text>
+   <rect width="232" height="20" x="1562" y="429" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="443" style="fill:black;" font-family="Arial" font-size="16px">updated_by_id</text>
+   <rect width="232" height="20" x="1562" y="449" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="463" style="fill:black;" font-family="Arial" font-size="16px">updated_at</text>
+   <rect width="232" height="20" x="1562" y="469" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="483" style="fill:black;" font-family="Arial" font-size="16px">request_by_id</text>
+   <rect width="232" height="20" x="1562" y="489" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="503" style="fill:black;" font-family="Arial" font-size="16px">status</text>
+   <rect width="232" height="20" x="1562" y="509" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="523" style="fill:black;" font-family="Arial" font-size="16px">url</text>
+   <rect width="232" height="20" x="1562" y="529" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="543" style="fill:black;" font-family="Arial" font-size="16px">rating</text>
+   <rect width="232" height="20" x="1562" y="549" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1567" y="563" style="fill:black;" font-family="Arial" font-size="16px">note</text>
+   <rect width="232" height="20" x="1200" y="264" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="1205" y="278" style="fill:#fff;" font-family="Arial" font-size="16px"> project_category</text>
+   <rect width="232" height="20" x="1200" y="284" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1205" y="298" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="1200" y="304" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1205" y="318" style="fill:black;" font-family="Arial" font-size="16px">name</text>
+   <rect width="232" height="20" x="1200" y="324" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1205" y="338" style="fill:black;" font-family="Arial" font-size="16px">information</text>
+   <rect width="232" height="20" x="1200" y="344" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1205" y="358" style="fill:black;" font-family="Arial" font-size="16px">slug</text>
+   <rect width="232" height="20" x="1975" y="17" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="1980" y="31" style="fill:#fff;" font-family="Arial" font-size="16px"> reset_password_request</text>
+   <rect width="232" height="20" x="1975" y="37" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1980" y="51" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="1975" y="57" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1980" y="71" style="fill:black;" font-family="Arial" font-size="16px">user_id</text>
+   <rect width="232" height="20" x="1975" y="77" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1980" y="91" style="fill:black;" font-family="Arial" font-size="16px">selector</text>
+   <rect width="232" height="20" x="1975" y="97" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1980" y="111" style="fill:black;" font-family="Arial" font-size="16px">hashed_token</text>
+   <rect width="232" height="20" x="1975" y="117" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1980" y="131" style="fill:black;" font-family="Arial" font-size="16px">requested_at</text>
+   <rect width="232" height="20" x="1975" y="137" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="1980" y="151" style="fill:black;" font-family="Arial" font-size="16px">expires_at</text>
+   <rect width="232" height="20" x="2304" y="451" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="465" style="fill:#fff;" font-family="Arial" font-size="16px"> task</text>
+   <rect width="232" height="20" x="2304" y="471" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="485" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="2304" y="491" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="505" style="fill:black;" font-family="Arial" font-size="16px">category_id</text>
+   <rect width="232" height="20" x="2304" y="511" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="525" style="fill:black;" font-family="Arial" font-size="16px">location_id</text>
+   <rect width="232" height="20" x="2304" y="531" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="545" style="fill:black;" font-family="Arial" font-size="16px">name</text>
+   <rect width="232" height="20" x="2304" y="551" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="565" style="fill:black;" font-family="Arial" font-size="16px">description</text>
+   <rect width="232" height="20" x="2304" y="571" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="585" style="fill:black;" font-family="Arial" font-size="16px">created_at</text>
+   <rect width="232" height="20" x="2304" y="591" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="605" style="fill:black;" font-family="Arial" font-size="16px">start_date</text>
+   <rect width="232" height="20" x="2304" y="611" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="625" style="fill:black;" font-family="Arial" font-size="16px">end_date</text>
+   <rect width="232" height="20" x="2304" y="631" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="645" style="fill:black;" font-family="Arial" font-size="16px">start_hour</text>
+   <rect width="232" height="20" x="2304" y="651" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="665" style="fill:black;" font-family="Arial" font-size="16px">end_hour</text>
+   <rect width="232" height="20" x="2304" y="671" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="685" style="fill:black;" font-family="Arial" font-size="16px">attachment</text>
+   <rect width="232" height="20" x="2304" y="691" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="705" style="fill:black;" font-family="Arial" font-size="16px">status</text>
+   <rect width="232" height="20" x="2304" y="711" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="725" style="fill:black;" font-family="Arial" font-size="16px">slug</text>
+   <rect width="232" height="20" x="2304" y="731" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="745" style="fill:black;" font-family="Arial" font-size="16px">project_id</text>
+   <rect width="232" height="20" x="2304" y="751" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="765" style="fill:black;" font-family="Arial" font-size="16px">created_by_id</text>
+   <rect width="232" height="20" x="2304" y="771" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="785" style="fill:black;" font-family="Arial" font-size="16px">updated_by_id</text>
+   <rect width="232" height="20" x="2304" y="791" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="805" style="fill:black;" font-family="Arial" font-size="16px">updated_at</text>
+   <rect width="232" height="20" x="2304" y="811" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2309" y="825" style="fill:black;" font-family="Arial" font-size="16px">stream</text>
+   <rect width="232" height="20" x="2325" y="296" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="2330" y="310" style="fill:#fff;" font-family="Arial" font-size="16px"> task_category</text>
+   <rect width="232" height="20" x="2325" y="316" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="2330" y="330" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="2325" y="336" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2330" y="350" style="fill:black;" font-family="Arial" font-size="16px">name</text>
+   <rect width="232" height="20" x="2325" y="356" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2330" y="370" style="fill:black;" font-family="Arial" font-size="16px">description</text>
+   <rect width="232" height="20" x="2325" y="376" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2330" y="390" style="fill:black;" font-family="Arial" font-size="16px">slug</text>
+   <rect width="232" height="20" x="1875" y="736" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="1880" y="750" style="fill:#fff;" font-family="Arial" font-size="16px"> task_equipment</text>
+   <rect width="232" height="20" x="1875" y="756" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1880" y="770" style="fill:black;" font-family="Arial" font-size="16px">task_id</text>
+   <rect width="232" height="20" x="1875" y="776" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="1880" y="790" style="fill:black;" font-family="Arial" font-size="16px">equipment_id</text>
+   <rect width="232" height="20" x="2336" y="24" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="2341" y="38" style="fill:#fff;" font-family="Arial" font-size="16px"> task_user</text>
+   <rect width="232" height="20" x="2336" y="44" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="2341" y="58" style="fill:black;" font-family="Arial" font-size="16px">task_id</text>
+   <rect width="232" height="20" x="2336" y="64" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="2341" y="78" style="fill:black;" font-family="Arial" font-size="16px">user_id</text>
+   <rect width="232" height="20" x="2056" y="229" style="fill:#007;stroke:black;"/>
+   <text width="232" height="20" x="2061" y="243" style="fill:#fff;" font-family="Arial" font-size="16px"> user</text>
+   <rect width="232" height="20" x="2056" y="249" style="fill:#aea;stroke:black;"/>
+   <text width="232" height="20" x="2061" y="263" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="232" height="20" x="2056" y="269" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2061" y="283" style="fill:black;" font-family="Arial" font-size="16px">email</text>
+   <rect width="232" height="20" x="2056" y="289" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2061" y="303" style="fill:black;" font-family="Arial" font-size="16px">roles</text>
+   <rect width="232" height="20" x="2056" y="309" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2061" y="323" style="fill:black;" font-family="Arial" font-size="16px">password</text>
+   <rect width="232" height="20" x="2056" y="329" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2061" y="343" style="fill:black;" font-family="Arial" font-size="16px">firstname</text>
+   <rect width="232" height="20" x="2056" y="349" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2061" y="363" style="fill:black;" font-family="Arial" font-size="16px">lastname</text>
+   <rect width="232" height="20" x="2056" y="369" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2061" y="383" style="fill:black;" font-family="Arial" font-size="16px">phone</text>
+   <rect width="232" height="20" x="2056" y="389" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2061" y="403" style="fill:black;" font-family="Arial" font-size="16px">mobil</text>
+   <rect width="232" height="20" x="2056" y="409" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2061" y="423" style="fill:black;" font-family="Arial" font-size="16px">office</text>
+   <rect width="232" height="20" x="2056" y="429" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2061" y="443" style="fill:black;" font-family="Arial" font-size="16px">job</text>
+   <rect width="232" height="20" x="2056" y="449" style="fill:none;stroke:black;"/>
+   <text width="232" height="20" x="2061" y="463" style="fill:black;" font-family="Arial" font-size="16px">department</text>
+</svg>
