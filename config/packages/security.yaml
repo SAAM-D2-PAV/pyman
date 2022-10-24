@@ -23,6 +23,9 @@ security:
                     - App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
+            #identification via api
+            json_login:
+                check_path: api_login
                 # where to redirect after logout
                 # target: app_any_route
 
@@ -41,6 +44,7 @@ security:
          - { path: ^/materiel, roles: ROLE_OWNER }
          - { path: ^/contacts, roles: ROLE_VIEWER }
          - { path: ^/document, roles: ROLE_VIEWER }
+         - { path: ^/api, roles: ROLE_VIEWER }
         # - { path: ^/profile, roles: ROLE_USER }
 
     role_hierarchy:

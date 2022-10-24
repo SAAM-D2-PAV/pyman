@@ -39,7 +39,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/connexion", name="app_login", priority=1)
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('dashboard' );
@@ -51,6 +51,25 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
         
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+    }
+    //CONNEXION VIA L'API
+    /**
+     * @Route("/api/connexion", name="api_login", methods={"POST"})
+     */
+    public function api_login(Request $request):Response{
+
+
+        $user = $this->getUser();
+
+        if (null === $user) {
+            return $this->json([
+                'message' => 'missing credentials',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+        return $this->json([
+            'username' => $user->getUsername(),
+            'roles' => $user->getRoles()
+        ]);
     }
 
     /**
@@ -147,6 +166,10 @@ class SecurityController extends AbstractController
             }
             else if($taskCat == "Photo"){
                 $color = "#341f97";
+                $textColor = 'white';
+            }
+            else if($taskCat == "Intervention technique"){
+                $color = "#484D7A";
                 $textColor = 'white';
             }
 

@@ -38,7 +38,7 @@ class TaskCategory
      * @Assert\NotBlank(message="Veuillez renseigner le nom de la catégorie")
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{limit}} caractère minimun.", maxMessage="Ne pas dépasser {{limit}} caractères.")
      */
-    #[Groups(['tc_read:collection', 't_read:collection'])]
+    #[Groups(['tc_read:collection', 't_read:item'])]
     private $name;
 
     /**
@@ -56,6 +56,7 @@ class TaskCategory
     /**
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="category")
      */
+    #[Groups(['tc_read:item'])]
     private $tasks;
 
     public function __construct()

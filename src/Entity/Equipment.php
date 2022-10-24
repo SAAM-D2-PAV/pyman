@@ -10,8 +10,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 //API PLATFORM
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use ApiPlatform\Core\Annotation\ApiFilter;
 /**
  * @ORM\Entity(repositoryClass=EquipmentRepository::class)
  */
@@ -22,7 +23,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'get' =>[
             'normalization_context' => ['groups' =>  ['e_read:collection', 'e_read:item']]
         ]
-    ]
+    ],
+    paginationItemsPerPage:20
+
+)]
+#[ApiFilter(
+    SearchFilter::class, properties: ['identificationCode' => 'exact', 'name' => 'partial']
 )]
 class Equipment
 {
@@ -38,7 +44,7 @@ class Equipment
      * @Assert\NotBlank(message="Veuillez renseigner le nom du matériel")
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{  limit  }} caractère minimun.", maxMessage="Ne pas dépasser {{  limit  }} caractères.")
      */
-    #[Groups('e_read:collection', 't_read:item')]
+    #[Groups(['e_read:collection', 't_read:item'])]
     private $name;
 
     /**
@@ -67,14 +73,14 @@ class Equipment
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{ limit }} caractère minimun.", maxMessage="Ne pas dépasser {{ limit }} caractères.")
      */
-    #[Groups('e_read:item', 't_read:item')]
+    #[Groups(['e_read:item', 't_read:item'])]
     private $serialNumber;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{ limit }} caractère minimun.", maxMessage="Ne pas dépasser {{ limit }} caractères.")
      */
-    #[Groups('e_read:item', 't_read:item')]
+    #[Groups(['e_read:item', 't_read:item'])]
     private $identificationCode;
 
     /**

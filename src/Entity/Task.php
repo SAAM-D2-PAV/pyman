@@ -10,7 +10,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 //API PLATFORM
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
  * @ORM\Entity(repositoryClass=TaskRepository::class)
@@ -18,12 +20,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 #[ApiResource(
     normalizationContext: ['groups' => ['t_read:collection']],
+    denormalizationContext:['groups' => ['t_patch:item']],
     collectionOperations: ['get'],
     itemOperations: [
+        'patch',
         'get' =>[
             'normalization_context' => ['groups' =>  ['t_read:collection', 't_read:item']]
         ]
     ]
+)]
+#[ApiFilter(
+    SearchFilter::class, properties: ['name' => 'partial', 'category' => 'exact', 'status' => 'exact']
 )]
 class Task
 {
@@ -40,7 +47,7 @@ class Task
      * @Assert\NotBlank(message="Veuillez renseigner le nom de la tâche")
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{ limit }} caractère minimun.", maxMessage="Ne pas dépasser {{ limit }} caractères.")
      */
-    #[Groups('t_read:collection')]
+    #[Groups(['t_read:collection','p_read:item','tc_read:item'])]
     private $name;
 
     /**
@@ -100,10 +107,11 @@ class Task
     private $slug;
 
     /**
-     * @ORM\ManyToOne(targetEntity=TaskCategory::class, inversedBy="location")
+     * @ORM\ManyToOne(targetEntity=TaskCategory::class, inversedBy="tasks")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank(message="Veuillez selectionner la catégorie de la tâche")
      */
+    #[Groups(['t_read:item'])]
     private $category;
 
     /**
@@ -115,7 +123,7 @@ class Task
     /**
      * @ORM\ManyToMany(targetEntity=Equipment::class, inversedBy="tasks")
      */
-    #[Groups('t_read:item')]
+    #[Groups(['t_read:item','t_patch:item'])]
     private $equipment;
 
     /**
@@ -123,11 +131,13 @@ class Task
      * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="tasks")
      * 
      */
+    #[Groups('t_read:item')]
     private $project;
 
     /**
      * @ORM\Column(type="datetime")
      */
+    #[Groups(['t_patch:item'])]
     private $updatedAt;
 
     /**
@@ -183,6 +193,7 @@ class Task
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime();
+
     }
 
     public function getId(): ?int
