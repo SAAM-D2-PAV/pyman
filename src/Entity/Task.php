@@ -19,9 +19,12 @@ use ApiPlatform\Core\Annotation\ApiFilter;
  * @ORM\HasLifecycleCallbacks
  */
 #[ApiResource(
+    //security: 'is_granted("ROLE_VIEWER")',  ou global dans security.yaml
     normalizationContext: ['groups' => ['t_read:collection']],
     denormalizationContext:['groups' => ['t_patch:item']],
-    collectionOperations: ['get'],
+    collectionOperations: [
+        'get'
+    ],
     itemOperations: [
         'patch',
         'get' =>[
@@ -118,6 +121,7 @@ class Task
      * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="tasks")
      * @Assert\NotBlank(message="Veuillez selectionner un lieu")
      */
+    #[Groups('t_read:item')]
     private $location;
 
     /**

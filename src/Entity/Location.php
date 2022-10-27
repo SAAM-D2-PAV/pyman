@@ -39,7 +39,7 @@ class Location
      * @Assert\NotBlank(message="Veuillez renseigner le nom de l'espace")
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{ limit }} caractère minimun.", maxMessage="Ne pas dépasser {{ limit }} caractères.")
      */
-    #[Groups(['l_read:collection'])]
+    #[Groups(['l_read:collection','t_read:item'])]
     private $name;
 
     /**

@@ -54,7 +54,7 @@ class SecurityController extends AbstractController
     }
     //CONNEXION VIA L'API
     /**
-     * @Route("/api/connexion", name="api_login", methods={"POST"})
+     * @Route("/api_connexion", name="api_login", methods={"POST"})
      */
     public function api_login(Request $request):Response{
 
