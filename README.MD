@@ -17,8 +17,8 @@ Pyman utilise les technologies suivantes :
 
 - [Symfony 5] - Symfony est un ensemble de composants PHP réutilisables et un framework PHP pour les projets web
 - [Twig] - Moteur de template pour PHP
-- [Webpack] -
-- [Bootstrap] -
+- [Webpack] - 
+- [Bootstrap] - 
 - [API plateform] -
 
 ## Installation
@@ -50,6 +50,7 @@ MAILER_DSN=smtp://localhost or your smtp server (you can use mailtrap)
 
 
 ![Modèle de données][model-db]
+
 ![Schéma de données][schema-db]
 
 
@@ -77,7 +78,7 @@ yarn watch
 
 Fixtures !!!!!! no longer available !!!!!!
 ```sh
-bin/console doctrine:fixtures:load
+bin/console doctrine:fixtures:load 
 ```
 
 ## Plugins et Librairies CDN
@@ -182,16 +183,15 @@ package.json
      "sweetalert2": "^11.3.8"
 }
 ```
-## API Pyman
-En cours de redaction
+
 ## License
 
 **Free Software, Hell Yeah!**
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
-
-
+   
+  
    [Symfony 5]: <https://symfony.com/>
    [composer]: <https://getcomposer.org/doc/00-intro.md>
    [Twig]: <https://twig.symfony.com/>
@@ -205,3 +205,4 @@ En cours de redaction
    [CKEditor]: <https://symfony.com/bundles/FOSCKEditorBundle/current/installation.html>
    [API Plateform]: https://api-platform.com/docs
    [schema-db]: ./doc/pyman_dbschema.svg  "schéma de données"
+
