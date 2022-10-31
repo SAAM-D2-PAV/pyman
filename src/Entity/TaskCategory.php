@@ -24,15 +24,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     }
  *)
  */
-/*#[ApiResource(
-    normalizationContext: ['groups' => ['tc_read:collection']],
-    collectionOperations: ['get'],
-    itemOperations: [
-        'get' =>[
-            'normalization_context' => ['groups' =>  ['tc_read:collection', 'tc_read:item']]
-        ]
-    ]
-)]*/
 class TaskCategory
 {
     /**

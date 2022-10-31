@@ -25,15 +25,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     }
  *)
  */
-/*#[ApiResource(
-    normalizationContext: ['groups' => ['l_read:collection']],
-    collectionOperations: ['get'],
-    itemOperations: [
-        'get' =>[
-            'normalization_context' => ['groups' =>  ['l_read:collection', 'l_read:item']]
-        ]
-    ]
-)]*/
 class Location
 {
     /**
@@ -47,9 +38,8 @@ class Location
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez renseigner le nom de l'espace")
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{ limit }} caractère minimun.", maxMessage="Ne pas dépasser {{ limit }} caractères.")
-     * @Groups ({"l_read:collection"},{"l_read:item"})
+     * @Groups ({"l_read:collection","t_read:item"})
      */
-    //#[Groups(['l_read:collection','t_read:item'])]
     private $name;
 
     /**
@@ -85,7 +75,6 @@ class Location
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="location")
      * @Groups ({"l_read:item"})
      */
-    //#[Groups('l_read:item')]
     private $tasks;
 
     /**

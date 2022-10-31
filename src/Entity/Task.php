@@ -14,25 +14,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiFilter;
 
-//WITH ATTRIBUTS
-/*#[ApiResource(
-    //security: 'is_granted("ROLE_VIEWER")',  ou global dans security.yaml
-    normalizationContext: ['groups' => ['t_read:collection']],
-    denormalizationContext:['groups' => ['t_patch:item']],
-    collectionOperations: [
-        'get'
-    ],
-    itemOperations: [
-        'patch',
-        'get' =>[
-            'normalization_context' => ['groups' =>  ['t_read:collection', 't_read:item']]
-        ]
-    ]
-)]
-#[ApiFilter(
-    SearchFilter::class, properties: ['name' => 'partial', 'category' => 'exact', 'status' => 'exact']
-)]*/
-
 /**
  * @ORM\Entity(repositoryClass=TaskRepository::class)
  * @ORM\HasLifecycleCallbacks

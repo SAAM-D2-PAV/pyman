@@ -32,6 +32,7 @@ class Equipment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups ({"e_read:item","t_read:item"})
      */
     private $id;
 
@@ -39,16 +40,15 @@ class Equipment
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez renseigner le nom du matériel")
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{  limit  }} caractère minimun.", maxMessage="Ne pas dépasser {{  limit  }} caractères.")
-     * @Groups ({"e_read:collection"},{"e_read:item"})
+     * @Groups ({"e_read:collection","t_read:item"})
      */
-    //#[Groups(['e_read:collection', 't_read:item'])]
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez renseigner la référence du matériel")
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{  limit  }} caractère minimun.", maxMessage="Ne pas dépasser {{  limit  }} caractères.")
-     * @Groups ({"e_read:item"},{"t_read:item"})
+     * @Groups ({"e_read:item","t_read:item"})
      */
     private $ref;
 
@@ -69,14 +69,14 @@ class Equipment
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{ limit }} caractère minimun.", maxMessage="Ne pas dépasser {{ limit }} caractères.")
-     * @Groups ({"e_read:item"},{"t_read:item"})
+     * @Groups ({"e_read:item","t_read:item"})
      */
     private $serialNumber;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{ limit }} caractère minimun.", maxMessage="Ne pas dépasser {{ limit }} caractères.")
-     * @Groups ({"e_read:item"},{"t_read:item"})
+     * @Groups ({"e_read:item","t_read:item"})
      */
     private $identificationCode;
 

@@ -46,9 +46,8 @@ class Project
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez renseigner le nom du projet")
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{ limit }} caractère minimun.", maxMessage="Ne pas dépasser {{ limit }} caractères.")
-     * @Groups ({"p_read:collection"},{"t_read:item"})
+     * @Groups ({"p_read:collection","t_read:item"})
      */
-    //#[Groups(['p_read:collection','t_read:item'])]
     private $name;
 
     /**
@@ -83,7 +82,6 @@ class Project
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="project")
      * @Groups ({"p_read:item"})
      */
-    //#[Groups(['p_read:item'])]
     private $tasks;
 
     /**
