@@ -14,8 +14,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TaskCategoryRepository::class)
+ * @ApiResource(
+ *     normalizationContext = {"groups" = {"tc_read:collection"} },
+ *     collectionOperations = {"get"},
+ *     itemOperations =  {
+ *        "get" = {
+ *           "normalization_context" =  {"groups" =  {"tc_read:collection", "tc_read:item"} }
+ *         }
+ *     }
+ *)
  */
-#[ApiResource(
+/*#[ApiResource(
     normalizationContext: ['groups' => ['tc_read:collection']],
     collectionOperations: ['get'],
     itemOperations: [
@@ -23,7 +32,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             'normalization_context' => ['groups' =>  ['tc_read:collection', 'tc_read:item']]
         ]
     ]
-)]
+)]*/
 class TaskCategory
 {
     /**
@@ -37,8 +46,9 @@ class TaskCategory
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez renseigner le nom de la catégorie")
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{limit}} caractère minimun.", maxMessage="Ne pas dépasser {{limit}} caractères.")
+     * @Groups ({"tc_read:collection","t_read:item"})
      */
-    #[Groups(['tc_read:collection', 't_read:item'])]
+    //#[Groups(['tc_read:collection', 't_read:item'])]
     private $name;
 
     /**
@@ -55,8 +65,9 @@ class TaskCategory
 
     /**
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="category")
+     * @Groups ({"tc_read:item"})
      */
-    #[Groups(['tc_read:item'])]
+    //#[Groups(['tc_read:item'])]
     private $tasks;
 
     public function __construct()

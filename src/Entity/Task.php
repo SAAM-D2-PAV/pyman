@@ -14,11 +14,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiFilter;
 
-/**
- * @ORM\Entity(repositoryClass=TaskRepository::class)
- * @ORM\HasLifecycleCallbacks
- */
-#[ApiResource(
+//WITH ATTRIBUTS
+/*#[ApiResource(
     //security: 'is_granted("ROLE_VIEWER")',  ou global dans security.yaml
     normalizationContext: ['groups' => ['t_read:collection']],
     denormalizationContext:['groups' => ['t_patch:item']],
@@ -34,23 +31,42 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 )]
 #[ApiFilter(
     SearchFilter::class, properties: ['name' => 'partial', 'category' => 'exact', 'status' => 'exact']
-)]
+)]*/
+
+/**
+ * @ORM\Entity(repositoryClass=TaskRepository::class)
+ * @ORM\HasLifecycleCallbacks
+ * @ApiResource(
+ *     normalizationContext = {"groups" = {"t_read:collection"} },
+ *     denormalizationContext = {"groups" = {"t_patch:item"} },
+ *     collectionOperations = {"get"},
+ *     itemOperations =  {
+ *        "get" = {
+ *           "normalization_context" =  {"groups" =  {"t_read:collection", "t_read:item"} }
+ *         },
+ *       "Patch"
+ *     }
+ *)
+ * @ApiFilter(SearchFilter::class, properties = {"name" = "partial", "category" = "exact", "status" = "exact"})
+ */
 class Task
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups ({"t_read:collection"})
      */
-    #[Groups('t_read:collection')]
+    //#[Groups('t_read:collection')]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez renseigner le nom de la tâche")
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{ limit }} caractère minimun.", maxMessage="Ne pas dépasser {{ limit }} caractères.")
+     * @Groups ({"t_read:collection','p_read:item','tc_read:item"})
      */
-    #[Groups(['t_read:collection','p_read:item','tc_read:item'])]
+    //#[Groups(['t_read:collection','p_read:item','tc_read:item'])]
     private $name;
 
     /**
@@ -67,29 +83,33 @@ class Task
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="Veuillez renseigner la date de début")
+     * @Groups ({"t_read:collection"})
      */
-    #[Groups('t_read:collection')]
+    //#[Groups('t_read:collection')]
     private $startDate;
 
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="Veuillez renseigner la date de fin")
+     * @Groups ({"t_read:collection"})
      */
-    #[Groups('t_read:collection')]
+    //#[Groups('t_read:collection')]
     private $endDate;
 
     /**
      * @ORM\Column(type="time")
      * @Assert\NotBlank(message="Veuillez renseigner l'heure de début")
+     * @Groups ({"t_read:collection"})
      */
-    #[Groups('t_read:collection')]
+    //#[Groups('t_read:collection')]
     private $startHour;
 
     /**
      * @ORM\Column(type="time")
      * @Assert\NotBlank(message="Veuillez renseigner l'heure de fin")
+     * @Groups ({"t_read:collection"})
      */
-    #[Groups('t_read:collection')]
+    //#[Groups('t_read:collection')]
     private $endHour;
 
     /**
@@ -113,35 +133,39 @@ class Task
      * @ORM\ManyToOne(targetEntity=TaskCategory::class, inversedBy="tasks")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank(message="Veuillez selectionner la catégorie de la tâche")
+     * @Groups ({"t_read:item"})
      */
-    #[Groups(['t_read:item'])]
+    //#[Groups(['t_read:item'])]
     private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="tasks")
      * @Assert\NotBlank(message="Veuillez selectionner un lieu")
+     * @Groups ({"t_read:item"})
      */
-    #[Groups('t_read:item')]
+    //#[Groups('t_read:item')]
     private $location;
 
     /**
      * @ORM\ManyToMany(targetEntity=Equipment::class, inversedBy="tasks")
+     * @Groups ({"t_read:item","t_patch:item"})
      */
-    #[Groups(['t_read:item','t_patch:item'])]
+    //#[Groups(['t_read:item','t_patch:item'])]
     private $equipment;
 
     /**
      * @Assert\NotBlank(message="Veuillez liéer cette tâche à un projet")
      * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="tasks")
-     * 
+     * @Groups ({"t_read:item"})
      */
-    #[Groups('t_read:item')]
+    //#[Groups('t_read:item')]
     private $project;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups ({"t_patch:item"})
      */
-    #[Groups(['t_patch:item'])]
+    //#[Groups(['t_patch:item'])]
     private $updatedAt;
 
     /**
