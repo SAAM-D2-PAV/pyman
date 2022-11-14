@@ -19,13 +19,14 @@ use ApiPlatform\Core\Annotation\ApiFilter;
  * @ORM\HasLifecycleCallbacks
  * @ApiResource(
  *     normalizationContext = {"groups" = {"t_read:collection"} },
- *     denormalizationContext = {"groups" = {"t_patch:item"} },
+ *     denormalizationContext = {"groups" = {"t_patch:item","t_put:item"} },
  *     collectionOperations = {"get"},
  *     itemOperations =  {
  *        "get" = {
  *           "normalization_context" =  {"groups" =  {"t_read:collection", "t_read:item"} }
  *         },
- *       "Patch"
+ *       "Patch",
+ *       "Put"
  *     }
  *)
  * @ApiFilter(SearchFilter::class, properties = {"name" = "partial", "category" = "exact", "status" = "exact"})
@@ -38,16 +39,14 @@ class Task
      * @ORM\Column(type="integer")
      * @Groups ({"t_read:collection"})
      */
-    //#[Groups('t_read:collection')]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez renseigner le nom de la tâche")
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{ limit }} caractère minimun.", maxMessage="Ne pas dépasser {{ limit }} caractères.")
-     * @Groups ({"t_read:collection','p_read:item','tc_read:item"})
+     * @Groups({"t_read:collection","p_read:item","tc_read:item"})
      */
-    //#[Groups(['t_read:collection','p_read:item','tc_read:item'])]
     private $name;
 
     /**
@@ -66,7 +65,6 @@ class Task
      * @Assert\NotBlank(message="Veuillez renseigner la date de début")
      * @Groups ({"t_read:collection"})
      */
-    //#[Groups('t_read:collection')]
     private $startDate;
 
     /**
@@ -74,7 +72,6 @@ class Task
      * @Assert\NotBlank(message="Veuillez renseigner la date de fin")
      * @Groups ({"t_read:collection"})
      */
-    //#[Groups('t_read:collection')]
     private $endDate;
 
     /**
@@ -82,7 +79,6 @@ class Task
      * @Assert\NotBlank(message="Veuillez renseigner l'heure de début")
      * @Groups ({"t_read:collection"})
      */
-    //#[Groups('t_read:collection')]
     private $startHour;
 
     /**
@@ -90,7 +86,6 @@ class Task
      * @Assert\NotBlank(message="Veuillez renseigner l'heure de fin")
      * @Groups ({"t_read:collection"})
      */
-    //#[Groups('t_read:collection')]
     private $endHour;
 
     /**
@@ -116,7 +111,6 @@ class Task
      * @Assert\NotBlank(message="Veuillez selectionner la catégorie de la tâche")
      * @Groups ({"t_read:item"})
      */
-    //#[Groups(['t_read:item'])]
     private $category;
 
     /**
@@ -124,14 +118,12 @@ class Task
      * @Assert\NotBlank(message="Veuillez selectionner un lieu")
      * @Groups ({"t_read:item"})
      */
-    //#[Groups('t_read:item')]
     private $location;
 
     /**
      * @ORM\ManyToMany(targetEntity=Equipment::class, inversedBy="tasks")
      * @Groups ({"t_read:item","t_patch:item"})
      */
-    //#[Groups(['t_read:item','t_patch:item'])]
     private $equipment;
 
     /**
@@ -139,14 +131,12 @@ class Task
      * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="tasks")
      * @Groups ({"t_read:item"})
      */
-    //#[Groups('t_read:item')]
     private $project;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups ({"t_patch:item"})
      */
-    //#[Groups(['t_patch:item'])]
     private $updatedAt;
 
     /**

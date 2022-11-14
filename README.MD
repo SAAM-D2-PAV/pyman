@@ -80,6 +80,12 @@ Fixtures !!!!!! no longer available !!!!!!
 ```sh
 bin/console doctrine:fixtures:load 
 ```
+[API]
+
+Certaines données sont accessibles via l'api.
+
+L'authentification se fait via le [bundle] Lexik JWT Authentification.
+
 
 ## Plugins et Librairies CDN
 
@@ -104,7 +110,7 @@ Pyman utilise les plugins et librairies suivantes dans son code
 Composer.json
 ```sh
  "require": {
-        "php": ">=8.0",
+         "php": ">=8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
@@ -117,6 +123,7 @@ Composer.json
         "doctrine/orm": "^2.8",
         "friendsofsymfony/ckeditor-bundle": "^2.3",
         "knplabs/knp-paginator-bundle": "^5.6",
+        "lexik/jwt-authentication-bundle": "^2.16",
         "nelmio/cors-bundle": "^2.2",
         "phpdocumentor/reflection-docblock": "^5.2",
         "phpstan/phpdoc-parser": "^1.8",
@@ -205,4 +212,6 @@ package.json
    [CKEditor]: <https://symfony.com/bundles/FOSCKEditorBundle/current/installation.html>
    [API Plateform]: https://api-platform.com/docs
    [schema-db]: ./doc/pyman_dbschema.svg  "schéma de données"
+   [API]: https://api-platform.com/docs/distribution/
+   [bundle]: https://symfony.com/bundles/LexikJWTAuthenticationBundle/current/index.html
 

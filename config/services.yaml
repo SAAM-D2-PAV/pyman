@@ -6,8 +6,8 @@
 parameters:
     upload_directory: '%kernel.project_dir%/doc/uploads/documents'
     upload_photo_directory: '%kernel.project_dir%/public/build/images/photos'
-    default_admin_email: your admin email
-    default_team_email: your team email
+    default_admin_email: no-reply@gdp-app.ovh
+    default_team_email: audiovideo.ac@education.gouv.fr
 services:
     # default configuration for services in *this* file
     _defaults:

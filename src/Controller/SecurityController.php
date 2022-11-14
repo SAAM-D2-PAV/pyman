@@ -52,26 +52,6 @@ class SecurityController extends AbstractController
         
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
-    //CONNEXION VIA L'API
-    /**
-     * @Route("/api_connexion", name="api_login", methods={"POST"})
-     */
-    public function api_login(Request $request):Response{
-
-
-        $user = $this->getUser();
-
-        if (null === $user) {
-            return $this->json([
-                'message' => 'missing credentials',
-            ], Response::HTTP_UNAUTHORIZED);
-        }
-        return $this->json([
-            'username' => $user->getUsername(),
-            'roles' => $user->getRoles()
-        ]);
-    }
-
     /**
      * @Route("/logout", name="app_logout")
      */
@@ -311,7 +291,7 @@ class SecurityController extends AbstractController
 
             $em->persist($user);
             $em->flush($user);
-            https://symfony.com/doc/current/mailer.html
+            //https://symfony.com/doc/current/mailer.html
             $email = (new TemplatedEmail())
             ->from(new Address('audiovideo.ac@gdp-app.ovh', 'Pôle audiovisuel - PAV'))
             ->to($user->getEmail())
