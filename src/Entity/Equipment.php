@@ -84,6 +84,7 @@ class Equipment
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez renseigner l'état du matériel")
      * @Assert\Length(min = 4, max = 255, minMessage="Vous devez utilisez {{ limit }} caractère minimun.", maxMessage="Ne pas dépasser {{ limit }} caractères.")
+     * @Groups ({"e_read:collection","e_read:item","t_read:item"})
      */
     private $status;
 
@@ -144,6 +145,7 @@ class Equipment
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups ({"e_read:collection","e_read:item","t_read:item"})
      */
     private $missing;
 

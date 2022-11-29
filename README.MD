@@ -86,7 +86,11 @@ Certaines données sont accessibles via l'api.
 
 L'authentification se fait via le [bundle] Lexik JWT Authentification.
 
-
+Ne pas oublier de générer les clés SSL
+Generate the SSL keys
+```sh
+php bin/console lexik:jwt:generate-keypair
+```
 ## Plugins et Librairies CDN
 
 Pyman utilise les plugins et librairies suivantes dans son code

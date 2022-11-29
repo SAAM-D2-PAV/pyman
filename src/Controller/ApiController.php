@@ -74,7 +74,7 @@ class ApiController extends AbstractController
                         $em->flush();
                         
 
-                        return $this->json("Matériel ajouté", 200, [], []);
+                        return $this->json($equipment, 200, [], []);
                     }
                     elseif ("RemEq_ToTask") {
                         //VERIFIVCATION ET SUPPRESSION DU MATERIEL DE LA TACHE
