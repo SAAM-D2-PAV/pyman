@@ -91,15 +91,30 @@ Generate the SSL keys
 ```sh
 php bin/console lexik:jwt:generate-keypair
 ```
-Cross-Origin Resource Sharing (CORS)
+### Cross-Origin Resource Sharing (CORS)
 
 Autorisation d'accès à l'API et gestion des [CORS]
+
+.env || .env.local
 ```sh
 ici seul le locahost est autorisé à accèder à l api
 ###> nelmio/cors-bundle ###
 CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
 ###< nelmio/cors-bundle ###
 ```
+ config / packages / nelmio_cors.yaml
+```sh
+nelmio_cors:
+    defaults:
+        origin_regex: true
+        allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
+        allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
+        allow_headers: ['Content-Type', 'Authorization']
+        expose_headers: ['Link']
+        max_age: 3600
+    paths:
+        '^/': null
+ ```
 ## Plugins et Librairies CDN
 
 Pyman utilise les plugins et librairies suivantes dans son code
