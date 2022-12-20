@@ -20,25 +20,41 @@
 
 {% block back_main_content %}
     <div class="row">
-       
             <div class="col-12 mb-2">
-                
-        
-                <nav class="nav">
-                 {% for category in categories %}
-                      <a class="nav-link btn m-1" href="{{path('calendar',{category:category.slug})}}" style="color: {{category.color}}; font-weight:bold;">
-                         {{category.name}}
-                      </a>
-                {% endfor %}
-                    <a class="nav-link btn m-1" href="{{path('calendar')}}" style="font-weight:bold;">
-                       toutes les tâches
-                      </a>
-                </nav>
-            </div>
+                    <form action=" {{path('calendar')}}" method="get">
+                        {% for category in categories %}
+                            <div class="form-check form-check-inline">
+                                <input 
+                                    class="form-check-input" 
+                                    type="checkbox" 
+                                    id="{{category.id}}" 
+                                    name="categories[]" 
+                                    value="{{category.id}}"
+                                    {% for val in checked %}
+                                        {% if val == category.id %}
+                                            checked
+                                        {% endif %}
+                                    {% endfor %}
+                                >
+                                <label class="form-check-label" for="{{category.id}}" style="color: {{category.color}}; font-weight:bold;">{{category.name}}</label>
+                            </div>
+                        {% endfor %}
+                        <div>
+                            <button type="submit" class="btn btn-primary mt-2">filtrer</button>
 
+                            <button type="button" class="btn btn-warning mt-2" onclick="location.href='{{path('calendar')}}';"><i class="fas fa-plus"></i> toutes les tâches</button>
+
+                            
+                        </div>
+                        <div class="">
+                           
+                        </div>
+                        
+                    </form>
+                    
+                      
+            </div>
             <div class="col-12" id="calendarEl"></div>
-        
-        
     </div>
 
 {% endblock %}

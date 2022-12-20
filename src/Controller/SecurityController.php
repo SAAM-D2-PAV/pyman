@@ -90,83 +90,147 @@ class SecurityController extends AbstractController
         ]);
     }
     /**
-     * @Route("/calendrier/{category}", name="calendar")
+     * @Route("/calendrier", name="calendar")
      * @isGranted("ROLE_VIEWER", message="Vous n'avez pas accès à cette section !")
      */
-    public function deskPage($category = "",TaskRepository $taskRepository, TaskCategoryRepository $taskCategoryRepository)
+    public function deskPage( Request $request,TaskRepository $taskRepository, TaskCategoryRepository $taskCategoryRepository)
     {
-       
-
-        if ($category) {
-
-            $cat = $taskCategoryRepository->findOneBy(['slug' => $category]);
-            if ($cat) {
-              
-                $events = $taskRepository->findBy(['category' => $cat]);
-            }
-            else{
-                $events = $taskRepository->findAll();
-            }
-        }
-        else{
-            $events = $taskRepository->findAll();
-        }
+        //Affichage des catégories 
         $cats = $taskCategoryRepository->findAll();
+        //Tabelau d'entrées du calendrier = vide
         $evts = [];
+        //Tabelau pour envoi à twig => input checked
+        $checked = [];
         $color = "#341f97";
         $textColor = 'white';
 
-        foreach ($events as  $event) {
+        //Récupération des catégories si envoyées par la request
+        $categories = $request->query->get('categories');
 
-            $taskCat = $event->getCategory()->getName();
-            $status = $event->getStatus();
-            $eventDesc = "";
-            
-            $color = $event->getCategory()->getColor();
-            $textColor = $event->getCategory()->getTextColor();
-
-            if ($status == "Annulée") {
-                $color = "#ee5253";
-                $eventDesc = "ANNULÉE";
-            }
-
+        if ($categories) {
          
-            $start = $event->getStartDate()->format('Y-m-d') .' '. $event->getStartHour()->format('H:i:s'); 
-            $end = $event->getEndDate()->format('Y-m-d').' '.$event->getEndHour()->format('H:i:s');
+            foreach ($categories as $category){
 
-            $allDay = false;
+                //Vérification de la catégorie
+                $cat = $taskCategoryRepository->findOneBy(['id' => $category]);
+                //Si elle existe on cherche toutes les tâches existantes de cette catégorie
 
-            if ($event->getStartDate()->format('Y-m-d') !== $event->getEndDate()->format('Y-m-d') ){
-                $allDay = true;
+                if ($cat) {
+                    //Pour checked les input (catégories) sélectionnées template twig
+                    array_push($checked,$category);
 
-                $end = date('Y-m-d H:i:s', strtotime($end. ' + 1 days'));
+                    $taskByThisCategory = $taskRepository->findBy(['category' => $cat]);
+                    //Et pour chaque tache trouvée on ajoute une entrée au calendrier $evts[]
+                    foreach ($taskByThisCategory as $event) {
 
-            }
-            //$event->getCategory();
-            $owners = [];
-            
-            foreach ($event->getOwners() as $owner) {
-               $owners[] = $owner->getFirstname();
-               
-            }
-            $comma_separated_owners = implode(", ", $owners);
+                        //statut de la tache
+                        $status = $event->getStatus();
+                        $eventDesc = "";
+                        
+                        $color = $event->getCategory()->getColor();
+                        $textColor = $event->getCategory()->getTextColor();
         
-            $evts[] = [
-                'id' => $event->getId(),
-                'start' => $start,
-                'end' => $end,
-				'allDay' => $allDay,
-                'title' =>  $eventDesc.' '.$event->getName().' | '.$event->getProject()->getName().' | '.$comma_separated_owners,
-                //'description' => $comma_separated_owners,
-                'url' => '/taches/'.$event->getId().'/afficher',
-                'backgroundColor' => $color,
-                'textColor' => $textColor
-            ];
+                        if ($status == "Annulée") {
+                            $color = "#ee5253";
+                            $eventDesc = "ANNULÉE";
+                        }
+        
+                    
+                        $start = $event->getStartDate()->format('Y-m-d') .' '. $event->getStartHour()->format('H:i:s'); 
+                        $end = $event->getEndDate()->format('Y-m-d').' '.$event->getEndHour()->format('H:i:s');
+        
+                        $allDay = false;
+        
+                        if ($event->getStartDate()->format('Y-m-d') !== $event->getEndDate()->format('Y-m-d') ){
+                            $allDay = true;
+        
+                            $end = date('Y-m-d H:i:s', strtotime($end. ' + 1 days'));
+        
+                        }
+                        //$event->getCategory();
+                        $owners = [];
+                        
+                        foreach ($event->getOwners() as $owner) {
+                        $owners[] = $owner->getFirstname();
+                        
+                        }
+                        $comma_separated_owners = implode(", ", $owners);
+                    
+                        $evts[] = [
+                            'id' => $event->getId(),
+                            'start' => $start,
+                            'end' => $end,
+                            'allDay' => $allDay,
+                            'title' =>  $eventDesc.' '.$event->getName().' | '.$event->getProject()->getName().' | '.$comma_separated_owners,
+                            //'description' => $comma_separated_owners,
+                            'url' => '/taches/'.$event->getId().'/afficher',
+                            'backgroundColor' => $color,
+                            'textColor' => $textColor
+                        ];
+                    }
+                }
+            }
         }
 
+        else{
+            $events = $taskRepository->findAll();
+
+            foreach($events as $event){
+
+                //statut de la tache
+                $status = $event->getStatus();
+                $eventDesc = "";
+                
+                $color = $event->getCategory()->getColor();
+                $textColor = $event->getCategory()->getTextColor();
+
+                if ($status == "Annulée") {
+                    $color = "#ee5253";
+                    $eventDesc = "ANNULÉE";
+                }
+
+            
+                $start = $event->getStartDate()->format('Y-m-d') .' '. $event->getStartHour()->format('H:i:s'); 
+                $end = $event->getEndDate()->format('Y-m-d').' '.$event->getEndHour()->format('H:i:s');
+
+                $allDay = false;
+
+                if ($event->getStartDate()->format('Y-m-d') !== $event->getEndDate()->format('Y-m-d') ){
+                    $allDay = true;
+
+                    $end = date('Y-m-d H:i:s', strtotime($end. ' + 1 days'));
+
+                }
+                //$event->getCategory();
+                $owners = [];
+                
+                foreach ($event->getOwners() as $owner) {
+                $owners[] = $owner->getFirstname();
+                
+                }
+                $comma_separated_owners = implode(", ", $owners);
+            
+                $evts[] = [
+                    'id' => $event->getId(),
+                    'start' => $start,
+                    'end' => $end,
+                    'allDay' => $allDay,
+                    'title' =>  $eventDesc.' '.$event->getName().' | '.$event->getProject()->getName().' | '.$comma_separated_owners,
+                    //'description' => $comma_separated_owners,
+                    'url' => '/taches/'.$event->getId().'/afficher',
+                    'backgroundColor' => $color,
+                    'textColor' => $textColor
+                ];
+
+            }
+
+
+        }
+        //Encodage du tableau au format json pour envoi vers twig
         $data = json_encode($evts);
 
        return $this->render("back/calendar.html.twig",[
+        'checked' => $checked,
         'data' =>  $data,
         'categories' => $cats
        ]);

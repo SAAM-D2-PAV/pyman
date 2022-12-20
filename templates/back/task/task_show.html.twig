@@ -23,7 +23,7 @@
 <div class="row justify-content-center">
     <div class="col-12">
         <div class="col-12">
-            <h2 class="fuel_town animate__animated animate__fadeInDown"> Tâche : <span class="amour">{{task.name}}</span> sur le projet {{task.project.name}} <span class="badge badge-pill badge-{{foo}}">{{task.status}}</span></h2>
+            <h2 class="fuel_town animate__animated animate__fadeInDown"><i class="fa-solid fa-circle" style="color: {{task.category.color}}; "></i> Tâche : <span class="amour">{{task.name}}</span> sur le projet {{task.project.name}} <span class="badge badge-pill badge-{{foo}}">{{task.status}}</span></h2>
             <caption>Cette tâche est liée au projet <span class="amour">{{task.project.name}}</span> | créée le {{ task.createdAt|date("d/m/Y") }} par {{ task.createdBy.firstname }} </caption>
             <caption>Modifiée le {{ task.updatedAt | date("d/m/Y") }} par {{task.updatedBy.firstname}} </caption>
         </div>
