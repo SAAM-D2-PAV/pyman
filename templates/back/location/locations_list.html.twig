@@ -44,6 +44,7 @@
                                             <th>Nom</th>
                                             <th>Site</th>
                                             <th>Type</th>
+                                            <th>Ministère</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -53,6 +54,7 @@
                                             <td><a href=" {{path('location_show', {slug:location.slug})}} "> {{ location.name }}</a></td>
                                             <td>{{location.located}}</td>
                                             <td>{{ location.type }}</td>
+                                            <td>{{location.ministry}}</td>
                                         </tr>
                                         {% endfor %}
                                         

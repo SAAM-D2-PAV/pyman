@@ -86,6 +86,10 @@ class Location
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $located;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ministry;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -253,6 +257,17 @@ class Location
     public function setLocated(?string $located): self
     {
         $this->located = $located;
+
+        return $this;
+    }
+    public function getMinistry(): ?string
+    {
+        return $this->ministry;
+    }
+
+    public function setMinistry(?string $ministry): self
+    {
+        $this->ministry = $ministry;
 
         return $this;
     }

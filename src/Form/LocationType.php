@@ -26,17 +26,31 @@ class LocationType extends AbstractType
                 'label' => 'Site',
                 
                 'choices'  => [
-                    '...' => 'NC',
-                    'MENJS - GRENELLE' => 'MENJS - GRENELLE',
-                    'MENJS - DUTOT' => 'MENJS - DUTOT',
-                    'MENJS - REGNAULT' => 'MENJS - REGNAULT',
-                    'MENJS - AVENUE DE FRANCE' => 'MENJS - AVENUE DE FRANCE',
-                    'MESRI - DESCARTES' => 'MESRI - DESCARTES',
-                    'MESRI - MIRABEAU' => 'MESRI - MIRABEAU',
-                    'SORBONNE' => 'SORBONNE',
-                    'COLLEGE DE FRANCE' => 'COLLEGE DE FRANCE',
+                    '...' => '...',
+                    '97 GRENELLE' => '97 GRENELLE',
+                    '99 GRENELLE' => '99 GRENELLE',
+                    '103 GRENELLE' => '103 GRENELLE',
+                    '107 GRENELLE' => '107 GRENELLE',
+                    '110 GRENELLE' => '110 GRENELLE',
+                    'AVENUE DE FRANCE' => 'AVENUE DE FRANCE',
+                    'DESCARTES' => 'DESCARTES',
+                    'DUTOT' => 'DUTOT',
+                    'MIRABEAU' => 'MIRABEAU',
+                    'REGNAULT' => 'REGNAULT',
+                    '----' => '----',
                     'ÉCOLE / COLLÈGE / LYCÉE' => 'ÉCOLE / COLLÈGE / LYCÉE',
                     'AUTRE' => 'AUTRE'
+                ],
+            ])
+            ->add('ministry', ChoiceType::class, [
+                'label' => 'Ministère de rattachement',
+                'choices'  => [
+                    '...' => '...',
+                    'MENJ' => 'MENJ',
+                    'MSJOP' => 'MSJOP',
+                    'MESR' => 'MESR',
+                    '----' => '----',
+                    'LIEU EXTERNE' => 'LIEU EXTERNE',
                 ],
             ])
             ->add('type', ChoiceType::class, [
@@ -44,15 +58,16 @@ class LocationType extends AbstractType
                 
                 'choices'  => [
                     '...' => 'NC',
-                    'Bureau' => 'Bureau',
-                    'Réunion - conférence' => 'Réunion - conférence',
-                    'Réception' => 'Réception',
                     'Amphithéâtre' => 'Amphithéâtre',
+                    'Bibliothèque' => 'Bibliothèque',
+                    'Bureau' => 'Bureau',   
+                    'Cour ou jardin' => 'Cour ou jardin',
+                    'Réception' => 'Réception',
+                    'Réserve' => 'Réserve',
+                    'Réunion - conférence' => 'Réunion - conférence',
                     'Studio' => 'Studio',
                     'Visioconférence' => 'Visioconférence',
-                    'Réserve' => 'Réserve',
-                    'Bibliothèque' => 'Bibliothèque',
-                    'Cour - jardin' => 'Cour - jardin',
+                    '----' => '----',
                     'Autre' => 'Autre'
 
                 ],
