@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\TaskCategory;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,6 +25,18 @@ class TaskCategoryType extends AbstractType
                 'label' => 'Description',
                 'attr' => [
                     'placeholder' => 'Présentation de la catégorie'
+                ]
+            ])
+            ->add('color', ColorType::class, [
+                'label' => 'Couleur de la tâche',
+                'attr' => [
+                    'placeholder' => '#ee5253'
+                ]
+            ])
+            ->add('textColor', ColorType::class, [
+                'label' => 'Couleur du texte',
+                'attr' => [
+                    'placeholder' => '#ee5253'
                 ]
             ])
          

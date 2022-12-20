@@ -49,6 +49,18 @@ class TaskCategory
      */
     private $description;
 
+     /**
+     * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Veuillez renseigner une couleur")
+     */
+    private $color;
+
+      /**
+     * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Veuillez renseigner une couleur de texte")
+     */
+    private $textColor;
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -91,6 +103,29 @@ class TaskCategory
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function getTextColor(): ?string
+    {
+        return $this->textColor;
+    }
+
+    public function setTextColor(?string $textColor): self
+    {
+        $this->textColor = $textColor;
 
         return $this;
     }

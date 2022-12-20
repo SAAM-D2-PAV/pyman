@@ -20,6 +20,7 @@ use Symfony\Component\Mime\Address;
 use App\Repository\ProjectRepository;
 use Psr\Container\ContainerInterface;
 use App\Repository\LogEventRepository;
+use App\Repository\TaskCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -89,73 +90,43 @@ class SecurityController extends AbstractController
         ]);
     }
     /**
-     * @Route("/calendrier", name="calendar")
+     * @Route("/calendrier/{category}", name="calendar")
      * @isGranted("ROLE_VIEWER", message="Vous n'avez pas accès à cette section !")
      */
-    public function deskPage(TaskRepository $taskRepository)
+    public function deskPage($category = "",TaskRepository $taskRepository, TaskCategoryRepository $taskCategoryRepository)
     {
-        $events = $taskRepository->findAll();
+       
+
+        if ($category) {
+
+            $cat = $taskCategoryRepository->findOneBy(['slug' => $category]);
+            if ($cat) {
+              
+                $events = $taskRepository->findBy(['category' => $cat]);
+            }
+            else{
+                $events = $taskRepository->findAll();
+            }
+        }
+        else{
+            $events = $taskRepository->findAll();
+        }
+        $cats = $taskCategoryRepository->findAll();
         $evts = [];
         $color = "#341f97";
         $textColor = 'white';
+
         foreach ($events as  $event) {
 
             $taskCat = $event->getCategory()->getName();
             $status = $event->getStatus();
             $eventDesc = "";
             
-            if ($taskCat == "Repérage technique") {
-                $color = "#7D4E5B";
-                $textColor = 'white';
-            }
-            else if($taskCat == "Captation live (mono ou multi-caméras)"){
-                $color = "#ff9f43";
-                $textColor = 'black';
-            }
-            else if($taskCat == "Administrative"){
-                $color = "#c8d6e5";
-                $textColor = 'black';
-            }
-            else if($taskCat == "Installation"){
-                $color = "#01a3a4";
-                $textColor = 'black';
-            }
-            else if($taskCat == "Interview / témoignage / capsule vidéo"){
-                $color = "#FF8D7E";
-                $textColor = 'black';
-            }
-            else if($taskCat == "Reportage / documentaire"){
-                $color = "#10ac84";
-                $textColor = 'black';
-            }
-            else if($taskCat == "Sonorisation"){
-                $color = "#feca57";
-                $textColor = 'black';
-            }
-            else if($taskCat == "Sonorisation et enregistrement audio"){
-                $color = "#0abde3";
-                $textColor = 'black';
-            }
-            else if($taskCat == "Post-production audio"){
-                $color = "#576574";
-                $textColor = 'black';
-            }
-            else if($taskCat == "Post-production vidéo"){
-                $color = "#1dd1a1";
-                $textColor = 'black';
-            }
-            else if($taskCat == "Photo"){
-                $color = "#341f97";
-                $textColor = 'white';
-            }
-            else if($taskCat == "Intervention technique"){
-                $color = "#484D7A";
-                $textColor = 'white';
-            }
+            $color = $event->getCategory()->getColor();
+            $textColor = $event->getCategory()->getTextColor();
 
             if ($status == "Annulée") {
                 $color = "#ee5253";
-                $textColor = 'black';
                 $eventDesc = "ANNULÉE";
             }
 
@@ -195,7 +166,10 @@ class SecurityController extends AbstractController
 
         $data = json_encode($evts);
 
-       return $this->render("back/calendar.html.twig",compact("data"));
+       return $this->render("back/calendar.html.twig",[
+        'data' =>  $data,
+        'categories' => $cats
+       ]);
     }
 
     //------------------------------------------------------------------------------
