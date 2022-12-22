@@ -45,12 +45,13 @@ class LocationController extends AbstractController
     }
     //Afficher un lieu de tournage et d'intervention
     /**
-     * @Route("/{slug}/afficher", name="location_show")
+     * @Route("/{slug}/{id}/afficher", name="location_show")
      */
-    public function locationShow($slug, LocationRepository $locationRepository)
+    public function locationShow($slug,$id, LocationRepository $locationRepository)
     {
         
         $location = $locationRepository->findOneBy([
+            'id' => $id,
             'slug' => $slug
         ]);
 

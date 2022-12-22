@@ -19,6 +19,20 @@ class LocationRepository extends ServiceEntityRepository
         parent::__construct($registry, Location::class);
     }
 
+    public function getMinistries()
+    {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery(
+            'SELECT DISTINCT  l.ministry
+            FROM App\Entity\Location l
+          
+            ORDER BY l.ministry DESC'
+        );
+
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Location[] Returns an array of Location objects
     //  */

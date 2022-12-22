@@ -93,10 +93,13 @@ class SecurityController extends AbstractController
      * @Route("/calendrier", name="calendar")
      * @isGranted("ROLE_VIEWER", message="Vous n'avez pas accès à cette section !")
      */
-    public function deskPage( Request $request,TaskRepository $taskRepository, TaskCategoryRepository $taskCategoryRepository)
+    public function deskPage( Request $request,TaskRepository $taskRepository, TaskCategoryRepository $taskCategoryRepository, LocationRepository $locationRepository)
     {
-        //Affichage des catégories 
-        $cats = $taskCategoryRepository->findAll();
+        //Pour affichage par catégories 
+        $tasksCats = $taskCategoryRepository->findAll();
+        //Pour affichage par ministère
+        $ministriesCats = $locationRepository->getMinistries();
+
         //Tabelau d'entrées du calendrier = vide
         $evts = [];
         //Tabelau pour envoi à twig => input checked
@@ -106,22 +109,95 @@ class SecurityController extends AbstractController
 
         //Récupération des catégories si envoyées par la request
         $categories = $request->query->get('categories');
-
         if ($categories) {
-         
+            //Pour checked les input (catégories) sélectionnées template twig
+            foreach ($categories as $category) {
+                array_push($checked,$category);
+            }
+        }
+        //Récupération des ministères si envoyées par la request
+        $ministry = $request->query->get('ministry');
+        if ($ministry) {
+             //Pour checked les input (catégories) sélectionnées template twig
+            array_push($checked,$ministry);
+        }
+
+        //Si catégories && ministères
+        if ($categories and $ministry) {
+            //Tableau vide
+            $tasksByCatAndMinistry = [];
+             //On récupère toutes les taches par catégories et ministères
+             foreach ($categories as $category) {
+                $tasksByCatAndMinistry[] = $taskRepository->getTasksByCatAndMinistry($ministry,$category);
+             }
+            
+             //Et pour chaque tache trouvée on ajoute une entrée au calendrier $evts[]
+             foreach ($tasksByCatAndMinistry as $events) {
+              
+                foreach ($events as $event) {
+                   //statut de la tache
+                $status = $event->getStatus();
+                $eventDesc = "";
+                
+                $color = $event->getCategory()->getColor();
+                $textColor = $event->getCategory()->getTextColor();
+
+                if ($status == "Annulée") {
+                    $color = "#ee5253";
+                    $eventDesc = "ANNULÉE";
+                }
+
+            
+                $start = $event->getStartDate()->format('Y-m-d') .' '. $event->getStartHour()->format('H:i:s'); 
+                $end = $event->getEndDate()->format('Y-m-d').' '.$event->getEndHour()->format('H:i:s');
+
+                $allDay = false;
+
+                if ($event->getStartDate()->format('Y-m-d') !== $event->getEndDate()->format('Y-m-d') ){
+                    $allDay = true;
+
+                    $end = date('Y-m-d H:i:s', strtotime($end. ' + 1 days'));
+
+                }
+                //$event->getCategory();
+                $owners = [];
+                
+                foreach ($event->getOwners() as $owner) {
+                $owners[] = $owner->getFirstname();
+                
+                }
+                $comma_separated_owners = implode(", ", $owners);
+            
+                $evts[] = [
+                    'id' => $event->getId(),
+                    'start' => $start,
+                    'end' => $end,
+                    'allDay' => $allDay,
+                    'title' =>  $eventDesc.' '.$event->getName().' | '.$event->getProject()->getName().' | '.$comma_separated_owners,
+                    //'description' => $comma_separated_owners,
+                    'url' => '/taches/'.$event->getId().'/afficher',
+                    'backgroundColor' => $color,
+                    'textColor' => $textColor
+                ];
+                }
+                
+            }
+        }
+        //Si catégories
+        elseif ($categories) {
+            
             foreach ($categories as $category){
 
                 //Vérification de la catégorie
                 $cat = $taskCategoryRepository->findOneBy(['id' => $category]);
                 //Si elle existe on cherche toutes les tâches existantes de cette catégorie
-
+               
                 if ($cat) {
-                    //Pour checked les input (catégories) sélectionnées template twig
-                    array_push($checked,$category);
-
-                    $taskByThisCategory = $taskRepository->findBy(['category' => $cat]);
+                    
+                    $tasksByThisCategory = $taskRepository->findBy(['category' => $cat]);
                     //Et pour chaque tache trouvée on ajoute une entrée au calendrier $evts[]
-                    foreach ($taskByThisCategory as $event) {
+                  
+                    foreach ($tasksByThisCategory as $event) {
 
                         //statut de la tache
                         $status = $event->getStatus();
@@ -168,15 +244,74 @@ class SecurityController extends AbstractController
                             'textColor' => $textColor
                         ];
                     }
+
                 }
             }
         }
+        //Si ministères
+        elseif ($ministry) {
+         
+            //Vérification et récupération des lieux appartenant à ce ministère
+            $locations = $locationRepository->findBy(['ministry' => $ministry]);
+            //Vérification des tâches existantes pour ce ministère
+            foreach ($locations as $location) {
+                
+                $tasksByLocations = $taskRepository->findBy(['location' => $location]);
+                //Et pour chaque tache trouvée on ajoute une entrée au calendrier $evts[]
+                foreach ($tasksByLocations as $event) {
 
+                    //statut de la tache
+                    $status = $event->getStatus();
+                    $eventDesc = "";
+                    
+                    $color = $event->getCategory()->getColor();
+                    $textColor = $event->getCategory()->getTextColor();
+    
+                    if ($status == "Annulée") {
+                        $color = "#ee5253";
+                        $eventDesc = "ANNULÉE";
+                    }
+    
+                
+                    $start = $event->getStartDate()->format('Y-m-d') .' '. $event->getStartHour()->format('H:i:s'); 
+                    $end = $event->getEndDate()->format('Y-m-d').' '.$event->getEndHour()->format('H:i:s');
+    
+                    $allDay = false;
+    
+                    if ($event->getStartDate()->format('Y-m-d') !== $event->getEndDate()->format('Y-m-d') ){
+                        $allDay = true;
+    
+                        $end = date('Y-m-d H:i:s', strtotime($end. ' + 1 days'));
+    
+                    }
+                    //$event->getCategory();
+                    $owners = [];
+                    
+                    foreach ($event->getOwners() as $owner) {
+                    $owners[] = $owner->getFirstname();
+                    
+                    }
+                    $comma_separated_owners = implode(", ", $owners);
+                
+                    $evts[] = [
+                        'id' => $event->getId(),
+                        'start' => $start,
+                        'end' => $end,
+                        'allDay' => $allDay,
+                        'title' =>  $eventDesc.' '.$event->getName().' | '.$event->getProject()->getName().' | '.$comma_separated_owners,
+                        //'description' => $comma_separated_owners,
+                        'url' => '/taches/'.$event->getId().'/afficher',
+                        'backgroundColor' => $color,
+                        'textColor' => $textColor
+                    ];
+                }
+            }
+        }
+       
         else{
             $events = $taskRepository->findAll();
 
             foreach($events as $event){
-
                 //statut de la tache
                 $status = $event->getStatus();
                 $eventDesc = "";
@@ -228,11 +363,12 @@ class SecurityController extends AbstractController
         }
         //Encodage du tableau au format json pour envoi vers twig
         $data = json_encode($evts);
-
+    
        return $this->render("back/calendar.html.twig",[
+        'ministries' => $ministriesCats,
         'checked' => $checked,
         'data' =>  $data,
-        'categories' => $cats
+        'categories' => $tasksCats
        ]);
     }
 

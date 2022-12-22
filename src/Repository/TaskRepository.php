@@ -155,4 +155,24 @@ class TaskRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+
+    public function getTasksByCatAndMinistry($ministry, $category)
+    {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery(
+            " SELECT t
+           FROM App\Entity\Task t
+           
+           JOIN App\Entity\Location l
+             WITH t.location = l.id
+           
+           WHERE l.ministry = '$ministry' AND t.category = '$category'
+          
+           ORDER BY t.startDate"
+        );
+
+        return $query->getResult();
+    }
+
 }

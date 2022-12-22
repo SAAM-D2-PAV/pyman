@@ -55,7 +55,7 @@ class ProjectRepository extends ServiceEntityRepository
             'status2' => $status2,
             'status3' => $status3,
           
-        ]);;
+        ]);
 
         return $query->getResult();
     }

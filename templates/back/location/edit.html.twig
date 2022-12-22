@@ -20,7 +20,7 @@
        
             <h3 class="card-title amour ">{{cat}}</h3>
             {% if item is defined %}
-                <button class="bg-pastel_red btn-custom-lg text-white" onclick=" location.href=' {{path('location_show',{slug:item.slug})}}'"> {{item.name}}</button>
+                <button class="bg-pastel_red btn-custom-lg text-white" onclick=" location.href=' {{path('location_show',{slug:item.slug,id:item.id})}}'"> {{item.name}}</button>
             {% endif %}
             
             

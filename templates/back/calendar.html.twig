@@ -40,14 +40,49 @@
                             </div>
                         {% endfor %}
                         <div>
+                       
+                            {% for val in ministries %}
+                                <div class="form-check form-check-inline">
+                                    <input 
+                                        class="form-check-input" 
+                                        type="radio" 
+                                        name="ministry" 
+                                        id="{{val["ministry"]}}"  
+                                        value="{{val["ministry"]}}"
+                                         {% for value in checked %}
+                                            {% if value == val["ministry"] %}
+                                                checked
+                                            {% endif %}
+                                        {% endfor %}
+                                    >
+                                    <label class="form-check-label" for="{{val["ministry"]}}" style="color: black; font-weight:bold;">
+                                        {{val["ministry"]}}
+                                    </label>
+
+                                </div>
+                            {% endfor %}
+                                <div class="form-check form-check-inline" >
+                                    <input 
+                                        class="form-check-input" 
+                                        type="radio" 
+                                        name="ministry" 
+                                        id="all"  
+                                        value=""
+                                    >
+                                    <label class="form-check-label" for="all" style="color: black; font-weight:bold;">
+                                        tous
+                                    </label>
+
+                                </div>
+                        </div>
+                        <div>
                             <button type="submit" class="btn btn-primary mt-2">filtrer</button>
 
                             <button type="button" class="btn btn-warning mt-2" onclick="location.href='{{path('calendar')}}';"><i class="fas fa-plus"></i> toutes les tâches</button>
 
-                            
                         </div>
                         <div class="">
-                           
+                          
                         </div>
                         
                     </form>

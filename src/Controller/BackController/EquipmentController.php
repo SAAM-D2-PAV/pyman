@@ -744,10 +744,11 @@ class EquipmentController extends AbstractController
     /**
      * @Route("/{type_slug}/{slug}/{id}", name="equipment_show")
      */
-    public function show($id, EquipmentRepository $equipmentRepository, Request $request, FileManager $fileManager, EntityManagerInterface $em, PhotoManager $photoManager)
+    public function show($id,$slug, EquipmentRepository $equipmentRepository, Request $request, FileManager $fileManager, EntityManagerInterface $em, PhotoManager $photoManager)
     {
         $equipment = $equipmentRepository->findOneBy([
-            'id' => $id
+            'id' => $id,
+            'slug' => $slug
         ]);
 
         if(!$equipment){

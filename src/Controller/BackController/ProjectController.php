@@ -247,7 +247,8 @@ class ProjectController extends AbstractController
     public function projectShow($slug, $id, ProjectRepository $projectRepository, Request $request, FileManager $fileManager, MessageGenerator $messageGenerator, EventDispatcherInterface $dispatcher,PaginatorInterface $paginatorInterface, CommentRepository $commentRepository, EntityManagerInterface $em)
     {
         $project = $projectRepository->findOneBy([
-            'id' => $id
+            'id' => $id,
+            'slug' => $slug
         ]);
         if(!$project){
             throw $this->createNotFoundException("Ce projet n'existe pas !");
