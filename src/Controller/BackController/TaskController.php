@@ -361,25 +361,26 @@ class TaskController extends AbstractController
 
             //Vérifier si la tâche existe déjà
             $toSlug = $form->getData()->getName();
-            $taskStartDate = $form->getData()->getStartDate();
-            $taskEndDate = $form->getData()->getEndDate();
+            //$taskStartDate = $form->getData()->getStartDate();
+            //$taskEndDate = $form->getData()->getEndDate();
             //En comparant la date et le nom de la tâche
             //Vérification si le nom de la tâche existe déja dans la base
-            $existingTasks = $taskRepository->findBy(['name' => $toSlug]);
+            //$existingTasks = $taskRepository->findBy(['name' => $toSlug]);
             $goodToGo = true;
 
-            //Si oui comparaison des dates de livraison
-            foreach ($existingTasks as $taask){
-                //Si oui on bloque la validation
-                if ($taask->getStartDate() == $taskStartDate AND $taask->getEndDate() == $taskEndDate AND $linkedProject == $taask->getProject()){
-                    $goodToGo = false;
+            // //Si oui comparaison des dates de livraison
+            // foreach ($existingTasks as $taask){
+            //     //Si oui on bloque la validation
+            //     if ($taask->getStartDate() == $taskStartDate AND $taask->getEndDate() == $taskEndDate AND $linkedProject == $taask->getProject()){
+            //         $goodToGo = false;
+            //         dd($taask->getProject());
 
-                }
-                //On valide
-                else{
-                    $goodToGo = true;
-                }
-            }
+            //     }
+            //     //On valide
+            //     else{
+            //         $goodToGo = true;
+            //     }
+            // }
             if ($goodToGo == true){
 
                 $linkedProject->setUpdatedBy($this->getUser());
@@ -408,9 +409,9 @@ class TaskController extends AbstractController
                 ]);
 
             }
-            else{
-                $this->addFlash('warning', 'Cette tâche existe déjà');
-            }
+            // else{
+            //     $this->addFlash('danger', 'Sur le projet '.$linkedProject->getName().', une tâche portant le même nom existe déjà sur ce créneau horaire !');
+            // }
         }
         return $this->render('back/task/edit_task.html.twig', [
             // createView() permet de récupérer
