@@ -2,9 +2,9 @@
 
 {% block stylesheets %}
 
-    {{ parent() }}
-    {{ encore_entry_link_tags('back') }}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css" integrity="sha256-u40zn9KeZYpMjgYaxWJccb4HnP0i8XI17xkXrEklevE=" crossorigin="anonymous">
+	{{ parent() }}
+	{{ encore_entry_link_tags('back') }}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css" integrity="sha256-u40zn9KeZYpMjgYaxWJccb4HnP0i8XI17xkXrEklevE=" crossorigin="anonymous">
 
 {% endblock %}
 
@@ -19,147 +19,166 @@
 
 
 {% block back_main_content %}
-    <div class="row">
-            <div class="col-12 mb-2">
-                    <form action=" {{path('calendar')}}" method="get">
-                        {% for category in categories %}
-                            <div class="form-check form-check-inline">
-                                <input 
-                                    class="form-check-input" 
-                                    type="checkbox" 
-                                    id="{{category.id}}" 
-                                    name="categories[]" 
-                                    value="{{category.id}}"
-                                    {% for val in checked %}
-                                        {% if val == category.id %}
-                                            checked
-                                        {% endif %}
-                                    {% endfor %}
-                                >
-                                <label class="form-check-label" for="{{category.id}}" style="color: {{category.color}}; font-weight:bold;">{{category.name}}</label>
-                            </div>
-                        {% endfor %}
-                        <div>
-                       
-                            {% for val in ministries %}
-                                <div class="form-check form-check-inline">
-                                    <input 
-                                        class="form-check-input" 
-                                        type="radio" 
-                                        name="ministry" 
-                                        id="{{val["ministry"]}}"  
-                                        value="{{val["ministry"]}}"
-                                         {% for value in checked %}
-                                            {% if value == val["ministry"] %}
-                                                checked
-                                            {% endif %}
-                                        {% endfor %}
-                                    >
-                                    <label class="form-check-label" for="{{val["ministry"]}}" style="color: black; font-weight:bold;">
-                                        {{val["ministry"]}}
-                                    </label>
+	<div class="row">
+		<div class="col-12 mb-2">
+			<form action=" {{path('calendar')}}" method="get" class="filterForm">
+				{% for category in categories %}
+					<div class="form-check form-check-inline">
+						<input class="form-check-input filter-input" type="checkbox" id="{{category.id}}" name="categories[]" value="{{category.id}}" {% for val in checked %} {% if val == category.id %} checked {% endif %} {% endfor %} >
+						<label class="form-check-label" for="{{category.id}}" style="color: {{category.color}}; font-weight:bold;">{{category.name}}</label>
+					</div>
+				{% endfor %}
+				<div>
 
-                                </div>
-                            {% endfor %}
-                                <div class="form-check form-check-inline" >
-                                    <input 
-                                        class="form-check-input" 
-                                        type="radio" 
-                                        name="ministry" 
-                                        id="all"  
-                                        value=""
-                                    >
-                                    <label class="form-check-label" for="all" style="color: black; font-weight:bold;">
-                                        tous
-                                    </label>
+					{% for val in ministries %}
+						<div class="form-check form-check-inline">
+							<input class="form-check-input filter-input" type="radio" name="ministry" id="{{val["ministry"]}}" value="{{val["ministry"]}}" {% for value in checked %} {% if value == val["ministry"] %} checked {% endif %} {% endfor %}>
+							<label class="form-check-label" for="{{val["ministry"]}}" style="color: black; font-weight:bold;">
+								{{val["ministry"]}}
+							</label>
 
-                                </div>
-                        </div>
-                        <div>
-                            <button type="submit" class="btn btn-primary mt-2">filtrer</button>
+						</div>
+					{% endfor %}
+					<div class="form-check form-check-inline">
+						<input class="form-check-input filter-input" type="radio" name="ministry" id="all" value="">
+						<label class="form-check-label" for="all" style="color: black; font-weight:bold;">
+							tous
+						</label>
 
-                            <button type="button" class="btn btn-warning mt-2" onclick="location.href='{{path('calendar')}}';"><i class="fas fa-plus"></i> toutes les tâches</button>
+					</div>
+				</div>
+				<div>
+				
 
-                        </div>
-                        <div class="">
-                          
-                        </div>
-                        
-                    </form>
-                    
-                      
-            </div>
-            <div class="col-12" id="calendarEl"></div>
-    </div>
+					<button type="button" class="btn btn-warning mt-2" onclick="location.href='{{path('calendar')}}';">
+						<i class="fas fa-plus"></i>
+						toutes les tâches</button>
+
+				</div>
+				<div class=""></div>
+
+			</form>
+
+
+		</div>
+		<div class="col-12" id="calendarEl"></div>
+	</div>
 
 {% endblock %}
 
 
 {% block javascripts %}
-{{ parent() }}
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js" integrity="sha256-AOrsg7pOO9zNtKymdz4LsI+KyLEHhTccJrZVU4UFwIU=" crossorigin="anonymous"></script>
-    <script>
+	{{ parent() }}
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js" integrity="sha256-AOrsg7pOO9zNtKymdz4LsI+KyLEHhTccJrZVU4UFwIU=" crossorigin="anonymous"></script>
+	<script>
 
-        // function random_item(items)
-        // {
-        //     return items[Math.floor(Math.random()*items.length)];
-        // }
-       
-        // var items = ['#ff6b6b','#10ac84','#341f97','#ff9f43'];
+const form =  document.querySelector('.filterForm');
 
-        //var color = (random_item(items));
+document.addEventListener('DOMContentLoaded', function () {
 
-        document.addEventListener('DOMContentLoaded', function() {
+//Fonction de submit du forme à chaque nouveau flitre
+const filterInput = document.querySelectorAll('.filter-input');
 
-        var calendarEl = document.getElementById('calendarEl');
-
-
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'timeGridWeek',
-            height: 800,
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,listWeek'
-            },
-            buttonText:{
-                today:    'Aujourd\'hui',
-                month:    'mois',
-                week:     'semaine',
-                day:      'jour',
-                list:     'liste',
-            },
-            locale: 'fr',
-            timeZone: 'Europe/Paris',
-            events: {{ data|raw }},
-            //eventColor: color,
-            selectable: true,
-            firstDay: 1,
-            nowIndicator: true,
-            select: function(info) {
-               
-                
-                let startDate = info.startStr;
-                let endDate = info.endStr;
-            
-                window.location = '/taches/creer?start=' + startDate+'&end='+endDate;
-                
-                
-            },
-            eventClick: function(info) {
-
-                info.jsEvent.preventDefault(); // don't let the browser navigate
-
-                if (info.event.url) {
-                window.open(info.event.url);
-                }
-            }   
-        });
-        calendar.render();
-        });
+filterInput.forEach(element => {
+     element.addEventListener('click', event => {
+        document.querySelector('.filterForm').submit()
+    });
+});
 
 
 
-    </script>
+//Pour vérifier si des parmaètres ont été envoyés en GET
+// 1 . On récupère l'url
+var uri = document.URL;
+
+// 2. On vérifie si elle contient des paramètres de type GET
+var searchParams = new URLSearchParams(uri);
+
+//Tableau de reception des paramètres parmas
+var params = [];
+var categories = [];
+var ministry = '';
+
+
+for(var entry of searchParams.entries()) {
+    //on récupère les id des catégories et on les convertit en int si value = int alors c'est une catégorie sinon NaN donc ministère
+    value = parseInt(entry[1]);
+    //int
+    if (Number.isInteger(value)) {
+        categories.push(value);
+    }
+    //NaN string 
+    else{
+        ministry = entry[1];
+    }
+
+     
+}
+
+if (categories) {
+    params.push(categories);
+}
+if (ministry) {
+    params.push(ministry);
+}
+if (params) {
+    params = JSON.stringify(params);
+}
+
+
+
+// 3 . si paramètres alors on les ajoute à la requete ajax
+var ajaxUrl = "/ajaxCtl?action=calendarUpdater&parameter="+params;
+
+
+
+var calendarEl = document.getElementById('calendarEl');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'timeGridWeek',
+        height: 800,
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,listWeek'
+        },
+        buttonText: {
+            today: 'Aujourd\'hui',
+            month: 'mois',
+            week: 'semaine',
+            day: 'jour',
+            list: 'liste'
+        },
+        locale: 'fr',
+        timeZone: 'Europe/Paris',
+        //ON fetch les data via fonction * @Route("/ajaxCtl", name="ajaxCtl", methods={"GET"}) SecurityController
+        events: ajaxUrl,
+        selectable: true,
+        firstDay: 1,
+        nowIndicator: true,
+        select: function (info) {
+
+
+            let startDate = info.startStr;
+            let endDate = info.endStr;
+
+            window.location = '/taches/creer?start=' + startDate + '&end=' + endDate;
+
+
+        },
+        eventClick: function (info) {
+
+            info.jsEvent.preventDefault(); // don't let the browser navigate
+
+            if (info.event.url) {
+            window.open(info.event.url);
+            }
+        }
+    });
+
+    calendar.render()
+
+});
+</script>
+
 {% endblock %}
-

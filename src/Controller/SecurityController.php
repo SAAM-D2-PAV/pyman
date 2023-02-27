@@ -36,21 +36,23 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
 {
-    
+
+   
+
     /**
      * @Route("/connexion", name="app_login", priority=1)
      */
     public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('dashboard' );
-        } 
+            return $this->redirectToRoute('dashboard');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        
+
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
     /**
@@ -69,7 +71,7 @@ class SecurityController extends AbstractController
      */
     public function dashboard(ProjectRepository $projectRepository, EquipmentRepository $equipmentRepository, LocationRepository $locationRepository, LogEventRepository $logEventRepository)
     {
-        
+
         $projects = $projectRepository->getInProgressProjectOrderedByDateAsc();
         $equipments = $equipmentRepository->findAll();
         $locations = $locationRepository->findAll();
@@ -79,22 +81,24 @@ class SecurityController extends AbstractController
 
         $logs = $logEventRepository->findLastFive();
 
-        
-        
-        return $this->render("back/dashboard.html.twig",[
+
+
+        return $this->render("back/dashboard.html.twig", [
             'projects' => $projects,
             'equipmentsCount' => $equipmentsCount,
             'locationsCount' => $locationsCount,
             'logs' => $logs
-           
+
         ]);
     }
     /**
      * @Route("/calendrier", name="calendar")
      * @isGranted("ROLE_VIEWER", message="Vous n'avez pas accès à cette section !")
      */
-    public function deskPage( Request $request,TaskRepository $taskRepository, TaskCategoryRepository $taskCategoryRepository, LocationRepository $locationRepository)
+    public function deskPage(Request $request, TaskRepository $taskRepository, TaskCategoryRepository $taskCategoryRepository, LocationRepository $locationRepository)
     {
+        //Cette méthode nous sert à l'affichage de la vue avec les eventuelles checkbox les données sont envoyées via le ajaxCtl 
+        //ajaxCtl() 
         //Pour affichage par catégories 
         $tasksCats = $taskCategoryRepository->findAll();
         //Pour affichage par ministère
@@ -112,264 +116,22 @@ class SecurityController extends AbstractController
         if ($categories) {
             //Pour checked les input (catégories) sélectionnées template twig
             foreach ($categories as $category) {
-                array_push($checked,$category);
+                array_push($checked, $category);
             }
         }
         //Récupération des ministères si envoyées par la request
         $ministry = $request->query->get('ministry');
         if ($ministry) {
-             //Pour checked les input (catégories) sélectionnées template twig
-            array_push($checked,$ministry);
+            //Pour checked les input (catégories) sélectionnées template twig
+            array_push($checked, $ministry);
         }
 
-        //Si catégories && ministères
-        if ($categories and $ministry) {
-            //Tableau vide
-            $tasksByCatAndMinistry = [];
-             //On récupère toutes les taches par catégories et ministères
-             foreach ($categories as $category) {
-                $tasksByCatAndMinistry[] = $taskRepository->getTasksByCatAndMinistry($ministry,$category);
-             }
-            
-             //Et pour chaque tache trouvée on ajoute une entrée au calendrier $evts[]
-             foreach ($tasksByCatAndMinistry as $events) {
-              
-                foreach ($events as $event) {
-                   //statut de la tache
-                $status = $event->getStatus();
-                $eventDesc = "";
-                
-                $color = $event->getCategory()->getColor();
-                $textColor = $event->getCategory()->getTextColor();
-
-                if ($status == "Annulée") {
-                    $color = "#ee5253";
-                    $eventDesc = "ANNULÉE";
-                }
-
-            
-                $start = $event->getStartDate()->format('Y-m-d') .' '. $event->getStartHour()->format('H:i:s'); 
-                $end = $event->getEndDate()->format('Y-m-d').' '.$event->getEndHour()->format('H:i:s');
-
-                $allDay = false;
-
-                if ($event->getStartDate()->format('Y-m-d') !== $event->getEndDate()->format('Y-m-d') ){
-                    $allDay = true;
-
-                    $end = date('Y-m-d H:i:s', strtotime($end. ' + 1 days'));
-
-                }
-                //$event->getCategory();
-                $owners = [];
-                
-                foreach ($event->getOwners() as $owner) {
-                $owners[] = $owner->getFirstname();
-                
-                }
-                $comma_separated_owners = implode(", ", $owners);
-            
-                $evts[] = [
-                    'id' => $event->getId(),
-                    'start' => $start,
-                    'end' => $end,
-                    'allDay' => $allDay,
-                    'title' =>  $eventDesc.' '.$event->getName().' | '.$event->getProject()->getName().' | '.$comma_separated_owners,
-                    //'description' => $comma_separated_owners,
-                    'url' => '/taches/'.$event->getId().'/afficher',
-                    'backgroundColor' => $color,
-                    'textColor' => $textColor
-                ];
-                }
-                
-            }
-        }
-        //Si catégories
-        elseif ($categories) {
-            
-            foreach ($categories as $category){
-
-                //Vérification de la catégorie
-                $cat = $taskCategoryRepository->findOneBy(['id' => $category]);
-                //Si elle existe on cherche toutes les tâches existantes de cette catégorie
-               
-                if ($cat) {
-                    
-                    $tasksByThisCategory = $taskRepository->findBy(['category' => $cat]);
-                    //Et pour chaque tache trouvée on ajoute une entrée au calendrier $evts[]
-                  
-                    foreach ($tasksByThisCategory as $event) {
-
-                        //statut de la tache
-                        $status = $event->getStatus();
-                        $eventDesc = "";
-                        
-                        $color = $event->getCategory()->getColor();
-                        $textColor = $event->getCategory()->getTextColor();
-        
-                        if ($status == "Annulée") {
-                            $color = "#ee5253";
-                            $eventDesc = "ANNULÉE";
-                        }
-        
-                    
-                        $start = $event->getStartDate()->format('Y-m-d') .' '. $event->getStartHour()->format('H:i:s'); 
-                        $end = $event->getEndDate()->format('Y-m-d').' '.$event->getEndHour()->format('H:i:s');
-        
-                        $allDay = false;
-        
-                        if ($event->getStartDate()->format('Y-m-d') !== $event->getEndDate()->format('Y-m-d') ){
-                            $allDay = true;
-        
-                            $end = date('Y-m-d H:i:s', strtotime($end. ' + 1 days'));
-        
-                        }
-                        //$event->getCategory();
-                        $owners = [];
-                        
-                        foreach ($event->getOwners() as $owner) {
-                        $owners[] = $owner->getFirstname();
-                        
-                        }
-                        $comma_separated_owners = implode(", ", $owners);
-                    
-                        $evts[] = [
-                            'id' => $event->getId(),
-                            'start' => $start,
-                            'end' => $end,
-                            'allDay' => $allDay,
-                            'title' =>  $eventDesc.' '.$event->getName().' | '.$event->getProject()->getName().' | '.$comma_separated_owners,
-                            //'description' => $comma_separated_owners,
-                            'url' => '/taches/'.$event->getId().'/afficher',
-                            'backgroundColor' => $color,
-                            'textColor' => $textColor
-                        ];
-                    }
-
-                }
-            }
-        }
-        //Si ministères
-        elseif ($ministry) {
-         
-            //Vérification et récupération des lieux appartenant à ce ministère
-            $locations = $locationRepository->findBy(['ministry' => $ministry]);
-            //Vérification des tâches existantes pour ce ministère
-            foreach ($locations as $location) {
-                
-                $tasksByLocations = $taskRepository->findBy(['location' => $location]);
-                //Et pour chaque tache trouvée on ajoute une entrée au calendrier $evts[]
-                foreach ($tasksByLocations as $event) {
-
-                    //statut de la tache
-                    $status = $event->getStatus();
-                    $eventDesc = "";
-                    
-                    $color = $event->getCategory()->getColor();
-                    $textColor = $event->getCategory()->getTextColor();
     
-                    if ($status == "Annulée") {
-                        $color = "#ee5253";
-                        $eventDesc = "ANNULÉE";
-                    }
-    
-                
-                    $start = $event->getStartDate()->format('Y-m-d') .' '. $event->getStartHour()->format('H:i:s'); 
-                    $end = $event->getEndDate()->format('Y-m-d').' '.$event->getEndHour()->format('H:i:s');
-    
-                    $allDay = false;
-    
-                    if ($event->getStartDate()->format('Y-m-d') !== $event->getEndDate()->format('Y-m-d') ){
-                        $allDay = true;
-    
-                        $end = date('Y-m-d H:i:s', strtotime($end. ' + 1 days'));
-    
-                    }
-                    //$event->getCategory();
-                    $owners = [];
-                    
-                    foreach ($event->getOwners() as $owner) {
-                    $owners[] = $owner->getFirstname();
-                    
-                    }
-                    $comma_separated_owners = implode(", ", $owners);
-                
-                    $evts[] = [
-                        'id' => $event->getId(),
-                        'start' => $start,
-                        'end' => $end,
-                        'allDay' => $allDay,
-                        'title' =>  $eventDesc.' '.$event->getName().' | '.$event->getProject()->getName().' | '.$comma_separated_owners,
-                        //'description' => $comma_separated_owners,
-                        'url' => '/taches/'.$event->getId().'/afficher',
-                        'backgroundColor' => $color,
-                        'textColor' => $textColor
-                    ];
-                }
-            }
-        }
-       
-        else{
-            $events = $taskRepository->findAll();
-
-            foreach($events as $event){
-                //statut de la tache
-                $status = $event->getStatus();
-                $eventDesc = "";
-                
-                $color = $event->getCategory()->getColor();
-                $textColor = $event->getCategory()->getTextColor();
-
-                if ($status == "Annulée") {
-                    $color = "#ee5253";
-                    $eventDesc = "ANNULÉE";
-                }
-
-            
-                $start = $event->getStartDate()->format('Y-m-d') .' '. $event->getStartHour()->format('H:i:s'); 
-                $end = $event->getEndDate()->format('Y-m-d').' '.$event->getEndHour()->format('H:i:s');
-
-                $allDay = false;
-
-                if ($event->getStartDate()->format('Y-m-d') !== $event->getEndDate()->format('Y-m-d') ){
-                    $allDay = true;
-
-                    $end = date('Y-m-d H:i:s', strtotime($end. ' + 1 days'));
-
-                }
-                //$event->getCategory();
-                $owners = [];
-                
-                foreach ($event->getOwners() as $owner) {
-                $owners[] = $owner->getFirstname();
-                
-                }
-                $comma_separated_owners = implode(", ", $owners);
-            
-                $evts[] = [
-                    'id' => $event->getId(),
-                    'start' => $start,
-                    'end' => $end,
-                    'allDay' => $allDay,
-                    'title' =>  $eventDesc.' '.$event->getName().' | '.$event->getProject()->getName().' | '.$comma_separated_owners,
-                    //'description' => $comma_separated_owners,
-                    'url' => '/taches/'.$event->getId().'/afficher',
-                    'backgroundColor' => $color,
-                    'textColor' => $textColor
-                ];
-
-            }
-
-
-        }
-        //Encodage du tableau au format json pour envoi vers twig
-        $data = json_encode($evts);
-    
-       return $this->render("back/calendar.html.twig",[
-        'ministries' => $ministriesCats,
-        'checked' => $checked,
-        'data' =>  $data,
-        'categories' => $tasksCats
-       ]);
+        return $this->render("back/calendar.html.twig", [
+            'ministries' => $ministriesCats,
+            'checked' => $checked,
+            'categories' => $tasksCats
+        ]);
     }
 
     //------------------------------------------------------------------------------
@@ -383,7 +145,7 @@ class SecurityController extends AbstractController
     {
         $users = $userRepository->findAll();
 
-        return $this->render('security/users_list.html.twig',[
+        return $this->render('security/users_list.html.twig', [
             'users' => $users
         ]);
     }
@@ -405,17 +167,13 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            
-           
+
+
             $em->flush();
 
             $this->addFlash('success', $messageGenerator->getHappyMessage());
-            
-            
-
-           
-         }
-        return $this->render('security/user_show.html.twig',[
+        }
+        return $this->render('security/user_show.html.twig', [
             'user' => $user,
             'createdAc' => $createdAc,
             'form' => $form->createView(),
@@ -428,13 +186,13 @@ class SecurityController extends AbstractController
     /**
      * @Route("/$NGwJKwq0/mDARLdUyDU5xOWu8N43qzGKNpaLu2I7t1FplrzdKB7Jm/register", name="user_register")
      */
-    public function userRegister(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder,MailerInterface $mailer, MessageGenerator $messageGenerator,EntityManagerInterface $em)
+    public function userRegister(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, MailerInterface $mailer, MessageGenerator $messageGenerator, EntityManagerInterface $em)
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('dashboard',[
+            return $this->redirectToRoute('dashboard', [
                 'id' => $this->getUser()->getId()
             ]);
-        } 
+        }
         //nouvelle entité user
         $user = new User;
         $form = $this->createForm(UserType::class, $user);
@@ -444,11 +202,11 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $emailTocheck = $form->getData()->getEmail();
-            $emailIsExist = $userRepository->findOneBy(['email' => $emailTocheck ]);
-            
+            $emailIsExist = $userRepository->findOneBy(['email' => $emailTocheck]);
+
             if ($emailIsExist) {
                 $error = "Cet email existe déjà !";
-                return $this->render('security/register.html.twig', [ 
+                return $this->render('security/register.html.twig', [
                     'form' => $form->createView(),
                     'error' => $error,
                     'cat' => 'Créer un compte',
@@ -467,14 +225,13 @@ class SecurityController extends AbstractController
             $em->flush($user);
             //https://symfony.com/doc/current/mailer.html
             $email = (new TemplatedEmail())
-            ->from(new Address('audiovideo.ac@gdp-app.ovh', 'Pôle audiovisuel - PAV'))
-            ->to($user->getEmail())
-            ->subject('Bienvenue sur Pyman')
-            ->htmlTemplate('mail/register_template.html.twig')
-            ->context([
-                'user_firstname' => $user->getFirstname()
-            ])
-            ;
+                ->from(new Address('audiovideo.ac@gdp-app.ovh', 'Pôle audiovisuel - PAV'))
+                ->to($user->getEmail())
+                ->subject('Bienvenue sur Pyman')
+                ->htmlTemplate('mail/register_template.html.twig')
+                ->context([
+                    'user_firstname' => $user->getFirstname()
+                ]);
 
             // $mailer->send($email);
             $this->addFlash('success', 'Vous pouvez à présent vous connecter');
@@ -482,7 +239,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('security/register.html.twig',[
+        return $this->render('security/register.html.twig', [
             'error' => '',
             'form' => $form->createView(),
             'cat' => 'Créer un compte',
@@ -499,47 +256,47 @@ class SecurityController extends AbstractController
     {
         $userToDelete = $user;
         //VOTER TaskVoter
-        $this->denyAccessUnlessGranted('USER_DELETE',$user,'Vous ne pouvez pas supprimer ce profil');
+        $this->denyAccessUnlessGranted('USER_DELETE', $user, 'Vous ne pouvez pas supprimer ce profil');
 
         $johnDoe = $userRepository->findOneBy([
             'email' => 'john.doe@nowhere.fr'
         ]);
         if (!$johnDoe) {
-           $johnDoe =  $userRepository->createJohnDoe();
+            $johnDoe =  $userRepository->createJohnDoe();
         }
 
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-        
-          
-            
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+
+
+
             $logRepository->deleteById($user->getId());
 
             $userProjects = $userToDelete->getProjects();
-            foreach ($userProjects as $project){
+            foreach ($userProjects as $project) {
                 $project->setCreatedBy($johnDoe);
             }
             $userTasks = $userToDelete->getTasks();
-            foreach ($userTasks as $task){
+            foreach ($userTasks as $task) {
                 $task->setCreatedBy($johnDoe);
             }
             $userTasksOwner = $userToDelete->getSubscribedTasks();
-            foreach ($userTasksOwner as $task){
+            foreach ($userTasksOwner as $task) {
                 $task->removeOwner($userToDelete);
             }
             $userDocs = $userToDelete->getDocuments();
-            foreach ($userDocs as $doc){
+            foreach ($userDocs as $doc) {
                 $doc->setUploadedBy($johnDoe);
             }
             $projectsUpdated = $projectRepository->findBy([
                 'updatedBy' => $userToDelete
             ]);
-            foreach ($projectsUpdated as $projectUpdated){
+            foreach ($projectsUpdated as $projectUpdated) {
                 $projectUpdated->setUpdatedBy($johnDoe);
             }
             $tasksUpdated = $taskRepository->findBy([
                 'updatedBy' => $userToDelete
             ]);
-            foreach ($tasksUpdated as $taskUpdated){
+            foreach ($tasksUpdated as $taskUpdated) {
                 $taskUpdated->setUpdatedBy($johnDoe);
             }
 
@@ -549,13 +306,12 @@ class SecurityController extends AbstractController
                 $em->remove($user);
                 $em->flush();
                 // Ceci ne fonctionne pas avec la création d'une nouvelle session !
-                $this->addFlash('success', 'Votre compte a bien été supprimé !'); 
+                $this->addFlash('success', 'Votre compte a bien été supprimé !');
                 return $this->redirectToRoute('app_logout');
             }
-            
+
             $em->remove($user);
             $em->flush();
-            
         }
         return $this->redirectToRoute('users_list');
     }
@@ -577,20 +333,16 @@ class SecurityController extends AbstractController
             $createdAc = $logRepository->getUserlastLog();
             $form = $this->createForm(UserEditType::class, $user);
             $form->handleRequest($request);
-    
+
             if ($form->isSubmitted() && $form->isValid()) {
-    
-                
-               
+
+
+
                 $em->flush();
-    
+
                 $this->addFlash('success', $messageGenerator->getHappyMessage());
-                
-                
-    
-               
-             }
-            return $this->render('security/user_dashboard.html.twig',[
+            }
+            return $this->render('security/user_dashboard.html.twig', [
                 'user' => $user,
                 'createdAc' => $createdAc,
                 'form' => $form->createView(),
@@ -599,26 +351,24 @@ class SecurityController extends AbstractController
                 'ico' => 'edit'
             ]);
         }
-        
+
         return $this->redirectToRoute('dashboard');
-       
     }
 
-   
+
     //méthode appelée dans back.js
     /**
      * @Route("/ajaxCtl", name="ajaxCtl", methods={"GET"})
      * @isGranted("ROLE_VIEWER", message="Vous n'avez pas accès à cette section !")
      */
-    public function ajaxCtl(Request $request, LogEventRepository $logEventRepository, TaskRepository $taskRepository, EntityManagerInterface $em, EventDispatcherInterface $dispatcher,EquipmentRepository $equipmentRepository)
+    public function ajaxCtl(Request $request, LogEventRepository $logEventRepository, TaskRepository $taskRepository, EntityManagerInterface $em, EventDispatcherInterface $dispatcher, EquipmentRepository $equipmentRepository, TaskCategoryRepository $taskCategoryRepository, LocationRepository $locationRepository)
     {
 
         $action = $request->query->get('action');
         $parameter = $request->query->get('parameter');
-
-
-
-        if ($action === "log_event"){
+        
+        
+        if ($action === "log_event") {
 
             $logEvents = $logEventRepository->findLastFive();
             //On récupère le dernier élément de la requète
@@ -627,20 +377,18 @@ class SecurityController extends AbstractController
             $lastLogInSession = $request->getSession()->get('lastLogId');
             //On compare les deux
             //Si oui alors pas de nouvelle entrée
-            if($lastLogInSession){
+            if ($lastLogInSession) {
 
-                if ($LastLogInArray->getCreatedAt() == $lastLogInSession->getCreatedAt()){
+                if ($LastLogInArray->getCreatedAt() == $lastLogInSession->getCreatedAt()) {
                     $newLog = false;
                 }
                 //Sinon nouvelle entrée et stockage en session  de celle-ci
-                else{
-                    $request->getSession()->set('lastLogId',$LastLogInArray);
+                else {
+                    $request->getSession()->set('lastLogId', $LastLogInArray);
                     $newLog = true;
                 }
-
-            }
-            else{
-                $request->getSession()->set('lastLogId',$LastLogInArray);
+            } else {
+                $request->getSession()->set('lastLogId', $LastLogInArray);
                 $newLog = true;
             }
 
@@ -654,18 +402,18 @@ class SecurityController extends AbstractController
 
                 $logEventType = $logEvent->getType();
                 //si le logEvent est un projet
-                if ($logEvent->getProject() !== null){
+                if ($logEvent->getProject() !== null) {
 
                     $logEventId = $logEvent->getProject()->getId();
                     $logEventName = $logEvent->getProject()->getName();
                     $logEventSlug = $logEvent->getProject()->getSlug();
-                    $uri = "/projets/".$logEventSlug."/".$logEventId;
+                    $uri = "/projets/" . $logEventSlug . "/" . $logEventId;
                 }
                 //sinon une tache
-                else{
+                else {
                     $logEventId = $logEvent->getTask()->getId();
                     $logEventName = $logEvent->getTask()->getName();
-                    $uri = "/taches/".$logEventId;
+                    $uri = "/taches/" . $logEventId;
                 }
 
                 $logEventCreatedAt = $logEvent->getCreatedAt()->format('d-m-Y');
@@ -676,57 +424,52 @@ class SecurityController extends AbstractController
                     'logEventName' => $logEventName,
                     'logEventCreatedAt' => $logEventCreatedAt,
                     'logEventCreatedBy' => $logEventCreatedBy,
-                    'url' => $uri."/afficher",
+                    'url' => $uri . "/afficher",
 
                 ];
                 $result = $evts;
             }
             $result[] = $newLog;
             $data = json_encode($result);
-            return $this->json($data, 200,[],[]);
-
-        }
-        elseif ($action === "status_update") {
+            return $this->json($data, 200, [], []);
+        } elseif ($action === "status_update") {
             # code...
             $result = $parameter;
             $data = json_decode($result);
             $task = $taskRepository->find($data);
             $project = $task->getProject();
-            if(!$task){
+            if (!$task) {
                 //Gérer les erreurs de requêtes 
                 return $this->json(404);
-            }
-            else{
+            } else {
 
-               switch ($task->getStatus()) {
-                   case 'A faire':
-                       # code...
-                       $task->setStatus('En cours');
-
-                       break;
-
-                    case 'En cours':
-                    # code...
-                    $task->setStatus('Faite');
+                switch ($task->getStatus()) {
+                    case 'A faire':
+                        # code...
+                        $task->setStatus('En cours');
 
                         break;
-                   
 
-                   default:
-                       # code...
-                       break;
-               }
-               $project->setUpdatedAt(new \DateTime());
-               $taskEvent = new TaskSuccessEvent($task);
-               $dispatcher->dispatch($taskEvent,'task.updated');
-               $projectEvent = new ProjectSuccessEvent($project);
-               $dispatcher->dispatch($projectEvent,'project.updated');
-               $em->flush();
-               return $this->json($task->getStatus(), 200,[],[]);
+                    case 'En cours':
+                        # code...
+                        $task->setStatus('Faite');
+
+                        break;
+
+
+                    default:
+                        # code...
+                        break;
+                }
+                $project->setUpdatedAt(new \DateTime());
+                $taskEvent = new TaskSuccessEvent($task);
+                $dispatcher->dispatch($taskEvent, 'task.updated');
+                $projectEvent = new ProjectSuccessEvent($project);
+                $dispatcher->dispatch($projectEvent, 'project.updated');
+                $em->flush();
+                return $this->json($task->getStatus(), 200, [], []);
             }
-            
-        }
-        elseif ($action === 'addEq_ToTask'){
+        } elseif ($action === 'addEq_ToTask') {
 
 
             $taskid = json_decode($parameter['tid']);
@@ -736,13 +479,12 @@ class SecurityController extends AbstractController
                 'id' => $taskid
             ]);
             //VOTER TaskVoter
-            $this->denyAccessUnlessGranted('TASK_EDIT',$task,'Vous ne pouvez pas modifier cette tâche');
+            $this->denyAccessUnlessGranted('TASK_EDIT', $task, 'Vous ne pouvez pas modifier cette tâche');
 
             if (!$task) {
                 //Gérer les erreurs de requêtes
                 throw $this->createNotFoundException("Cette tâche n'existe pas !");
-            }
-            else {
+            } else {
                 $equipment = $equipmentRepository->find($eid);
 
                 if ($equipment) {
@@ -757,16 +499,12 @@ class SecurityController extends AbstractController
                     $em->flush();
 
                     return $this->json($taskid, 200, [], []);
-
-                }
-                else{
+                } else {
                     //Gérer les erreurs de requêtes
                     throw $this->createNotFoundException("Problème de liaison avec la base de donnée !");
                 }
-
             }
-        }
-        elseif ($action === 'RemEq_ToTask'){
+        } elseif ($action === 'RemEq_ToTask') {
 
             $taskid = json_decode($parameter['tid']);
             $eid = json_decode($parameter['eid']);
@@ -775,13 +513,12 @@ class SecurityController extends AbstractController
                 'id' => $taskid
             ]);
             //VOTER TaskVoter
-            $this->denyAccessUnlessGranted('TASK_EDIT',$task,'Vous ne pouvez pas modifier cette tâche');
+            $this->denyAccessUnlessGranted('TASK_EDIT', $task, 'Vous ne pouvez pas modifier cette tâche');
 
             if (!$task) {
                 //Gérer les erreurs de requêtes
                 throw $this->createNotFoundException("Cette tâche n'existe pas !");
-            }
-            else {
+            } else {
                 $equipment = $equipmentRepository->find($eid);
 
                 if ($equipment) {
@@ -796,20 +533,334 @@ class SecurityController extends AbstractController
                     $em->flush();
 
                     return $this->json($taskid, 200, [], []);
-
-                }
-                else{
+                } else {
                     //Gérer les erreurs de requêtes
                     throw $this->createNotFoundException("Problème de liaison avec la base de donnée !");
                 }
-
             }
+        } elseif ($action === 'calendarUpdater') {
 
-        }
-        else{
-            return $this->json(404);
-        }
+            //$start = $request->query->get('start');
+            //$end = $request->query->get('end');
+            
+            //Pour affichage par catégories 
+            $tasksCats = $taskCategoryRepository->findAll();
+            //Pour affichage par ministère
+            $ministriesCats = $locationRepository->getMinistries();
 
+            //Tabelau d'entrées du calendrier = vide
+            $evts = [];
+           
+            $color = "#341f97";
+            $textColor = 'white';
+            
+
+           if($parameter){
+                //On décode les données get de l'url
+                $parameters = json_decode($parameter);
+                //Initialisation du tableau de catégories et de la variable ministry
+                $categories = [];
+                $ministry = null;
+
+                
+                //On vérifie si des catégories ont été passées en paramètres 
+                if (array_key_exists(0, $parameters)) {
+                    //Récupération des catégories si envoyées par la request
+                    $categories =  $parameters[0];
+                    
+                }
+                //On vérifie si un ministère a été passé en paramètres 
+                if (array_key_exists(1, $parameters)) {
+                    //Récupération des ministères si envoyé par la request
+                    $ministry =  $parameters[1];
+                }
+                
+                //Si parameter et catégories && ministères
+                if ($categories and $ministry) {
+                    //Tableau vide
+                    $tasksByCatAndMinistry = [];
+                    //On récupère toutes les taches par catégories et ministères
+                
+                    foreach ($categories as $category) {
+                    
+                        $tasksByCatAndMinistry[] = $taskRepository->getTasksByCatAndMinistry($ministry, $category);
+                    }
+
+                    //Et pour chaque tache trouvée on ajoute une entrée au calendrier $evts[]
+                    foreach ($tasksByCatAndMinistry as $events) {
+
+                        foreach ($events as $event) {
+                            //statut de la tache
+                            $status = $event->getStatus();
+                            $eventDesc = "";
+
+                            $color = $event->getCategory()->getColor();
+                            $textColor = $event->getCategory()->getTextColor();
+
+                            if ($status == "Annulée") {
+                                $color = "#ee5253";
+                                $eventDesc = "ANNULÉE";
+                            }
+
+
+                            $start = $event->getStartDate()->format('Y-m-d') . ' ' . $event->getStartHour()->format('H:i:s');
+                            $end = $event->getEndDate()->format('Y-m-d') . ' ' . $event->getEndHour()->format('H:i:s');
+
+                            $allDay = false;
+
+                            if ($event->getStartDate()->format('Y-m-d') !== $event->getEndDate()->format('Y-m-d')) {
+                                $allDay = true;
+
+                                $end = date('Y-m-d H:i:s', strtotime($end . ' + 1 days'));
+                            }
+                            //$event->getCategory();
+                            $owners = [];
+
+                            foreach ($event->getOwners() as $owner) {
+                                $owners[] = $owner->getFirstname();
+                            }
+                            $comma_separated_owners = implode(", ", $owners);
+
+                            $evts[] = [
+                                'id' => $event->getId(),
+                                'start' => $start,
+                                'end' => $end,
+                                'allDay' => $allDay,
+                                'title' =>  $eventDesc . ' ' . $event->getName() . ' | ' . $event->getProject()->getName() . ' | ' . $comma_separated_owners,
+                                //'description' => $comma_separated_owners,
+                                'url' => '/taches/' . $event->getId() . '/afficher',
+                                'backgroundColor' => $color,
+                                'textColor' => $textColor
+                            ];
+                        }
+                    }
+                }
+                //Si parameter et catégories
+                elseif ($categories) {
+                    foreach ($categories as $category) {
+                       
+
+                        //Vérification de la catégorie
+                        $cat = $taskCategoryRepository->findOneBy(['id' => $category]);
+                        //Si elle existe on cherche toutes les tâches existantes de cette catégorie
+
+                        if ($cat) {
+
+                            $tasksByThisCategory = $taskRepository->findBy(['category' => $cat]);
+                            //Et pour chaque tache trouvée on ajoute une entrée au calendrier $evts[]
+
+                            foreach ($tasksByThisCategory as $event) {
+
+                                //statut de la tache
+                                $status = $event->getStatus();
+                                $eventDesc = "";
+
+                                $color = $event->getCategory()->getColor();
+                                $textColor = $event->getCategory()->getTextColor();
+
+                                if ($status == "Annulée") {
+                                    $color = "#ee5253";
+                                    $eventDesc = "ANNULÉE";
+                                }
+
+
+                                $start = $event->getStartDate()->format('Y-m-d') . ' ' . $event->getStartHour()->format('H:i:s');
+                                $end = $event->getEndDate()->format('Y-m-d') . ' ' . $event->getEndHour()->format('H:i:s');
+
+                                $allDay = false;
+
+                                if ($event->getStartDate()->format('Y-m-d') !== $event->getEndDate()->format('Y-m-d')) {
+                                    $allDay = true;
+
+                                    $end = date('Y-m-d H:i:s', strtotime($end . ' + 1 days'));
+                                }
+                                //$event->getCategory();
+                                $owners = [];
+
+                                foreach ($event->getOwners() as $owner) {
+                                    $owners[] = $owner->getFirstname();
+                                }
+                                $comma_separated_owners = implode(", ", $owners);
+
+                                $evts[] = [
+                                    'id' => $event->getId(),
+                                    'start' => $start,
+                                    'end' => $end,
+                                    'allDay' => $allDay,
+                                    'title' =>  $eventDesc . ' ' . $event->getName() . ' | ' . $event->getProject()->getName() . ' | ' . $comma_separated_owners,
+                                    //'description' => $comma_separated_owners,
+                                    'url' => '/taches/' . $event->getId() . '/afficher',
+                                    'backgroundColor' => $color,
+                                    'textColor' => $textColor
+                                ];
+                            }
+                        }
+                    }
+                }
+                //Si parameter et ministères
+                elseif ($ministry) {
+                    //Vérification et récupération des lieux appartenant à ce ministère
+                    $locations = $locationRepository->findBy(['ministry' => $ministry]);
+                    //Vérification des tâches existantes pour ce ministère
+                    foreach ($locations as $location) {
+
+                        $tasksByLocations = $taskRepository->findBy(['location' => $location]);
+                        //Et pour chaque tache trouvée on ajoute une entrée au calendrier $evts[]
+                        foreach ($tasksByLocations as $event) {
+
+                            //statut de la tache
+                            $status = $event->getStatus();
+                            $eventDesc = "";
+
+                            $color = $event->getCategory()->getColor();
+                            $textColor = $event->getCategory()->getTextColor();
+
+                            if ($status == "Annulée") {
+                                $color = "#ee5253";
+                                $eventDesc = "ANNULÉE";
+                            }
+
+
+                            $start = $event->getStartDate()->format('Y-m-d') . ' ' . $event->getStartHour()->format('H:i:s');
+                            $end = $event->getEndDate()->format('Y-m-d') . ' ' . $event->getEndHour()->format('H:i:s');
+
+                            $allDay = false;
+
+                            if ($event->getStartDate()->format('Y-m-d') !== $event->getEndDate()->format('Y-m-d')) {
+                                $allDay = true;
+
+                                $end = date('Y-m-d H:i:s', strtotime($end . ' + 1 days'));
+                            }
+                            //$event->getCategory();
+                            $owners = [];
+
+                            foreach ($event->getOwners() as $owner) {
+                                $owners[] = $owner->getFirstname();
+                            }
+                            $comma_separated_owners = implode(", ", $owners);
+
+                            $evts[] = [
+                                'id' => $event->getId(),
+                                'start' => $start,
+                                'end' => $end,
+                                'allDay' => $allDay,
+                                'title' =>  $eventDesc . ' ' . $event->getName() . ' | ' . $event->getProject()->getName() . ' | ' . $comma_separated_owners,
+                                //'description' => $comma_separated_owners,
+                                'url' => '/taches/' . $event->getId() . '/afficher',
+                                'backgroundColor' => $color,
+                                'textColor' => $textColor
+                            ];
+                        }
+                    }
+                } 
+                //Si parameter seulement
+                else {
+                    
+                    $events = $taskRepository->findAll();
+    
+                    foreach ($events as $event) {
+                        //statut de la tache
+                        $status = $event->getStatus();
+                        $eventDesc = "";
+    
+                        $color = $event->getCategory()->getColor();
+                        $textColor = $event->getCategory()->getTextColor();
+    
+                        if ($status == "Annulée") {
+                            $color = "#ee5253";
+                            $eventDesc = "ANNULÉE";
+                        }
+    
+    
+                        $start = $event->getStartDate()->format('Y-m-d') . ' ' . $event->getStartHour()->format('H:i:s');
+                        $end = $event->getEndDate()->format('Y-m-d') . ' ' . $event->getEndHour()->format('H:i:s');
+    
+                        $allDay = false;
+    
+                        if ($event->getStartDate()->format('Y-m-d') !== $event->getEndDate()->format('Y-m-d')) {
+                            $allDay = true;
+    
+                            $end = date('Y-m-d H:i:s', strtotime($end . ' + 1 days'));
+                        }
+                        //$event->getCategory();
+                        $owners = [];
+    
+                        foreach ($event->getOwners() as $owner) {
+                            $owners[] = $owner->getFirstname();
+                        }
+                        $comma_separated_owners = implode(", ", $owners);
+    
+                        $evts[] = [
+                            'id' => $event->getId(),
+                            'start' => $start,
+                            'end' => $end,
+                            'allDay' => $allDay,
+                            'title' =>  $eventDesc . ' ' . $event->getName() . ' | ' . $event->getProject()->getName() . ' | ' . $comma_separated_owners,
+                            //'description' => $comma_separated_owners,
+                            'url' => '/taches/' . $event->getId() . '/afficher',
+                            'backgroundColor' => $color,
+                            'textColor' => $textColor
+                        ];
+                    }
+                }
+
+           }
+            else {
+               
+                $events = $taskRepository->findAll();
+
+                foreach ($events as $event) {
+                    //statut de la tache
+                    $status = $event->getStatus();
+                    $eventDesc = "";
+
+                    $color = $event->getCategory()->getColor();
+                    $textColor = $event->getCategory()->getTextColor();
+
+                    if ($status == "Annulée") {
+                        $color = "#ee5253";
+                        $eventDesc = "ANNULÉE";
+                    }
+
+
+                    $start = $event->getStartDate()->format('Y-m-d') . ' ' . $event->getStartHour()->format('H:i:s');
+                    $end = $event->getEndDate()->format('Y-m-d') . ' ' . $event->getEndHour()->format('H:i:s');
+
+                    $allDay = false;
+
+                    if ($event->getStartDate()->format('Y-m-d') !== $event->getEndDate()->format('Y-m-d')) {
+                        $allDay = true;
+
+                        $end = date('Y-m-d H:i:s', strtotime($end . ' + 1 days'));
+                    }
+                    //$event->getCategory();
+                    $owners = [];
+
+                    foreach ($event->getOwners() as $owner) {
+                        $owners[] = $owner->getFirstname();
+                    }
+                    $comma_separated_owners = implode(", ", $owners);
+
+                    $evts[] = [
+                        'id' => $event->getId(),
+                        'start' => $start,
+                        'end' => $end,
+                        'allDay' => $allDay,
+                        'title' =>  $eventDesc . ' ' . $event->getName() . ' | ' . $event->getProject()->getName() . ' | ' . $comma_separated_owners,
+                        //'description' => $comma_separated_owners,
+                        'url' => '/taches/' . $event->getId() . '/afficher',
+                        'backgroundColor' => $color,
+                        'textColor' => $textColor
+                    ];
+                }
+            }
+            //Encodage du tableau au format json pour envoi vers twig
+            //$data = json_encode($evts);
+            return $this->json($evts, 200, [], []);
+        } 
+        else {
+            return $this->json(500);
+        }
     }
 
     //méthode d'affichage des logs
@@ -820,7 +871,7 @@ class SecurityController extends AbstractController
     public function logsEvent_show(Request $request, LogEventRepository $logEventRepository)
     {
         $logs = $logEventRepository->findLastFifty();
-        return $this->render('security/log/log_show.html.twig',[
+        return $this->render('security/log/log_show.html.twig', [
             "logs" => $logs
         ]);
     }
