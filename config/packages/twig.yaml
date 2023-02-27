@@ -5,7 +5,7 @@ twig:
     globals:
         app_name: 'Pyman'
         app_version: 'Beta'
-        app_date: "déc. 2022"
+        app_date: "fév. 2023"
         app_theme: "w"
         default_admin_email: audiovideo.ac@education.gouv.fr
     date:

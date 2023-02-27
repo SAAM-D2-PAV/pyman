@@ -1,13 +1,24 @@
 #  PYMAN
 ## Gestion des demandes de prestations audiovisuelles
-> version Beta - 2022205
+> version Beta - 2022302
 <br/></br>
-Pyman est une application développée par le pôle audiovisuel du SAAM D2 (service de l'action administrative et des moyens) de l'administration centrale. https://www.education.gouv.fr/service-de-l-action-administrative-et-des-moyens-saam-6818
+Pyman est une application développée par le SAAM D2 (service de l'action administrative et des moyens) de l'administration centrale. https://www.education.gouv.fr/service-de-l-action-administrative-et-des-moyens-saam-6818
 
 Le service de l'action administrative et des moyens assure la gestion administrative, logistique et financière de l'administration centrale. Il contribue au fonctionnement des services administratifs du ministère de l'éducation nationale et de la jeunesse.
 
 
-## Features
+## Présentation
+
+L'application de gestion de projets audiovisuels est une solution qui permet de créer, gérer et suivre des projets. Elle offre une interface utilisateur conviviale et des fonctionnalités avancées pour simplifier la gestion de projets.
+
+L'application permet aux utilisateurs de créer des projets, d'y ajouter des tâches et des documents. Chaque tâche peut être attribuée à une ou plusieurs personnes être liée à du matériel, des documents, un lieu de prestation et sont classées par catégorie.
+
+L'pplication permet également de centraliser des documents et des informations sur les lieux de prestation et le matériel utilisé, facilitant ainsi la gestion des ressources pour chaque projet. Un calendrier intégré permet une lecture des tâches par jour, semaine et mois, avec la possibilité de trier et de filtrer les tâches selon différents critères.
+
+En plus de cela, l'application dispose d'un système de notification qui alerte les utilisateurs, ce qui permet de rester informé des changements importants sans avoir à surveiller constamment l'application.
+
+Enfin, l'application de gestion de projets audiovisuels offre des statistiques détaillées sur les projets, les tâches et les demandeurs.
+
 
 L'application est toujours en cours de développement avec Symfony version 5.4.* [Site de Symfony][Symfony 5] et PHP 8.0.* 15 avril 2022)
 

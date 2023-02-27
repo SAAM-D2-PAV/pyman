@@ -37,22 +37,33 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class SecurityController extends AbstractController
 {
 
-   
+/*  La méthode login() est une action contrôleur qui est définie avec une annotation @Route qui indique que cette action répond à l'URL "/connexion" et a pour nom de route "app_login". La priorité de la route est définie à 1, ce qui signifie que si plusieurs routes répondent à une même URL, celle-ci aura la priorité. 
+
+Cette méthode prend deux paramètres : $authenticationUtils et $request. $authenticationUtils est une instance de la classe AuthenticationUtils qui est fournie par le composant Security de Symfony et qui permet de récupérer les erreurs d'authentification et le dernier nom d'utilisateur saisi. $request est une instance de la classe Request qui contient les données de la requête HTTP qui a déclenché cette action.
+
+La méthode commence par vérifier si l'utilisateur est déjà connecté en appelant $this->getUser(), qui retourne l'utilisateur connecté ou null s'il n'y en a pas. Si un utilisateur est connecté, l'action redirige l'utilisateur vers la page dashboard avec return $this->redirectToRoute('dashboard');.
+
+Ensuite, la méthode utilise l'instance $authenticationUtils pour récupérer l'erreur d'authentification avec $error = $authenticationUtils->getLastAuthenticationError(); et le dernier nom d'utilisateur saisi avec $lastUsername = $authenticationUtils->getLastUsername();.
+
+Enfin, la méthode rend la vue Twig "security/login.html.twig" avec les variables $last_username et $error passées au tableau de variables. Ces variables sont utilisées pour afficher le dernier nom d'utilisateur saisi et l'erreur d'authentification éventuelle dans la vue Twig.
+*/
 
     /**
      * @Route("/connexion", name="app_login", priority=1)
      */
     public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
+        // Si l'utilisateur est déjà connecté, il est redirigé vers la page dashboard
         if ($this->getUser()) {
             return $this->redirectToRoute('dashboard');
         }
 
-        // get the login error if there is one
+        // récupération de l'erreur de connexion s'il y en a une
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
+        // récupération du dernier nom d'utilisateur saisi
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        // rendu de la vue Twig de la page de connexion avec le dernier nom d'utilisateur saisi et l'erreur s'il y en a une
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
     /**
@@ -539,7 +550,33 @@ class SecurityController extends AbstractController
                 }
             }
         } elseif ($action === 'calendarUpdater') {
+            /*
+                Récupérer certaines données de la base de données, en particulier :
 
+                Toutes les catégories de tâches.
+                Tous les ministères.
+
+                Créer un tableau vide appelé $evts pour stocker les événements qui seront affichés sur le calendrier.
+
+                Vérifier s'il y a des paramètres transmis par la requête HTTP (la variable $parameter n'est pas vide).
+
+                S'il y a des paramètres, les décoder du format JSON et les assigner aux variables $categories et $ministry.
+
+                Si les deux variables $categories et $ministry sont définies, cela signifie que l'utilisateur souhaite voir les événements filtrés par catégorie et ministère. Le code récupère toutes les tâches qui correspondent aux catégories et au ministère sélectionnés et crée un événement pour chacune d'elles, les ajoutant au tableau $evts.
+
+                Si seule la variable $categories est définie, cela signifie que l'utilisateur souhaite voir les événements filtrés par catégorie uniquement. Le code récupère toutes les tâches qui correspondent aux catégories sélectionnées et crée un événement pour chacune d'elles, les ajoutant au tableau $evts.
+
+                Pour chaque événement, le code récupère certaines informations de la base de données et crée un tableau avec les clés suivantes :
+
+                id : l'identifiant de l'événement.
+                start : la date et l'heure de début de l'événement.
+                end : la date et l'heure de fin de l'événement.
+                allDay : une valeur booléenne indiquant si l'événement dure toute la journée ou non.
+                title : le titre de l'événement, comprenant le nom de la tâche, le nom du projet et les noms des propriétaires.
+                url : l'URL où l'utilisateur peut voir plus de détails sur l'événement.
+                backgroundColor : la couleur de fond de l'événement, en fonction de sa catégorie.
+                textColor : la couleur du texte de l'événement, en fonction de sa catégorie.   
+            */
             //$start = $request->query->get('start');
             //$end = $request->query->get('end');
             
