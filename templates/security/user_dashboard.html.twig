@@ -1,7 +1,7 @@
 {% extends "back/base_back.html.twig" %}
 
 {% block title %}
-	Profil
+	Mon compte
 {% endblock %}
 
 {% block breadcrumb %}
@@ -17,99 +17,76 @@
 
     <div class="row mb-5">
       <div class="col-12 mt-3 mb-1">
-        <h4 class="text-uppercase">Mon compte</h4>
+        <h4 class="text-uppercase">Bonjour {{user.firstname}}</h4>
         <h5 class="amour">
+        Vous êtes
             {% for role in user.roles %}
+
               {% if role == "ROLE_USER" %}
-                utilisateur
+                Utilisateur
               {% elseif role == "ROLE_VIEWER" %}
-                Observateur |
+                Observateur 
               {% elseif role == "ROLE_OWNER" %}
-                Propriétaire de tâches |
+                Propriétaire de tâches 
               {% elseif role == "ROLE_EDITOR" %}
-                Editeur |
+                Editeur 
               {% else %}
-                Administrateur |
+                Administrateur
                 
               {% endif %}
             
             {% endfor %}
+            de {{app_name}}
 		    </h5>
+      </div>     
+    </div>
+    
+    {% for role in user.roles %}
+
+        {% if role == "ROLE_ADMIN" %}
+          <div class="row bg-bluebell mt-2 pb-5">
+            <div class="col-md-6">
+              <div class="p-5 rounded-3 text-white">
+                <h3>Ajouter des propriétaires de tâches</h3>
+                <p>Vous pouvez ici ajouter des propriétaires de tâches. Ils/elles apparaîtront dans la liste lors de la création d'une tâche parmis la liste suivante :
+              </div>
+            
+            </div>
+            
+            <div class="col-md-6">
+              <div class="p-5 rounded-3 text-white">
+                <h3>Envoyer le lien de création de compte</h3>
+                <p>Pour inviter une nouvelle personne à utiliser {{app_name}}. <em><a href="{{path('user_register')}}" target="_blank">Clic droit / copier le lien </a></em></p>
+              </div>
+            </div>
+          </div>  
+        {% endif %}
+            
+    {% endfor %}
+
+    
+
+   
+    <div class="row bg-casandora_yellow mt-2 pb-5">
+      <div class="col-12 mt-5">
+        <h3>Modifier mes informations</h3>
+        {% include "security/_user_edit_form.html.twig" %}
+          
       </div>
-      <div class="col-12">
+    </div>
+    <div class="row bg-fuel_town mt-4 pb-4">
+      <div class="col-12 mt-4">
+        <span><a href="{{path('app_forgot_password_request')}}" class="text-white"><i class="fa-solid fa-arrow-rotate-left"></i> Modifier mon mot de passe</a></span>
+      </div>
+      <div class="col-12 mt-4">
         <form method="post" action="{{ path('user_delete', {'id': user.id}) }}" onsubmit="return confirm('Supprimer votre profil ? vous ne pourrez plus revenir en arrière.');">
           <input type="hidden" name="_method" value="DELETE">
           <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-          <button class="btn-custom-xl bg-amour text-white">Supprimer mon compte</button>
+          <button class="btn-custom-xl bg-amour text-white"><i class="fa-solid fa-trash"></i> Supprimer mon compte</button>
         </form>
       </div>
-      
     </div>
-
-    {# <div class="row">
-
-      <div class="col-xl-4 col-sm-6 col-12"> 
-        <div class="text-white bg-wildcaribbeangreen wrap">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-                  <i class="icon-pencil font-large-2 float-left"></i>
-                </div>
-                <div class="media-body text-right">
-                  <h3>{{user.subscribedTasks | length}}</h3>
-                  <span>Tâches</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      
-
-      <div class="col-xl-4 col-sm-6 col-12">
-        <div class="text-white bg-casandora_yellow wrap">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-                  <i class="icon-graph success font-large-2 float-left"></i>
-                </div>
-                <div class="media-body text-right">
-                  <h3>Compte créé le</h3>
-                  <span>{% for ca in createdAc %}{{ ca.log | date("d/m/Y")}} {% endfor %}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xl-4 col-sm-6 col-12">
-        <div class="text-white bg-aqua_velvet wrap">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-                  <i class="icon-pointer danger font-large-2 float-left"></i>
-                </div>
-                <div class="media-body text-right">
-                  <h3>{{user.logs | length }}</h3>
-                  <span>Connexions</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div> #}
-    <div class="row">
-      
-        {% include "security/_user_edit_form.html.twig" %}
-		    
-    </div>
+    
 	
 </div>
   

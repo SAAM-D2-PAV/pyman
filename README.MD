@@ -42,6 +42,12 @@ git clone git@github.com:SAAM-D2-PAV/pyman.git
 ```
 
 ```sh
+touch .env.local
+DATABASE_URL="mysql://(user):(password)@127.0.0.1:3306/(database-name)?serverVersion=10.5.8-MariaDB"
+MAILER_DSN=smtp://localhost or your smtp server (you can use mailtrap)
+```
+
+```sh
 composer install or update
 ```
 [CKEditor]
@@ -50,11 +56,7 @@ yarn add ckeditor@^4.13.0
 yarn install/update
 ```
 
-```sh
-touch .env.local
-DATABASE_URL="mysql://(user):(password)@127.0.0.1:3306/(database-name)?serverVersion=10.5.8-MariaDB"
-MAILER_DSN=smtp://localhost or your smtp server (you can use mailtrap)
-```
+
 
 
 [Doctrine]
