@@ -31,6 +31,8 @@
             {% if role == "ROLE_ADMIN" %}
                  {{ form_label(form.roles, '', {'label_attr': {'class': 'foo'}}) }}
                  {{ form_widget(form.roles) }}
+                 {{ form_label(form.taskOwner, '', {'label_attr': {'class': 'foo mt-2'}}) }}
+                 {{ form_widget(form.taskOwner) }}
             {% endif %}
         {% endfor %}
        

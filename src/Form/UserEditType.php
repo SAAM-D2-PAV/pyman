@@ -92,6 +92,15 @@ class UserEditType extends AbstractType
                     ],
                     'multiple' => true,
                     'expanded' => true
+            ])
+            ->add('taskOwner', ChoiceType::class, [
+                'label' => 'Attribuer des tâches',
+                'choices' => [
+                    'Non' => 0,
+                    'Oui' => 1
+                   
+                ],
+                'placeholder' => '...',
             ]);
         }
        

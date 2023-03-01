@@ -115,6 +115,11 @@ class User implements UserInterface
      */
     private $logEvents;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $taskOwner;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
@@ -524,6 +529,18 @@ class User implements UserInterface
                 $logEvent->setCreatedBy(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isTaskOwner(): ?bool
+    {
+        return $this->taskOwner;
+    }
+
+    public function setTaskOwner(?bool $taskOwner): self
+    {
+        $this->taskOwner = $taskOwner;
 
         return $this;
     }

@@ -120,7 +120,7 @@ class TaskType extends AbstractType
             
             'class' => User::class,
             'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('u')->andWhere('u.office = :status')->setParameter('status', 'Pôle audiovisuel')->orderBy('u.firstname', 'ASC');
+                return $er->createQueryBuilder('u')->andWhere('u.taskOwner = :status')->setParameter('status', 1)->orderBy('u.firstname', 'ASC');
             },
             'choice_label' => 'firstname',
             'multiple' => true,

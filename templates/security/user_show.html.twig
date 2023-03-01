@@ -18,35 +18,37 @@
 
     <div class="row mb-5">
       <div class="col-12 mt-3 mb-1">
-        <h4 class="text-uppercase">{{user.firstname}} {{user.lastname}}</h4>
-        <h5 class="amour">
-            {% for role in user.roles %}
-              {% if role == "ROLE_NOTALLOW" %}
-                  - Profil non autorisé
-              {% elseif role == "ROLE_USER" %}
-                  - Utilisateur
-              {% elseif role == "ROLE_VIEWER" %}
-                  - Observateur 
-              {% elseif role == "ROLE_OWNER" %}
-                  - Propriétaire de tâches 
-              {% elseif role == "ROLE_EDITOR" %}
-                  - Editeur 
-              {% else %}
-                  - Administrateur 
-              {% endif %}
-            {% endfor %}
-		    </h5>
+       
+        
       </div>
-      <div class="col-12">
-        <form method="post" action="{{ path('user_delete', {'id': user.id}) }}" onsubmit="return confirm('Valider la suppression de ce profil ?');">
-          <input type="hidden" name="_method" value="DELETE">
-          <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-          <button class="btn-custom-lg bg-amour text-white"><i class="far fa-trash-alt"></i></button>
-        </form>
-      </div>
-      
     </div>
+    <div class="row bg-bluebell mt-2 pb-5">
+      <div class="col-md-6">
+        <div class="p-5 rounded-3 text-white">
+         <h4 class="text-uppercase">{{user.firstname}} {{user.lastname}}</h4>
+         
+          <h5>Rôles</h5>
 
+              <h5 class="amour">
+                {% for role in user.roles %}
+                  {% if role == "ROLE_NOTALLOW" %}
+                       <p>Profil non autorisé</p>
+                  {% elseif role == "ROLE_USER" %}
+                       <p>Utilisateur</p>
+                  {% elseif role == "ROLE_VIEWER" %}
+                       <p>Observateur</p> 
+                  {% elseif role == "ROLE_OWNER" %}
+                       <p>Propriétaire de tâches </p>
+                  {% elseif role == "ROLE_EDITOR" %}
+                       <p>Editeur</p> 
+                  {% else %}
+                      <p>Administrateur</p> 
+                  {% endif %}
+                {% endfor %}
+            </h5>
+        </div>
+      </div>
+    </div>
     {# <div class="row">
 
       <div class="col-xl-3 col-sm-6 col-12"> 
@@ -123,6 +125,9 @@
 
     </div> #}
     <div class="row">
+      <div class="col-12 mt-5">
+          <h3>Modifier les informations</h3>    
+      </div>
       <div class="col-6 mt-5">
 
 		    {{ form_start(form) }}
@@ -139,6 +144,18 @@
 	    </div>
       
     </div>
+    <div class="col-12 mt-5 bg-red_flag p-3">
+        
+        <div class="jumbotron text-center">
+        
+          <h3>DANGER</h3>
+          <form method="post" action="{{ path('user_delete', {'id': user.id}) }}" onsubmit="return confirm('Valider la suppression de ce profil ?');">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+          <button class="btn-custom-xl bg-amour text-white"><i class="far fa-trash-alt"></i> Supprimer ce profil</button>
+        </form>
+        </div>
+      </div>
 	
 </div>
   

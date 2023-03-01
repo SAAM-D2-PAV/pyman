@@ -98,6 +98,16 @@ bin/console doctrine:fixtures:load
 Certaines données sont accessibles via l'api.
 
 L'authentification se fait via le [bundle] Lexik JWT Authentification.
+Copier le code ci-dessous dans le fichier .env.local
+```sh
+JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
+JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
+JWT_PASSPHRASE=
+
+###> nelmio/cors-bundle ###
+CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
+###< nelmio/cors-bundle ###
+```
 
 Ne pas oublier de générer les clés SSL
 Generate the SSL keys
@@ -151,7 +161,7 @@ Pyman utilise les plugins et librairies suivantes dans son code
 Composer.json
 ```sh
  "require": {
-         "php": ">=8.0",
+        "php": ">=8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
@@ -180,7 +190,7 @@ Composer.json
         "symfony/form": "5.4.*",
         "symfony/framework-bundle": "5.4.*",
         "symfony/mailer": "5.4.*",
-        "symfony/maker-bundle": "^1.29",
+        "symfony/maker-bundle": "1.43",
         "symfony/mime": "5.4.*",
         "symfony/monolog-bundle": "^3.0",
         "symfony/property-access": "5.4.*",
@@ -191,7 +201,7 @@ Composer.json
         "symfony/stopwatch": "5.4.*",
         "symfony/string": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
-        "symfony/ux-autocomplete": "^2.2",
+        "symfony/ux-autocomplete": "^2.7",
         "symfony/validator": "5.4.*",
         "symfony/var-dumper": "5.4.*",
         "symfony/web-profiler-bundle": "5.4.*",
@@ -209,8 +219,8 @@ package.json
         "@hotwired/stimulus": "^3.0.0",
         "@symfony/stimulus-bridge": "^3.0.0",
         "@symfony/ux-autocomplete": "file:vendor/symfony/ux-autocomplete/assets",
-        "bootstrap": "^4.6.0",
         "@symfony/webpack-encore": "^2.0.0",
+        "bootstrap": "^4.6.0",
         "core-js": "^3.0.0",
         "file-loader": "^6.0.0",
         "jquery": "^3.5.1",
@@ -223,12 +233,12 @@ package.json
         "webpack-notifier": "^1.6.0"
     },
 "dependencies": {
-     "animate.css": "^4.1.1",
-     "chart.js": "^3.6.0",
-     "ckeditor": "^4.12.1",
-     "shufflejs": "^6.0.0",
-     "simple-datatables": "^3.0.2",
-     "sweetalert2": "^11.3.8"
+    "animate.css": "^4.1.1",
+    "chart.js": "^3.6.0",
+    "ckeditor": "^4.12.1",
+    "shufflejs": "^6.0.0",
+    "simple-datatables": "^3.0.2",
+    "sweetalert2": "^11.3.8"
 }
 ```
 
