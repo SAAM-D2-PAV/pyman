@@ -43,6 +43,7 @@
         "symfony/string": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
         "symfony/ux-autocomplete": "^2.7",
+        "symfony/ux-chartjs": "^2.7",
         "symfony/validator": "5.4.*",
         "symfony/var-dumper": "5.4.*",
         "symfony/web-profiler-bundle": "5.4.*",

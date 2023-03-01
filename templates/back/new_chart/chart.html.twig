@@ -1,0 +1,40 @@
+{% extends "back/base_back.html.twig" %}
+
+{% block title %}
+	Statistiques
+{% endblock %}
+{% block breadcrumb %}
+	<li class="breadcrumb-item">
+		<a href="">statistiques</a>
+	</li>
+{% endblock %}
+
+{% block  back_main_content %}
+    <div class="col-12 mb-3">
+		<h2 class="mb-5">Statistiques sur la période du {{ startDate | date('d-m-Y') }} au {{ endDate | date('d-m-Y') }}</h2>
+		{% if year == 2021 %}
+			<h5 class="amour">A noter que pour 2021 les données sont comptabilisées à partir de septembre, soit le lancement de l'application</h5>
+		{% endif %}
+	</div>
+
+    <div class="col-md-8 mb-4">
+        <h4>Choisir une période</h4>
+        {{ form_start(form, { 'attr': {'class': '_form'}}) }}
+
+        {{ form_errors(form) }}
+
+        {{ form_widget(form, { 'attr': {'class': 'foo ' } }) }}
+
+        <button type="submit" class="btn-custom-lg {{btnLabel}} text-white ">
+            <i class="fas fa-{{ico}}"></i>
+            {{ btnText }}
+            {{ form_end(form) }}
+        </button>
+    </div>
+
+
+
+{{ render_chart(chart) }}
+
+
+{% endblock %}
