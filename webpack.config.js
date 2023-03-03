@@ -27,9 +27,8 @@ Encore
     .addEntry('task','./assets/js/task.js')
     .addEntry('project','./assets/js/project.js')
     .addEntry('applicant','./assets/js/applicant.js')
-    .addEntry('chart','./assets/js/chart.js')
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
-    .enableStimulusBridge('./assets/controllers.json')
+    Encore.enableStimulusBridge('./assets/controllers.json')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

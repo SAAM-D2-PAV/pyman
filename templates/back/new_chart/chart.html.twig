@@ -10,15 +10,30 @@
 {% endblock %}
 
 {% block  back_main_content %}
+<div class="row">
     <div class="col-12 mb-3">
-		<h2 class="mb-5">Statistiques sur la période du {{ startDate | date('d-m-Y') }} au {{ endDate | date('d-m-Y') }}</h2>
+		
+        <div class="alert bg-blue_flag " role="alert">
+           <h2 class="mb-5">Statistiques sur la période du {{ startDate | date('d M Y') }} au {{ endDate | date('d M Y') }}</h2>
+            <h4> {{ projectsCount }} projets et {{ tasksCount }} tâches terminées</h4> 
+        </div>
 		{% if year == 2021 %}
 			<h5 class="amour">A noter que pour 2021 les données sont comptabilisées à partir de septembre, soit le lancement de l'application</h5>
 		{% endif %}
 	</div>
+    <div class="col-4 mb-4">
+        <h6 class="m-0 p-3 font-weight-bold bg-red_flag text-white">Statistiques</h6>
+        <div class="card-body">
+            <div class="text-center">
+                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                    src="{{asset('build/images/CHART01.svg')}}" alt="">
+            </div>
 
-    <div class="col-md-8 mb-4">
-        <h4>Choisir une période</h4>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+     <div class="col-md-4 mb-4 amour">
+        <h4>Modifier la période</h4>
         {{ form_start(form, { 'attr': {'class': '_form'}}) }}
 
         {{ form_errors(form) }}
@@ -31,10 +46,65 @@
             {{ form_end(form) }}
         </button>
     </div>
-
-
-
-{{ render_chart(chart) }}
-
-
+    <div class="col-md-8">
+        <h3 class="col-12 mb-3">Projets cloturés</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableFull" width="100%" cellspacing="0">
+                <thead class="bg-nasu_purple text-white">
+                    <tr class="default-color">
+                        <th>Projet</th>
+                        <th>Catégorie</th>
+                        <th> Direction / service </th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    {% for  project in projects %}
+                    <tr>
+                        <td><a href="{{path('project_show', {slug:project.slug,id:project.id} )}}">{{project.name }}</a></td>
+                        <td>
+                            {{project.category.name}}
+                        </td>
+                        <td class="{% if project.deliveryDate <= date()%} amour {% endif %}">
+                            {{ project.requestBy.department }}
+                        </td>  
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class=" col-4 mb-4">
+		
+		<div class="card-body">
+			<div class="text-center">
+				<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+					 src="{{asset('build/images/CHART02.svg')}}" alt="">
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+    <div class="row mt-5">
+        <h3 class="col-md-12 mb-3"> {{ tasksCount }} tâches terminées (indépendamment des projets)</h3>
+        <div class="col-md-6 mt-4 mb-5">
+            <strong> Nombre de tâches réalisées par mois </strong> toutes catégories confondues. <br>
+            <ul>
+                {% for cat in taskCat %}
+                    <li>{{ cat.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6 mb-5">
+           {{ render_chart(chart01) }}
+        </div>   
+    </div>
+    <div class="row mt-5">
+		<h3 class="col-md-12 mb-3">{{ projectsCount }} projets (par direction)</h3>
+       
+         <div class="col-md-8 mt-4 mb-5">
+           {{ render_chart(chart02) }}
+        </div>
+	</div>
+</div>
 {% endblock %}

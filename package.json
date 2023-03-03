@@ -27,7 +27,6 @@
     },
     "dependencies": {
         "animate.css": "^4.1.1",
-        "chart.js": "^3.6.0",
         "ckeditor": "^4.12.1",
         "shufflejs": "^6.0.0",
         "simple-datatables": "^3.0.2",
