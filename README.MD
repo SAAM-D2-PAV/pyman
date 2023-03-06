@@ -48,24 +48,17 @@ MAILER_DSN=smtp://localhost or your smtp server (you can use mailtrap)
 ```
 
 ```sh
-composer install or update
+composer update
 ```
-[CKEditor]
 ```sh
-yarn add ckeditor@^4.13.0
-yarn install/update
+composer update
 ```
 
-
-
+```sh
+yarn install
+```
 
 [Doctrine]
-
-
-![Modèle de données][model-db]
-
-![Schéma de données][schema-db]
-
 
 ```sh
 php bin/console doctrine:database:create
@@ -242,9 +235,6 @@ package.json
 }
 ```
 
-## License
-
-**Free Software, Hell Yeah!**
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
