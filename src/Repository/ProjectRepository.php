@@ -224,16 +224,21 @@ class ProjectRepository extends ServiceEntityRepository
    
     public function findProjectByStatusAndDate($status, $dateA, $dateB)
     {
-        return $this->createQueryBuilder('p')
 
-            ->where('p.deliveryDate BETWEEN :dateA AND :dateB')
-            ->andWhere('p.status = :status')
-            ->setParameter('status', 'Fait')
-            ->setParameter('dateA', $dateA)
-            ->setParameter('dateB', $dateB)
-            ->getQuery()
-            ->getResult()
-        ;
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery(
+            'SELECT p FROM App\Entity\Project p
+            WHERE p.deliveryDate 
+            BETWEEN :dateA AND :dateB
+            AND p.status = :status');
+        
+        $query->setParameter('status', $status)
+              ->setParameter('dateA', $dateA)
+              ->setParameter('dateB', $dateB);
+
+
+         return $query->getResult();
     }
     /**
      * PROJECTS faits vers API APIController

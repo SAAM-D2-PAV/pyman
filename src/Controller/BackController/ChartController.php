@@ -22,7 +22,7 @@ class ChartController extends AbstractController
 
      //STATS
     /**
-     * @Route("/show", name="stats_show")
+     * @Route("/show_old", name="stats_show_old")
      */
     public function show(Request $request, TaskRepository $taskRepository, ProjectRepository $projectRepository, PaginatorInterface $paginatorInterface)
     {

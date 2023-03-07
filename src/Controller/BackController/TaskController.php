@@ -71,9 +71,9 @@ class TaskController extends AbstractController
         if (!$tasks) {
             $emptyList = true;
          }
-         $tasksPaginated = $paginatorInterface->paginate($tasks, $request->query->getInt('page',1), 5000);
+         //$tasksPaginated = $paginatorInterface->paginate($tasks, $request->query->getInt('page',1), 5000);
          return $this->render('back/task/tasks_list.html.twig',[
-            'tasks' => $tasksPaginated,
+            'tasks' => $tasks,
             'emptyList' => $emptyList,
             'dates' => $uniqueDates,
             'selectedDate' => $selectedDate
@@ -92,9 +92,9 @@ class TaskController extends AbstractController
         if (!$tasks) {
             $emptyList = true;
          }
-         $tasksPaginated = $paginatorInterface->paginate($tasks, $request->query->getInt('page',1), 500);
+         //$tasksPaginated = $paginatorInterface->paginate($tasks, $request->query->getInt('page',1), 500);
          return $this->render('back/task/todo_tasks_list.html.twig',[
-            'tasks' => $tasksPaginated,
+            'tasks' => $tasks,
             'emptyList' => $emptyList,
             'dates' => [],
         ]);
@@ -112,9 +112,9 @@ class TaskController extends AbstractController
         if (!$tasks) {
             $emptyList = true;
          }
-         $tasksPaginated = $paginatorInterface->paginate($tasks, $request->query->getInt('page',1), 500);
+         //$tasksPaginated = $paginatorInterface->paginate($tasks, $request->query->getInt('page',1), 500);
          return $this->render('back/task/inprogress_tasks_list.html.twig',[
-            'tasks' => $tasksPaginated,
+            'tasks' => $tasks,
             'emptyList' => $emptyList,
             'dates' => [],
         ]);

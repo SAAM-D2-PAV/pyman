@@ -19,7 +19,7 @@ class ProjectRateByApplicant
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Project::class, inversedBy="requestBy", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Project::class, inversedBy="applicantRating", cascade={"persist", "remove"})
      */
     private $project;
 
