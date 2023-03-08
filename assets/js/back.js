@@ -449,10 +449,10 @@ let notifer = {
 
 					}
 					if (value === true){
-						let audio = new Audio("/build/audio/notification.32bd321f.mp3");
+						let audio = new Audio("/build/audio/notification.d3a40fc5.mp3");
 						audio.play();
 
-						$("#ajaxModalBtn").html("<i class=\"far fa-bell\"></i><span class=\"badge bg-danger text-white rounded-pill\"> new</span>");
+						$("#ajaxModalBtn").html("<i class=\"far fa-bell red_flag\"></i>");
 					}
 					count++;
 
