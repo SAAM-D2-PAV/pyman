@@ -15,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-use function App\Service\date_range;
 
 #[Route('/stats')]
 class NewChartController extends AbstractController
@@ -406,10 +405,8 @@ class NewChartController extends AbstractController
             $date = $stream->getStartDate()->format('Y m');
             $allStreamingPerDate[] = $date; 
         }
-        dump($allStreamingPerDate);
 
         $allStreamingPerMonth = array_count_values($allStreamingPerDate);
-        dump($allStreamingPerMonth);
 
         $chart05 = $chartBuilder->createChart(Chart::TYPE_LINE);
         $chart05->setData([
@@ -418,8 +415,11 @@ class NewChartController extends AbstractController
                 [
                     'label' => 'Streaming pour '.$year,
                     'borderColor' => 'rgba(255, 0, 15)',
-                    'backgroundColor' => 'rgba(255, 0, 15)',
+                    'backgroundColor' => 'rgba(255, 0, 15, .5)',
                     'borderWidth' => 2,
+                    'pointStyle' => 'circle',
+                    'pointRadius' => 10,
+                    'pointHoverRadius' => 15,
                     'data' => array_values($allStreamingPerMonth),
                 ],
             ]
