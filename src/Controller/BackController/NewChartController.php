@@ -83,6 +83,7 @@ class NewChartController extends AbstractController
         $allDoneProjectsCounter = 0;
         $allDoneProjectsPerDirection = [];
         $allLocations = [];
+        $allStreaming = [];
 
         //Infos projets réalisés
         foreach ($doneProjectsPerPeriod  as $project) {
@@ -110,6 +111,7 @@ class NewChartController extends AbstractController
             //Tableau des catégories
             $category = $task->getCategory()->getName();//Voir graph sur les taches pour chaque catégorie
             $allTasksPerCategory[] = $category;
+
         }
         //Infos tâches réalisés moins 1 année
         foreach ($doneTasksPerPeriodMinusOne as $task){
@@ -120,7 +122,9 @@ class NewChartController extends AbstractController
             //Insertion de cette date dans le tableau
             $allDoneTasksMinusOne[] = $date; 
             //Compteur de tâches
-            $allDoneTasksMinusOneCounter ++;          
+            $allDoneTasksMinusOneCounter ++;    
+            //On récupère tous les streaming réalisés
+            $task->getStream() == 1 ? $allStreaming[] = $task : "";   
         }
         //******************/
         //PREMIER GRAPH TACHES PAR MOIS (TTES TACHES CONFONDUES)
@@ -393,8 +397,34 @@ class NewChartController extends AbstractController
             ]
         ]);
 
-         // FIN DU TROISIEME GRAPH TACHES PAR CATEGORIE  
+         // FIN DU QUATRIEME GRAPH TACHES PAR CATEGORIE  
          //******************/
+        //CINQUIEME GRAPH STREAMING
+        sort($allStreaming);
+
+        foreach ($allStreaming as $stream) {
+            $date = $stream->getStartDate()->format('Y m');
+            $allStreamingPerDate[] = $date; 
+        }
+        dump($allStreamingPerDate);
+
+        $allStreamingPerMonth = array_count_values($allStreamingPerDate);
+        dump($allStreamingPerMonth);
+
+        $chart05 = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $chart05->setData([
+            'labels' => array_keys($allStreamingPerMonth),
+            'datasets' => [
+                [
+                    'label' => 'Streaming pour '.$year,
+                    'borderColor' => 'rgba(255, 0, 15)',
+                    'backgroundColor' => 'rgba(255, 0, 15)',
+                    'borderWidth' => 2,
+                    'data' => array_values($allStreamingPerMonth),
+                ],
+            ]
+        ]);
+
          //******************/
         return $this->render('back/new_chart/chart.html.twig', [
             'btnText' => 'Filtrer',
@@ -409,11 +439,14 @@ class NewChartController extends AbstractController
             'chart02' => $chart02,
             'chart03' => $chart03,
             'chart04' => $chart04,
+            'chart05' => $chart05,
             'projectsCount' => $allDoneProjectsCounter,
             'tasksCount' =>  $allDoneTasksCounter,
             'tasksCountMinusOne' =>  $allDoneTasksMinusOneCounter,
             'projects' => $doneProjectsPerPeriod,
             'taskCat' => $taskCategories,
+            'tasks' => $doneTasksPerPeriod,
+            'allStreaming' => $allStreaming
         ]);
     }
 }
