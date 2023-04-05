@@ -20,7 +20,7 @@
         {% else %}
                     
                 <div class="col-12">
-                    <h2 class="amour"> {{ tasks.getTotalItemCount }}  tâches  </h2>
+                    <h2 class="amour"> {{ tasks|length }}  tâches  </h2>
                 </div>
                 <div class="col-12 text-center">
                     <!-- Illustrations -->
@@ -51,11 +51,9 @@
                                 <tr class="default-color">
                                     <th>Nom</th>
                                     <th>Projet</th>
-                                    <th>{{ knp_pagination_sortable(tasks, 'Catégorie', 'category.name') }}</th> 
-                                   
-                                        <th>{{ knp_pagination_sortable(tasks, 'Début de la tâche','startDate') }}</th>
-                                 
-                                    <th>{{ knp_pagination_sortable(tasks, 'Statut', 'status') }}</th>
+                                    <th>Catégorie</th> 
+                                    <th>Début de la tâche</th>
+                                    <th>Statut</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -79,9 +77,6 @@
                             
                             </tbody>
                         </table>
-                    </div>
-                    <div class="navigation">
-                        {{ knp_pagination_render(tasks,'_pagination.html.twig') }}
                     </div>
 			    </div>
 		

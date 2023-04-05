@@ -1,0 +1,222 @@
+{% extends "back/base_back.html.twig" %}
+
+{% block title %}
+	Statistiques
+{% endblock %}
+{% block breadcrumb %}
+	<li class="breadcrumb-item">
+		<a href="">statistiques</a>
+	</li>
+{% endblock %}
+
+{% block  back_main_content %}
+<div class="row">
+
+    <div class="col-12 mb-3">
+        <div class="row alert bg-blue_flag" role="alert">
+            <div class="col-md-12">
+                <h2 class="mb-5">Statistiques sur la période du {{ startDate | date('d M Y') }} au {{ endDate | date('d M Y') }}</h2>
+                <h4> {{ projectsCount }} projets et {{ tasksCount }} tâches terminées</h4> 
+                {% if year == 2021 %}
+                    <h5 class="amour">A noter que pour 2021 les données sont comptabilisées à partir de septembre, soit le lancement de l'application</h5>
+                {% endif %}
+            </div>
+            
+
+            <div class="col-md-4 mb-4">
+
+                <div class="card-body">
+                    <div class="text-center">
+                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                            src="{{asset('build/images/CHART01.svg')}}" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4"></div>
+
+            <div class="col-md-4 mb-4 amour">
+                <h4>Modifier la période</h4>
+                {{ form_start(form, { 'attr': {'class': '_form'}}) }}
+
+                {{ form_errors(form) }}
+
+                {{ form_widget(form, { 'attr': {'class': 'foo ' } }) }}
+
+                <button type="submit" class="btn-custom-lg {{btnLabel}} text-white ">
+                    <i class="fas fa-{{ico}}"></i>
+                    {{ btnText }}
+                    {{ form_end(form) }}
+                </button>
+            </div>
+
+        </div>
+
+		
+
+	</div>
+   
+    
+     
+    <div class="col-md-12">
+        <h3 class="col-12 mb-3">{{ projectsCount }} projets cloturés</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableFull" width="100%" cellspacing="0">
+                <thead class="bg-nasu_purple text-white">
+                    <tr class="default-color">
+                        <th>Projet</th>
+                        <th>Catégorie</th>
+                        <th> Direction / service </th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    {% for  project in projects %}
+                    <tr>
+                        <td><a href="{{path('project_show', {slug:project.slug,id:project.id} )}}">{{project.name }}</a></td>
+                        <td>
+                            {{project.category.name}}
+                        </td>
+                        <td class="{% if project.deliveryDate <= date()%} amour {% endif %}">
+                            {{ project.requestBy.department }}
+                        </td>  
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+		
+       
+         <div class="col-md-10 mb-5">
+           {{ render_chart(chart02) }}
+        </div>
+	
+        <div class="col-md-2 bg-bluebell p-2 text-white">
+            <h4>Nombre total de projets réalisés sur la période.</h4>
+            <p>Aperçu des demandes de projets par direction.</p>
+            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+					 src="{{asset('build/images/CHART01.svg')}}" alt="">
+        </div>
+    </div>
+</div>
+<div class="col-12">
+
+    <div class="row mt-5">
+      
+        <h3 class="col-md-12 mb-3 bg-blue_chart_0 text-white p-2"> {{ tasksCount }} tâches terminées</h3>
+        <h5 class="col-md-12 mb-3  p-2">période du {{ startDate | date('d M Y') }} au {{ endDate | date('d M Y') }}</h5>
+        <div class="col-md-6 mt-4 mb-5 bg-bluebell text-white p-2">
+            <strong> Nombre de tâches réalisées par mois </strong> toutes catégories confondues. <br>
+            <ul>
+                {% for cat in taskCat %}
+                    <li>{{ cat.name }}</li>
+                {% endfor %}
+            </ul>
+            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+					 src="{{asset('build/images/TASK.svg')}}" alt="">
+        </div>
+        <div class="col-md-6 mb-5">
+           {{ render_chart(chart01) }}
+            {{ render_chart(chart01B) }}
+        </div>   
+    </div>
+
+    <div class="row p-3 rounded-2 text-center">
+       <div class="col-md-6 mt-5">
+            <h3 class="col-md-12 mb-3 bg-nasu_purple text-white p-3 rounded-2"> Nombre de tâches réalisées par catégorie</h3>
+            <h5 class="col-md-12 mb-3">période du {{ startDate | date('d M Y') }} au {{ endDate | date('d M Y') }}</h5>
+            {{ render_chart(chart04) }}
+       </div>
+       <div class="col-md-6 mt-5 text-center">
+            <h3 class="col-md-12 mb-3 bg-nasu_purple text-white p-3 rounded-2"> Nombre de tâches réalisées par lieu</h3>
+            <h5 class="col-md-12 mb-3">période du {{ startDate | date('d M Y') }} au {{ endDate | date('d M Y') }}</h5>
+            {{ render_chart(chart03) }}
+	    </div>   
+        <div class="col-md-12">
+            <h3 class="col-md-12 mb-3 bg-nasu_purple text-white p-3 rounded-2">{{allStreaming | length }} Prestations avec streaming</h3>
+            <h5 class="col-md-12 mb-3">période du {{ startDate | date('d M Y') }} au {{ endDate | date('d M Y') }}</h5>
+        </div>
+         <div class="col-md-6 mt-5 text-center">
+            
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTableTask" width="100%" cellspacing="0">
+                    <thead class="bg-blue_flag text-white">
+                        <tr class="default-color">
+                            <th>Tâche</th>
+                            <th>Catégorie</th>
+                            <th> Date </th>
+                            <th> Projet </th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for  task in allStreaming %}
+                        <tr>
+                            <td>
+                                {{task.project.name}}
+                            </td>
+                            <td>
+                                {{task.category.name}}
+                            </td>
+                            <td>
+                                {{task.startDate | date('d m Y')}}
+                            </td>
+                            <td>
+                                 <a href="{{path('task_show', {id:task.id} )}}">{{task.name }}</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+            </div>
+	    </div>   
+        <div class="col-md-6 mt-5 text-center">
+            {{ render_chart(chart05) }}
+	    </div>   
+    </div>
+</div>
+
+
+<div class="col-md-12">
+        <h3 class="col-12 mb-3">Toute l'activité sur la période</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableFull2" width="100%" cellspacing="0">
+                <thead class="bg-blue_flag text-white">
+                    <tr class="default-color">
+                        <th>Tâche</th>
+                        <th>Catégorie</th>
+                        <th>Lieu</th>
+                        <th> Début </th>
+                        <th> Fin </th>
+                        <th> Projet </th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    {% for  task in tasks %}
+                    <tr>
+                        <td><a href="{{path('task_show', {id:task.id} )}}">{{task.name }}</a></td>
+                        <td>
+                            {{task.category.name}}
+                        </td>
+                         <td>
+                            {{ task.location.ministry }}
+                        </td>  
+                        <td>
+                           {{task.startDate | date('d m Y')}}
+                        </td>  
+                        <td>
+                           {{task.endDate | date('d m Y')}}
+                        </td>  
+                        <td>
+                            {{task.project.name}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

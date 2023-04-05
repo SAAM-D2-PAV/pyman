@@ -1,7 +1,3 @@
-
-// any CSS you import will output into a single css file (app.css in this case)
-//COLORS
-
 import '../styles/back.scss';
 import '../styles/_back_navbar.scss';
 
@@ -24,9 +20,19 @@ $(document).ready(function(){
 
 	};
 	fullHeight();
-
+	//GESTION DU MENU DE NAVIGATION
+	let nav = localStorage.getItem('nav');
+	if (nav == 'cachée') {
+		$('#sidebar').addClass('active');
+	}
 	$('#sidebarCollapse').on('click', function () {
-         $('#sidebar').toggleClass('active');
+		$('#sidebar').toggleClass('active');
+		if ($('#sidebar').hasClass('active')) {
+			localStorage.setItem('nav', 'cachée');
+		}
+		else{
+			localStorage.setItem('nav', 'visible');
+		}
     });
 
 	//FORMULAIRE D'UPLOAD DE FICHIER
@@ -443,10 +449,10 @@ let notifer = {
 
 					}
 					if (value === true){
-						let audio = new Audio("/build/audio/notification.32bd321f.mp3");
+						let audio = new Audio("/build/audio/notification.d3a40fc5.mp3");
 						audio.play();
 
-						$("#ajaxModalBtn").html("<i class=\"far fa-bell\"></i><span class=\"badge bg-danger text-white rounded-pill\"> new</span>");
+						$("#ajaxModalBtn").html("<i class=\"far fa-bell red_flag\"></i>");
 					}
 					count++;
 

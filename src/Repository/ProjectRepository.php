@@ -79,6 +79,7 @@ class ProjectRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
     // TODO problème avec cette méthode
+    //Vérifier les paramètres de dates
     /**
      * PROJECTS faits annulés refusés
      */
@@ -220,40 +221,24 @@ class ProjectRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
-    // TODO problème avec cette méthode 
-    // OK si projet non noté par applicant
-    // DOWN le cas contraire chart 
-    //App\Entity\Project::getRequestBy(): Return value must be of type ?App\Entity\Applicant, App\Entity\ProjectRateByApplicant returned
-
+   
     public function findProjectByStatusAndDate($status, $dateA, $dateB)
     {
-        $entityManager = $this->getEntityManager();
 
-        $query = $entityManager->createQuery(
-            'SELECT p
-            FROM App\Entity\Project p
-            WHERE p.status = :status
-            AND p.deliveryDate > :dateA
-            AND p.deliveryDate < :dateB
-            ORDER BY p.deliveryDate ASC'
-        )->setParameters([
-            'dateA' => $dateA,
-            'dateB' => $dateB,
-            'status' => $status
-        ]);
-        // returns an array of Product objects
-        return $query->getResult();
-        // return $this->createQueryBuilder('p')
+        $em = $this->getEntityManager();
 
-        //     ->where('p.deliveryDate BETWEEN :dateA AND :dateB')
-        //     ->andWhere('p.status = :status')
-        //     ->setParameter('status', $status)
-        //     ->setParameter('dateA', $dateA)
-        //     ->setParameter('dateB', $dateB)
+        $query = $em->createQuery(
+            'SELECT p FROM App\Entity\Project p
+            WHERE p.deliveryDate 
+            BETWEEN :dateA AND :dateB
+            AND p.status = :status');
+        
+        $query->setParameter('status', $status)
+              ->setParameter('dateA', $dateA)
+              ->setParameter('dateB', $dateB);
 
-        //     ->getQuery()
-        //     ->getResult()
-        //     ;
+
+         return $query->getResult();
     }
     /**
      * PROJECTS faits vers API APIController

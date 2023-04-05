@@ -36,11 +36,8 @@
             {% else %}
 
                 <div class="col-12 mb-5">
-                    <h2 class="amour"> {{ projects.getTotalItemCount }} projets clos</h2>
+                    <h2 class="amour"> {{ projects|length }} projets clos</h2>
                 </div>
-
-                
-                
                     <div class="col-12 mb-3" id="">
                             {% set val = 'active' %}
                             {% set val2 = 'active' %}
@@ -53,44 +50,22 @@
                            
                                 <a class="p-2 mr-2 bg-green_chart_0 text-white btn-custom-sm {{ val2 }}"  href="{{path('completed_projects_list')}}">tous</a>  
                     </div>
-                
-
-
                 <div class="card col-12">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTableFull" width="100%" cellspacing="0">
                             <thead class="bg-nasu_purple text-white">
                                 <tr class="default-color">
                                     <th>Nom</th>
-                                    <th>
-
-                                        Porté par
-
-                                    </th>
+                                    <th>Porté par</th>
                                     <th>Direction</th>
-                                    <th>
-                                    {% if projects.isSorted(['a.date', 'a.time']) %} class="sorted"{% endif %}
-
-                                        {{ knp_pagination_sortable(projects, 'Date d\'échéance','deliveryDate') }}
-
-                                    </th>
-                                    <th>{{ knp_pagination_sortable(projects, 'Statut', 'status') }}</th>
+                                    <th> Date d'échéance</th>
+                                    <th>Statut</th>
                                     <th>Retour interne</th>
-                                    <th>
-
-                                        {{ knp_pagination_sortable(projects, 'Satisfaction', 'applicantRating.note') }}
-
-                                    </th>
+                                    <th>Satisfaction</th>
                                 </tr>
-                                
                             </thead>
                             <tbody>
-
                                 {% for  project in projects %}
-
-
-
-
                                         <tr>
                                             <td><a href="{{path('project_show', {slug:project.slug,id:project.id} )}}">{{project.name}}</a>  </td>
 
@@ -121,8 +96,6 @@
                                                     {% if project.rating == 3 %}
                                                         <i class="far fa-star"></i>
                                                     {% endif %}
-
-
                                                 {% endif %}
                                             </td>
                                             <td class="text-center">
@@ -142,27 +115,13 @@
                                                 {% else %}
                                                     Non noté
                                                 {% endif %}
-
                                             </td>
-
-
                                         </tr>
-
                                 {% endfor %}
-                                
-                            
                             </tbody>
                         </table>
                     </div>
-                    <div class="navigation">
-                        {{ knp_pagination_render(projects,'_pagination.html.twig') }}
-                    </div>
 			    </div>
-                
-    
-                
             {% endif %}
-			
 		</div>
-	
 {% endblock %}

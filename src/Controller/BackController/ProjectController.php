@@ -229,12 +229,10 @@ class ProjectController extends AbstractController
             }
         }
         //ici on a nos projets triés par date dans le tableau  $nbDoneProjects[]
-
-
-         $projetsPaginated = $paginatorInterface->paginate($nbDoneProjects, $request->query->getInt('page',1), 500);
+         //$projetsPaginated = $paginatorInterface->paginate($nbDoneProjects, $request->query->getInt('page',1), 500);
 
          return $this->render('back/project/completed_projects_list.html.twig',[
-            'projects' => $projetsPaginated,
+            'projects' => $nbDoneProjects,
             'emptyList' => $emptyList,
              'dates' => $uniqueDates,
              'selectedDate' => $selectedDate
