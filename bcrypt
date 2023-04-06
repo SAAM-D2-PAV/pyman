@@ -1,0 +1,17 @@
+<?php
+echo "///////////";
+echo "ENCRYPT PROGRAM";
+echo "/////////// \n";
+
+// Input section
+// get user input
+$line = (string)readline("Mot de passe à crypter : ");
+$salt = uniqid();
+$hash_line = crypt($line, $salt);
+
+
+echo "\n
+Mot de passe crypté : " . $hash_line . " \n 
+//////////////////////\n
+Pour un hash en production : https://www.bcrypt.fr/ \n
+";
