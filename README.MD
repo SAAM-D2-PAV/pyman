@@ -161,7 +161,7 @@ Pyman utilise les plugins et librairies suivantes dans son code
 Composer.json
 ```sh
  "require": {
-        "php": ">=8.0",
+       "php": ">=8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
@@ -202,6 +202,8 @@ Composer.json
         "symfony/string": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
         "symfony/ux-autocomplete": "^2.7",
+        "symfony/ux-chartjs": "^2.7",
+        "symfony/ux-react": "^2.7",
         "symfony/validator": "5.4.*",
         "symfony/var-dumper": "5.4.*",
         "symfony/web-profiler-bundle": "5.4.*",
@@ -215,30 +217,38 @@ Composer.json
 ```
 package.json
 ```sh
-"devDependencies": {
+"dependencies": {
+        "@babel/preset-react": "^7.18.6",
         "@hotwired/stimulus": "^3.0.0",
         "@symfony/stimulus-bridge": "^3.0.0",
         "@symfony/ux-autocomplete": "file:vendor/symfony/ux-autocomplete/assets",
+        "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/assets",
+        "@symfony/ux-react": "file:vendor/symfony/ux-react/assets",
         "@symfony/webpack-encore": "^2.0.0",
+        "autoprefixer": "^10.4.14",
         "bootstrap": "^4.6.0",
+        "chart.js": "^3.4.1",
         "core-js": "^3.0.0",
         "file-loader": "^6.0.0",
         "jquery": "^3.5.1",
         "popper.js": "^1.16.1",
+        "postcss": "^8.4.22",
+        "postcss-loader": "^7.2.4",
+        "react": "^18.0",
+        "react-dom": "^18.0",
         "regenerator-runtime": "^0.13.2",
         "sass": "^1.32.8",
         "sass-loader": "^12.6.0",
         "stimulus": "^2.0.0",
+        "tailwindcss": "^3.3.1",
         "tom-select": "^2.0.1",
-        "webpack-notifier": "^1.6.0"
-    },
-"dependencies": {
-    "animate.css": "^4.1.1",
-    "chart.js": "^3.6.0",
-    "ckeditor": "^4.12.1",
-    "shufflejs": "^6.0.0",
-    "simple-datatables": "^3.0.2",
-    "sweetalert2": "^11.3.8"
+        "webpack-notifier": "^1.6.0",
+        "animate.css": "^4.1.1",
+        "axios": "^1.3.5",
+        "ckeditor": "^4.12.1",
+        "shufflejs": "^6.0.0",
+        "simple-datatables": "^3.0.2",
+        "sweetalert2": "^11.3.8"
 }
 ```
 

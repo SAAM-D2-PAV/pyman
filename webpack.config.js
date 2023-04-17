@@ -62,6 +62,7 @@ Encore
 
     // enables Sass/SCSS support
     .enableSassLoader()
+    .enablePostCssLoader()
 
     .copyFiles([
         {from: './assets/images', to: 'images/[path][name].[hash:8].[ext]'},
