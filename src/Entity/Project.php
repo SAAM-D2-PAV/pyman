@@ -94,7 +94,9 @@ class Project
      */
     private $createdBy;
 
-    
+     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="projects")
+     */
     private $updatedBy;
 
     /**

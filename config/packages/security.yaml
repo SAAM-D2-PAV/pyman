@@ -22,12 +22,12 @@ security:
                 check_path: /api/login_check # or api_login_check as defined in config/routes.yaml
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
-        api:
-            pattern:   ^/api
-            stateless: true
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+        # api:
+        #     pattern:   ^/api
+        #     stateless: true
+        #     guard:
+        #         authenticators:
+        #             - lexik_jwt_authentication.jwt_token_authenticator
 
         main:
             anonymous: true
@@ -49,7 +49,7 @@ security:
          - { path: ^/materiel, roles: ROLE_OWNER }
          - { path: ^/contacts, roles: ROLE_VIEWER }
          - { path: ^/document, roles: ROLE_VIEWER }
-         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+    #    - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
     #    - { path: ^/apip, roles: ROLE_EDITOR }
     #    - { path: ^/profile, roles: ROLE_USER }
 

@@ -103,7 +103,7 @@ Copier le code ci-dessous dans le fichier .env.local
 JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
 JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
 JWT_PASSPHRASE=
-
+REACT_APP_URL="https://localhost:8000/" VOTRE URL
 ###> nelmio/cors-bundle ###
 CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
 ###< nelmio/cors-bundle ###
@@ -229,6 +229,7 @@ package.json
         "bootstrap": "^4.6.0",
         "chart.js": "^3.4.1",
         "core-js": "^3.0.0",
+        "dotenv-webpack": "^8.0.1",
         "file-loader": "^6.0.0",
         "jquery": "^3.5.1",
         "popper.js": "^1.16.1",

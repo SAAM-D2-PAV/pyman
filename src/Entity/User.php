@@ -11,8 +11,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ApiResource(
+ *     normalizationContext = {"groups" = {"u_read:collection"} },
+ *     collectionOperations = {"get"},
+ *     itemOperations =  { "get" = { "normalization_context" =  { "groups" =  { "u_read:collection", "u_read:item" } } } },
+ * )
  */
 class User implements UserInterface
 {
@@ -20,14 +26,14 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("user:read")
+     * @Groups({"u_read:collection", "n_read:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank(message="Veuillez renseigner votre mail")
-     * @Groups("user:read")
+     * @Groups("u_read:item")
      */
     private $email;
 
@@ -47,7 +53,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez renseigner votre prénom")
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{ limit }} caractère minimun.", maxMessage="Ne pas dépasser {{ limit }} caractères.")
-     * @Groups("user:read")
+     * @Groups("u_read:collection","n_read:collection", "n_read:item")
      */
     private $firstname;
 
@@ -55,7 +61,6 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez renseigner votre nom")
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{ limit }} caractère minimun.", maxMessage="Ne pas dépasser {{ limit }} caractères.")
-     * @Groups("user:read")
      */
     private $lastname;
 

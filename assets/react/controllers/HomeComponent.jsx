@@ -5,7 +5,7 @@ import axios from "axios";
 
 import  Loading  from "./Loading";
 
-const MyComponent = () => {
+const HomeComponent = () => {
     //Variables et Fonctions du composant
     //Gestion des erreurs
     const [errMsg, setErrMsg] = useState('');
@@ -19,7 +19,8 @@ const MyComponent = () => {
     //Requète vers API
     const getUsers = () => {
         setLoading(true);
-        axios.get(`https://localhost:8000/react/users`).catch(
+        //https://www.npmjs.com/package/dotenv-webpack
+        axios.get(process.env.REACT_APP_URL+`users`).catch(
            function (error) {
                if (error.response) {
                 
@@ -31,9 +32,10 @@ const MyComponent = () => {
        //On charge dans users via setUsers
        .then(
            (res) => {
-              setLoading(false);
-              setUsers(res.data);
+              
+              setUsers(res.data['hydra:member']);
               setErrMsg('');
+              setLoading(false)
              
            }
        )
@@ -45,7 +47,7 @@ const MyComponent = () => {
     return (
         <>
         
-            <div className="container text-center">
+            <div className="container text-center bg-indigo-950">
 
                 <div className={ errMsg ? "errmsg alert alert-warning alert-dismissible fade show" : "d-none"} role="alert">
                     <strong>Holy guacamole!</strong> {errMsg}
@@ -53,15 +55,15 @@ const MyComponent = () => {
                 </div>
 
                 
-                <h1 class="text-3xl font-bold text-violet-200">
-                    Hello world!
+                <h1 className="text-3xl font-bold">
+                  Carnet de notes Pyman
                 </h1>
 
                 <div className="row">
                     <div className="col-md-4"></div>
                     <div className="input-group mb-3 col-md-4">
-                        <span className="input-group-text"><i className="fa-solid fa-magnifying-glass"></i></span>
-                        <input type="text" className="form-control" placeholder="rechercher une tâche" onChange={(e) => setInputSearch(e.target.value)}/>
+                        <span className="input-group-text"><i className="text-slate-50 fa-solid fa-magnifying-glass"></i></span>
+                        <input type="text" className="form-control text-slate-50" onChange={(e) => setInputSearch(e.target.value)}/>
                     </div>
                     <div className="col-md-4"></div>
                 </div>
@@ -74,7 +76,7 @@ const MyComponent = () => {
                                 users.map(
                                    (user) => 
                                    <div key={user.id}>
-                                        <p> {user.firstname }</p> 
+                                        <p className='text-slate-50'> {user.firstname }</p> 
                                    </div>
                                    
                                 )
@@ -86,4 +88,4 @@ const MyComponent = () => {
     );
 }
 
-export default MyComponent;
+export default HomeComponent;
