@@ -1,26 +1,27 @@
-// assets/react/controllers/MyComponent.jsx
+// assets/react/components/HomeComponent.jsx
 import React from 'react';
 import {useState, useEffect} from 'react';
 import axios from "axios";
 
 import  Loading  from "./Loading";
+import  NoteCardComponent from "./NoteCardComponent";
 
 const HomeComponent = () => {
     //Variables et Fonctions du composant
     //Gestion des erreurs
     const [errMsg, setErrMsg] = useState('');
-    //Variable users (tableau vide) -> stockage des users récupérées par axios  
-    const [users, setUsers] = useState([]);
+    //Variable notes (tableau vide) -> stockage des notes récupérées par axios  
+    const [notes, setNotes] = useState([]);
     //Variable initialement vide se remplie si le champs texte est modifié (recherche)
     const [inputSearch, setInputSearch] = useState("");
     //Variable de chargement
     const [loading,setLoading] = useState(false);
 
     //Requète vers API
-    const getUsers = () => {
+    const getNotes = () => {
         setLoading(true);
         //https://www.npmjs.com/package/dotenv-webpack
-        axios.get(process.env.REACT_APP_URL+`users`).catch(
+        axios.get(process.env.REACT_APP_URL+`notes`).catch(
            function (error) {
                if (error.response) {
                 
@@ -33,7 +34,7 @@ const HomeComponent = () => {
        .then(
            (res) => {
               
-              setUsers(res.data['hydra:member']);
+              setNotes(res.data['hydra:member']);
               setErrMsg('');
               setLoading(false)
              
@@ -41,8 +42,8 @@ const HomeComponent = () => {
        )
    }
     // Le useEffect se joue lorsque le composant est monté au chargement de la page
-    // Ici on lance la fonction getUsers
-    useEffect(() => getUsers(),[inputSearch])
+    // Ici on lance la fonction getNotes
+    useEffect(() => getNotes(),[inputSearch])
 
     return (
         <>
@@ -55,7 +56,7 @@ const HomeComponent = () => {
                 </div>
 
                 
-                <h1 className="text-3xl font-bold">
+                <h1 className="text-3xl">
                   Carnet de notes Pyman
                 </h1>
 
@@ -68,17 +69,14 @@ const HomeComponent = () => {
                     <div className="col-md-4"></div>
                 </div>
                 
-                <div className="row g-2">
+                <div className="row">
                     
                     {
                          loading ? <Loading/> :
-                            users &&
-                                users.map(
-                                   (user) => 
-                                   <div key={user.id}>
-                                        <p className='text-slate-50'> {user.firstname }</p> 
-                                   </div>
-                                   
+                            notes &&
+                                notes.map(
+                                   (note) => <NoteCardComponent key={note.id} data={note}/>
+                                  
                                 )
                     }
         
