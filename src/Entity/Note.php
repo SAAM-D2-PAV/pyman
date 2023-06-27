@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 //use ApiPlatform\Metadata\ApiResource;
+use Doctrine\ORM\Mapping as ORM;
+use App\Repository\NoteRepository;
+
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
-
-use App\Repository\NoteRepository;
-use Doctrine\ORM\Mapping as ORM;
 
 //ATTRIBUTS (configurer doctrine.yaml)
 
@@ -29,6 +31,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     collectionOperations = {"get"},
  *     itemOperations =  { "get" = { "normalization_context" =  { "groups" =  { "n_read:collection", "n_read:item" } } } },
  * )
+ * @ApiFilter(SearchFilter::class, properties = {"title" = "partial"})
  */
 class Note
 {

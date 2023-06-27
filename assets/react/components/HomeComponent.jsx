@@ -21,7 +21,7 @@ const HomeComponent = () => {
     const getNotes = () => {
         setLoading(true);
         //https://www.npmjs.com/package/dotenv-webpack
-        axios.get(process.env.REACT_APP_URL+`notes`).catch(
+        axios.get(process.env.REACT_APP_URL + `notes?title=` + inputSearch).catch(
            function (error) {
                if (error.response) {
                 
@@ -48,7 +48,7 @@ const HomeComponent = () => {
     return (
         <>
         
-            <div className="container text-center bg-indigo-950">
+            <div className="container text-center">
 
                 <div className={ errMsg ? "errmsg alert alert-warning alert-dismissible fade show" : "d-none"} role="alert">
                     <strong>Holy guacamole!</strong> {errMsg}
@@ -56,8 +56,8 @@ const HomeComponent = () => {
                 </div>
 
                 
-                <h1 className="text-3xl">
-                  Carnet de notes Pyman
+                <h1 className="text-2xl">
+                    Notes Pyman
                 </h1>
 
                 <div className="row">

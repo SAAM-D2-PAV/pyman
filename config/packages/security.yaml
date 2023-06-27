@@ -49,9 +49,9 @@ security:
          - { path: ^/materiel, roles: ROLE_OWNER }
          - { path: ^/contacts, roles: ROLE_VIEWER }
          - { path: ^/document, roles: ROLE_VIEWER }
-    #    - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
-    #    - { path: ^/apip, roles: ROLE_EDITOR }
-    #    - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/apip, roles: ROLE_EDITOR }
+         - { path: ^/profile, roles: ROLE_USER }
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_EDITOR
