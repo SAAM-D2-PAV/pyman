@@ -2,16 +2,23 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ApiResource(
+ *     normalizationContext = {"groups" = {"u_read:collection"} },
+ *     collectionOperations = {"get"},
+ *     itemOperations =  { "get" = { "normalization_context" =  { "groups" =  { "u_read:collection", "u_read:item" } } } },
+ * )
  */
 class User implements UserInterface
 {
@@ -19,12 +26,14 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"u_read:collection", "n_read:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank(message="Veuillez renseigner votre mail")
+     * @Groups("u_read:item")
      */
     private $email;
 
@@ -44,6 +53,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez renseigner votre prénom")
      * @Assert\Length(min = 1, max = 255, minMessage="Vous devez utilisez {{ limit }} caractère minimun.", maxMessage="Ne pas dépasser {{ limit }} caractères.")
+     * @Groups("u_read:collection","n_read:collection", "n_read:item")
      */
     private $firstname;
 
@@ -292,36 +302,6 @@ class User implements UserInterface
     public function setDepartment(?string $department): self
     {
         $this->department = $department;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Project[]
-     */
-    public function getUpdatedBy(): Collection
-    {
-        return $this->updatedBy;
-    }
-
-    public function addUpdatedBy(Project $updatedBy): self
-    {
-        if (!$this->updatedBy->contains($updatedBy)) {
-            $this->updatedBy[] = $updatedBy;
-            $updatedBy->setCreatedBy($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUpdatedBy(Project $updatedBy): self
-    {
-        if ($this->updatedBy->removeElement($updatedBy)) {
-            // set the owning side to null (unless already changed)
-            if ($updatedBy->getCreatedBy() === $this) {
-                $updatedBy->setCreatedBy(null);
-            }
-        }
 
         return $this;
     }
