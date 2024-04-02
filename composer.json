@@ -39,12 +39,12 @@
         "symfony/proxy-manager-bridge": "5.4.*",
         "symfony/security-bundle": "5.4.*",
         "symfony/serializer": "5.4.*",
+        "symfony/stimulus-bundle": "^2.16",
         "symfony/stopwatch": "5.4.*",
         "symfony/string": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
         "symfony/ux-autocomplete": "^2.7",
         "symfony/ux-chartjs": "^2.7",
-        "symfony/ux-react": "^2.7",
         "symfony/validator": "5.4.*",
         "symfony/var-dumper": "5.4.*",
         "symfony/web-profiler-bundle": "5.4.*",
@@ -60,7 +60,10 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true
+        }
     },
     "autoload": {
         "psr-4": {

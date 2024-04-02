@@ -15,12 +15,6 @@
                 "enabled": true,
                 "fetch": "eager"
             }
-        },
-        "@symfony/ux-react": {
-            "react": {
-                "enabled": true,
-                "fetch": "eager"
-            }
         }
     },
     "entrypoints": []
