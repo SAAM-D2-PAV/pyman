@@ -33,6 +33,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 /**
  * @Route("/taches")
  * @isGranted("ROLE_VIEWER", message="Vous devez être connecté !")
@@ -43,36 +44,36 @@ class TaskController extends AbstractController
 
     //LISTE DES TACHES
     /**
-     * @Route("/toutes-les-taches/{date}", name="tasks_list")
+     * @Route("/toutes-les-taches/{date}", name="tasks_list", defaults={"date"=null})
      */
     public function taskList($date = "", TaskRepository $taskRepository, PaginatorInterface $paginatorInterface, Request $request)
     {
-        $emptyList =false;
+        $emptyList = false;
         $dateSelect = "";
         $selectedDate = "";
         //Pour menu trier par date
         $allDates = $taskRepository->getDates();
         $array = [];
-        foreach ($allDates as $da){
+        foreach ($allDates as $da) {
             $d = $da['endDate']->format('Y');
-            array_push($array,$d);
+            array_push($array, $d);
         }
-       
+
         $uniqueDates = array_unique($array);
-       
+
         //Vérification de sécurité
-        foreach ($uniqueDates as $ud){
-            if($ud == $date){
+        foreach ($uniqueDates as $ud) {
+            if ($ud == $date) {
                 $selectedDate = $date;
             }
         }
-      
+
         $tasks = $taskRepository->getTaskOrderedByDateAscDql($selectedDate);
         if (!$tasks) {
             $emptyList = true;
-         }
-         //$tasksPaginated = $paginatorInterface->paginate($tasks, $request->query->getInt('page',1), 5000);
-         return $this->render('back/task/tasks_list.html.twig',[
+        }
+        //$tasksPaginated = $paginatorInterface->paginate($tasks, $request->query->getInt('page',1), 5000);
+        return $this->render('back/task/tasks_list.html.twig', [
             'tasks' => $tasks,
             'emptyList' => $emptyList,
             'dates' => $uniqueDates,
@@ -85,15 +86,15 @@ class TaskController extends AbstractController
      */
     public function todoTaskList(TaskRepository $taskRepository, PaginatorInterface $paginatorInterface, Request $request)
     {
-        $emptyList =false;
+        $emptyList = false;
         $tasks = $taskRepository->findBy([
             'status' => 'A faire'
         ]);
         if (!$tasks) {
             $emptyList = true;
-         }
-         //$tasksPaginated = $paginatorInterface->paginate($tasks, $request->query->getInt('page',1), 500);
-         return $this->render('back/task/todo_tasks_list.html.twig',[
+        }
+        //$tasksPaginated = $paginatorInterface->paginate($tasks, $request->query->getInt('page',1), 500);
+        return $this->render('back/task/todo_tasks_list.html.twig', [
             'tasks' => $tasks,
             'emptyList' => $emptyList,
             'dates' => [],
@@ -105,15 +106,15 @@ class TaskController extends AbstractController
      */
     public function inprogressTaskList(TaskRepository $taskRepository, PaginatorInterface $paginatorInterface, Request $request)
     {
-        $emptyList =false;
+        $emptyList = false;
         $tasks = $taskRepository->findBy([
             'status' => 'En cours'
         ]);
         if (!$tasks) {
             $emptyList = true;
-         }
-         //$tasksPaginated = $paginatorInterface->paginate($tasks, $request->query->getInt('page',1), 500);
-         return $this->render('back/task/inprogress_tasks_list.html.twig',[
+        }
+        //$tasksPaginated = $paginatorInterface->paginate($tasks, $request->query->getInt('page',1), 500);
+        return $this->render('back/task/inprogress_tasks_list.html.twig', [
             'tasks' => $tasks,
             'emptyList' => $emptyList,
             'dates' => [],
@@ -130,18 +131,17 @@ class TaskController extends AbstractController
         $taskcategory = $taskCategoryRepository->findAll();
         if (!$taskcategory) {
             $emptyList = true;
-         }
+        }
         /* if(!$taskcategory){
             //Gérer les erreurs de requêtes 
              throw $this->createNotFoundException("aucune tache à afficher !");
              
          } */
 
-         return $this->render('back/task/task_categories.html.twig',[
-             'categories' => $taskcategory,
-             'emptyList' => $emptyList
-         ]);
-
+        return $this->render('back/task/task_categories.html.twig', [
+            'categories' => $taskcategory,
+            'emptyList' => $emptyList
+        ]);
     }
 
     //AFFICHER UNE TACHE
@@ -153,52 +153,52 @@ class TaskController extends AbstractController
         $task = $taskRepository->findOneBy([
             'id' => $id
         ]);
-        if(!$task){
+        if (!$task) {
             throw $this->createNotFoundException("Cette tâche n'existe pas !");
         }
-        
+
         $form = $this->createForm(UploadFileType::class);
         $form->handleRequest($request);
 
         if ($this->isGranted("TASK_EDIT", $task)) {
-            
+
             if ($form->isSubmitted() && $form->isValid()) {
                 //gestion du chargement de fichier via //FileManager service 
                 $document = $form->get('uploadName')->getData();
-                
-                
+
+
                 if ($document != null) {
                     $FileName = $fileManager->upload($document);
-    
+
                     $document = new Document;
                     $document->setUploadName($FileName);
                     //$document->setProject($project);
                     $document->setTask($task);
                     $document->setUploadedBy($this->getUser());
-    
-                   $em->persist($document);
-    
+
+                    $em->persist($document);
+
                     //$projet->setCreatedAt(new \DateTime()); with LifecylceCallbacks
                     //$project->setUpdatedAt(new \DateTime()); with LifecylceCallbacks
                     //$projet->setCreatedBy($this->getUser());
                     $task->setUpdatedBy($this->getUser());
-    
+
                     $em->persist($task);
                     $em->flush();
 
                     //Envoi d'un mail de confirmation d'ajout de document à la tâche grace au EventSubscriber + Log de l'event
                     $taskEvent = new TaskSuccessEvent($task);
-                    $dispatcher->dispatch($taskEvent,'taskDocument.upload');
-                 }
-    
-                return $this->redirectToRoute('task_show',[
+                    $dispatcher->dispatch($taskEvent, 'taskDocument.upload');
+                }
+
+                return $this->redirectToRoute('task_show', [
                     'id' => $id
                 ]);
             }
         }
 
 
-        return $this->render('back/task/task_show.html.twig',[
+        return $this->render('back/task/task_show.html.twig', [
             'task' => $task,
             'form' => $form->createView(),
             'btnText' => 'Ajouter un document',
@@ -211,13 +211,12 @@ class TaskController extends AbstractController
     /**
      * @Route ("/{id}/pdf", name="task_as_pdf")
      */
-    public function pdfTaskGenerator(Task $task, PdfManager $pdf){
+    public function pdfTaskGenerator(Task $task, PdfManager $pdf)
+    {
 
         $html = $this->render('pdf/task_as_pdf.html.twig', ['task' => $task]);
 
         $pdf->showPdf($html);
-
-        
     }
 
     //*******************************************************
@@ -239,14 +238,14 @@ class TaskController extends AbstractController
         }
         $projectStatus = $project->getStatus();
 
-        if ($projectStatus == "Refusé" OR $projectStatus == "Annulé" OR $projectStatus == "Fait") {
+        if ($projectStatus == "Refusé" or $projectStatus == "Annulé" or $projectStatus == "Fait") {
             # code...
             throw $this->createNotFoundException("Le statut du projet ne permet pas l'ajout d'une tâche !");
         }
         $task->setProject($project);
 
         $form = $this->createForm(TaskType::class, $task);
-        
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -261,18 +260,17 @@ class TaskController extends AbstractController
             $goodToGo = true;
 
             //Si oui comparaison des dates de livraison
-            foreach ($existingTasks as $taask){
+            foreach ($existingTasks as $taask) {
                 //Si oui on bloque la validation
-                if ($taask->getStartDate() == $taskStartDate AND $taask->getEndDate() == $taskEndDate AND $project = $taask->getProject()){
+                if ($taask->getStartDate() == $taskStartDate and $taask->getEndDate() == $taskEndDate and $project = $taask->getProject()) {
                     $goodToGo = false;
-
                 }
                 //On valide
-                else{
+                else {
                     $goodToGo = true;
                 }
             }
-            if ($goodToGo == true){
+            if ($goodToGo == true) {
                 //$task->setCreatedAt(new \DateTime()); with LifecylceCallbacks
                 $task->setUpdatedAt(new \DateTime());
                 $task->setCreatedBy($this->getUser());
@@ -285,7 +283,7 @@ class TaskController extends AbstractController
 
                 $task->setSlug(strtolower($slugger->slug($toSlug)));
 
-               
+
                 $em->persist($task);
                 $em->persist($project);
 
@@ -296,19 +294,17 @@ class TaskController extends AbstractController
                 //Envoi d'un mail de confirmation d'ajout de tache grace au EventSubscriber + Log de l'event
 
                 $taskEvent = new TaskSuccessEvent($task);
-                $dispatcher->dispatch($taskEvent,'task.success');
+                $dispatcher->dispatch($taskEvent, 'task.success');
 
                 $this->addFlash('success', $messageGenerator->getHappyMessage());
 
                 // On redirige vers la tache
-                return $this->redirectToRoute('task_show',[
+                return $this->redirectToRoute('task_show', [
                     'id' => $task->getId()
                 ]);
-            }
-            else{
+            } else {
                 $this->addFlash('warning', 'Cette tâche existe déjà');
             }
-
         }
         return $this->render('back/task/edit_task.html.twig', [
             // createView() permet de récupérer
@@ -322,7 +318,6 @@ class TaskController extends AbstractController
             'btnLabel' => 'bg-aqua_velvet',
             'ico' => 'plus'
         ]);
-
     }
 
     //Ajout d'une tâche
@@ -343,7 +338,6 @@ class TaskController extends AbstractController
             $sD = new \DateTime($startDate);
             $form->get('startDate')->setData($sD);
             $form->get('startHour')->setData($sD);
-           
         }
         if ($endDate) {
             $eD = new \DateTime($endDate);
@@ -355,7 +349,7 @@ class TaskController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-           
+
 
             $linkedProject = $form->getData()->getProject();
 
@@ -381,7 +375,7 @@ class TaskController extends AbstractController
             //         $goodToGo = true;
             //     }
             // }
-            if ($goodToGo == true){
+            if ($goodToGo == true) {
 
                 $linkedProject->setUpdatedBy($this->getUser());
                 $linkedProject->setUpdatedAt(new \DateTime());
@@ -399,15 +393,14 @@ class TaskController extends AbstractController
                 //send mail to subscriber user
                 //Envoi d'un mail de confirmation d'ajout de tache grace au EventSubscriber + Log de l'event
                 $taskEvent = new TaskSuccessEvent($task);
-                $dispatcher->dispatch($taskEvent,'task.success');
+                $dispatcher->dispatch($taskEvent, 'task.success');
 
                 $this->addFlash('success', $messageGenerator->getHappyMessage());
 
                 // On redirige vers la tache
-                return $this->redirectToRoute('task_show',[
+                return $this->redirectToRoute('task_show', [
                     'id' => $task->getId()
                 ]);
-
             }
             // else{
             //     $this->addFlash('danger', 'Sur le projet '.$linkedProject->getName().', une tâche portant le même nom existe déjà sur ce créneau horaire !');
@@ -423,7 +416,6 @@ class TaskController extends AbstractController
             'btnLabel' => 'bg-aqua_velvet',
             'ico' => 'plus'
         ]);
-
     }
 
     //Modification d'une tâche
@@ -434,29 +426,29 @@ class TaskController extends AbstractController
     public function taskEdit($id, TaskRepository $taskRepository, Request $request, SluggerInterface $slugger, EntityManagerInterface $em, MessageGenerator $messageGenerator, EventDispatcherInterface $dispatcher)
     {
         $task = $taskRepository->find($id);
-        
 
-        if(!$task){
+
+        if (!$task) {
             //Gérer les erreurs de requêtes 
-             throw $this->createNotFoundException("Cette tâche n'existe pas !");
-         }
-         //VOTER TaskVoter
-         $this->denyAccessUnlessGranted('TASK_EDIT',$task,'Vous ne pouvez pas modifier cette tâche');
-         $projectStatus = $task->getProject()->getStatus();
+            throw $this->createNotFoundException("Cette tâche n'existe pas !");
+        }
+        //VOTER TaskVoter
+        $this->denyAccessUnlessGranted('TASK_EDIT', $task, 'Vous ne pouvez pas modifier cette tâche');
+        $projectStatus = $task->getProject()->getStatus();
 
-         if ($projectStatus == "Refusé" OR $projectStatus == "Annulé" OR $projectStatus == "Fait") {
-             # code...
-             throw $this->createNotFoundException("Le statut du projet ne permet pas la modification de cette tâche !");
-         }
-         $form = $this->createForm(TaskType::class, $task);
-         //$form->setData($equipment);
+        if ($projectStatus == "Refusé" or $projectStatus == "Annulé" or $projectStatus == "Fait") {
+            # code...
+            throw $this->createNotFoundException("Le statut du projet ne permet pas la modification de cette tâche !");
+        }
+        $form = $this->createForm(TaskType::class, $task);
+        //$form->setData($equipment);
 
-         $form->handleRequest($request);
-        
+        $form->handleRequest($request);
 
-         if ($form->isSubmitted() && $form->isValid()) {
 
-    
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
             $linkedProject = $form->getData()->getProject();
             $linkedProject->setUpdatedBy($this->getUser());
             $linkedProject->setUpdatedAt(new \DateTime());
@@ -470,20 +462,18 @@ class TaskController extends AbstractController
             //send mail to subscriber user
             //Envoi d'un mail de modification de tache grace au EventSubscriber + Log de l'event
             $taskEvent = new TaskSuccessEvent($task);
-            $dispatcher->dispatch($taskEvent,'task.updated');
+            $dispatcher->dispatch($taskEvent, 'task.updated');
 
-           
+
 
             $this->addFlash('success', $messageGenerator->getHappyMessage());
-            
+
             // On redirige vers la tache
-            return $this->redirectToRoute('task_show',[
+            return $this->redirectToRoute('task_show', [
                 'id' => $task->getId()
             ]);
-          
-           
-         }
-        
+        }
+
 
         return $this->render('back/task/edit_task.html.twig', [
             'form' => $form->createView(),
@@ -494,7 +484,7 @@ class TaskController extends AbstractController
             'btnText' => 'Modifier',
             'btnLabel' => 'bg-double_dragon_skin',
             'ico' => 'edit'
-        
+
         ]);
     }
     //Suppression d'une tâche
@@ -505,8 +495,8 @@ class TaskController extends AbstractController
     public function taskDelete($id, Request $request, Task $task, EventDispatcherInterface $dispatcher, DocumentRepository $documentRepository, FileManager $fileManager, LogEventRepository $logEventRepository, EntityManagerInterface $em)
     {
 
-        if ($this->isCsrfTokenValid('delete'.$task->getId(), $request->request->get('_token'))) {
-        
+        if ($this->isCsrfTokenValid('delete' . $task->getId(), $request->request->get('_token'))) {
+
 
 
             //Récupération du projet lié
@@ -518,13 +508,13 @@ class TaskController extends AbstractController
             //On récupère les logs liés
             $logs = $logEventRepository->findBy(['task' => $task]);
             //On supprime les logs liés
-            foreach ($logs as $log){
+            foreach ($logs as $log) {
                 $task->removeLogEvent($log);
                 $em->remove($log);
             }
             //si des documents existent alors on les supprime
-            if($docs){
-                foreach ($docs as $doc ){
+            if ($docs) {
+                foreach ($docs as $doc) {
                     $task->removeDocument($doc);
                     $em->remove($doc);
                     //Service from FileManager
@@ -532,21 +522,18 @@ class TaskController extends AbstractController
                 }
             }
             //si des owners existent alors on les supprime
-            foreach ($owners as $owner){
+            foreach ($owners as $owner) {
                 $owner->removeTask($task);
             }
 
             $em->remove($task);
             $em->flush();
-            
-
         }
         //Redirection vers le projet
-        return $this->redirectToRoute('project_show',[
+        return $this->redirectToRoute('project_show', [
             'slug' => $linkedProj->getSlug(),
             'id' => $linkedProj->getId()
         ]);
-        
     }
 
     //Ajout d'une catégorie de tâche
@@ -563,17 +550,17 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-         
-            
+
+
             $toSlug = $form->getData()->getName();
 
             $taskCategory->setSlug(strtolower($slugger->slug($toSlug)));
 
             $em->persist($taskCategory);
             $em->flush($taskCategory);
-            
+
             $this->addFlash('success', $messageGenerator->getHappyMessage());
-            
+
             // On redirige vers la liste
             return $this->redirectToRoute('task_categories_list');
         }
@@ -589,7 +576,7 @@ class TaskController extends AbstractController
         ]);
     }
 
-    
+
 
     //Modification de catégorie
     /**
@@ -601,17 +588,17 @@ class TaskController extends AbstractController
         $taskCat = $taskCategoryRepository->find($id);
 
 
-        if(!$taskCat){
+        if (!$taskCat) {
             //Gérer les erreurs de requêtes 
-             throw $this->createNotFoundException("Cette catégorie n'existe pas !");
-         }
+            throw $this->createNotFoundException("Cette catégorie n'existe pas !");
+        }
 
-         $form = $this->createForm(TaskCategoryType::class, $taskCat);
-         //$form->setData($equipment);
+        $form = $this->createForm(TaskCategoryType::class, $taskCat);
+        //$form->setData($equipment);
 
-         $form->handleRequest($request);
+        $form->handleRequest($request);
 
-         if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
 
             $toSlug = $form->getData()->getName();
@@ -621,12 +608,11 @@ class TaskController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', $messageGenerator->getHappyMessage());
-            
+
             // On redirige vers la liste
             return $this->redirectToRoute('task_categories_list');
-           
-         }
-        
+        }
+
 
         return $this->render('back/task/edit_task_category.html.twig', [
             'form' => $form->createView(),
@@ -635,7 +621,7 @@ class TaskController extends AbstractController
             'btnText' => 'Modifier',
             'btnLabel' => 'bg-double_dragon_skin',
             'ico' => 'edit'
-        
+
         ]);
     }
 
@@ -645,35 +631,34 @@ class TaskController extends AbstractController
      */
     public function equipmentToTaskShow($id, TaskRepository $taskRepository, EquipmentRepository $equipmentRepository, Request $request, MessageGenerator $messageGenerator)
     {
-        
+
         $task = $taskRepository->findOneBy([
             'id' => $id
         ]);
 
         //VOTER TaskVoter
-        $this->denyAccessUnlessGranted('TASK_EDIT',$task,'Vous ne pouvez pas modifier cette tâche');
+        $this->denyAccessUnlessGranted('TASK_EDIT', $task, 'Vous ne pouvez pas modifier cette tâche');
 
-       $emptyList = false;
-       if (!$task) {
-        $emptyList = true;
-     }
+        $emptyList = false;
+        if (!$task) {
+            $emptyList = true;
+        }
 
-       $equipmentList = $equipmentRepository->findAll();
+        $equipmentList = $equipmentRepository->findAll();
 
-       
+
 
         return $this->render('back/task/task_equipment_add.html.twig', [
             //'form' => $form->createView(),
-          
+
             'equipmentList' => $equipmentList,
             'task' => $task,
-            'cat' => 'Ajout de matériel à la tâche '.$task->getName() ,
+            'cat' => 'Ajout de matériel à la tâche ' . $task->getName(),
             'btnText' => 'Ajouter',
             'btnLabel' => 'bg-aqua_velvet',
             'ico' => 'plus'
-        
-        ]);
 
+        ]);
     }
     //REMPLACÉ PAR AJAXCaller /ajaxCtl dans SecurityController
     /**
@@ -686,44 +671,41 @@ class TaskController extends AbstractController
             'id' => $tid
         ]);
         //VOTER TaskVoter
-        $this->denyAccessUnlessGranted('TASK_EDIT',$task,'Vous ne pouvez pas modifier cette tâche');
-       
-       if (!$task) {
+        $this->denyAccessUnlessGranted('TASK_EDIT', $task, 'Vous ne pouvez pas modifier cette tâche');
+
+        if (!$task) {
             //Gérer les erreurs de requêtes 
-             throw $this->createNotFoundException("Cette tâche n'existe pas !");
-        }
-        else{   
-           $equipment = $equipmentRepository->find($id);
+            throw $this->createNotFoundException("Cette tâche n'existe pas !");
+        } else {
+            $equipment = $equipmentRepository->find($id);
 
-           if ($equipment) {
+            if ($equipment) {
 
-                
-               //AJOUT DU MATERIEL A LA TACHE
-               $task->addEquipment($equipment);
-               $task->setUpdatedBy($this->getUser());
-               $task->getProject()->setUpdatedAt(new \DateTime());
-               $task->getProject()->setUpdatedBy($this->getUser());
-              
-               $em->flush();
 
-               
-            
-               // redirect to a route with parameters
+                //AJOUT DU MATERIEL A LA TACHE
+                $task->addEquipment($equipment);
+                $task->setUpdatedBy($this->getUser());
+                $task->getProject()->setUpdatedAt(new \DateTime());
+                $task->getProject()->setUpdatedBy($this->getUser());
+
+                $em->flush();
+
+
+
+                // redirect to a route with parameters
                 return $this->redirectToRoute('equipment_to_task_show', [
-                   
+
                     'equipmentList' => $equipmentRepository->findAll(),
                     'id' => $task->getId(),
-                    'cat' => 'Ajout de matériel à la tâche '.$task->getName() ,
+                    'cat' => 'Ajout de matériel à la tâche ' . $task->getName(),
                     'btnText' => 'Ajouter',
                     'btnLabel' => 'bg-aqua_velvet',
                     'ico' => 'plus'
-                    ]);
-
-           }
-           else{
+                ]);
+            } else {
                 //Gérer les erreurs de requêtes 
                 throw $this->createNotFoundException("Problème de liaison avec la base de donnée !");
-           }
+            }
         }
     }
     /**
@@ -736,89 +718,82 @@ class TaskController extends AbstractController
             'id' => $tid
         ]);
         //VOTER TaskVoter
-        $this->denyAccessUnlessGranted('TASK_EDIT',$task,'Vous ne pouvez pas modifier cette tâche');
-       
-       if (!$task) {
-            //Gérer les erreurs de requêtes 
-             throw $this->createNotFoundException("Cette tâche n'existe pas !");
-        }
-        else{   
-           $equipment = $equipmentRepository->find($id);
+        $this->denyAccessUnlessGranted('TASK_EDIT', $task, 'Vous ne pouvez pas modifier cette tâche');
 
-           if ($equipment) {
-               //SUPPRESSION DU MATERIEL A LA TACHE
-               $task->removeEquipment($equipment);
-               $task->setUpdatedBy($this->getUser());
-               $task->getProject()->setUpdatedAt(new \DateTime());
-               $task->getProject()->setUpdatedBy($this->getUser());
-             
-               $em->flush();
-            
-               // redirect to a route with parameters
+        if (!$task) {
+            //Gérer les erreurs de requêtes 
+            throw $this->createNotFoundException("Cette tâche n'existe pas !");
+        } else {
+            $equipment = $equipmentRepository->find($id);
+
+            if ($equipment) {
+                //SUPPRESSION DU MATERIEL A LA TACHE
+                $task->removeEquipment($equipment);
+                $task->setUpdatedBy($this->getUser());
+                $task->getProject()->setUpdatedAt(new \DateTime());
+                $task->getProject()->setUpdatedBy($this->getUser());
+
+                $em->flush();
+
+                // redirect to a route with parameters
                 return $this->redirectToRoute('equipment_to_task_show', [
-                   
+
                     'equipmentList' => $equipmentRepository->findAll(),
                     'id' => $task->getId(),
-                    'cat' => 'Ajout de matériel à la tâche '.$task->getName() ,
+                    'cat' => 'Ajout de matériel à la tâche ' . $task->getName(),
                     'btnText' => 'Ajouter',
                     'btnLabel' => 'bg-aqua_velvet',
                     'ico' => 'plus'
-                    ]);
-
-           }
-           else{
+                ]);
+            } else {
                 //Gérer les erreurs de requêtes 
                 throw $this->createNotFoundException("Problème de liaison avec la base de donnée !");
-           }
+            }
         }
-    
     }
 
     /**
      * @Route("/{tid}/document/{id}/download", name="task_document_download")
-    */
-    public function downloadTaskDocument($tid,$id, Request $request, Document $document, FileManager $fileManager, DocumentRepository $documentRepository, TaskRepository $taskRepository)
+     */
+    public function downloadTaskDocument($tid, $id, Request $request, Document $document, FileManager $fileManager, DocumentRepository $documentRepository, TaskRepository $taskRepository)
     {
 
-        $valid = $documentRepository->findOneBy(['id' => $id,'task' => $tid]);
+        $valid = $documentRepository->findOneBy(['id' => $id, 'task' => $tid]);
         if ($valid) {
             $filePath = $fileManager->download($document);
 
             if ($filePath) {
-             return $this->file($filePath);
-            }   
-        }
-        else{
-             
-             throw $this->createNotFoundException("Erreur de chargement du fichier !");
-        }
-       $filePath = $fileManager->download($document);
+                return $this->file($filePath);
+            }
+        } else {
 
-       if ($filePath) {
-        return $this->file($filePath);
-       }   
+            throw $this->createNotFoundException("Erreur de chargement du fichier !");
+        }
+        $filePath = $fileManager->download($document);
+
+        if ($filePath) {
+            return $this->file($filePath);
+        }
     }
-    
+
     /**
      * @Route("/{tid}/document/{id}/supprimer", name="task_document_remove", methods={"DELETE"})
      * @isGranted("ROLE_EDITOR", message="Vous n'avez pas accès à cette fonctionnalité !")
      */
     public function removeDocumentFromTask($tid, Request $request, Document $document, FileManager $fileManager, EntityManagerInterface $em)
     {
-        if ($this->isCsrfTokenValid('delete'.$document->getId(), $request->request->get('_token'))) {
-          
+        if ($this->isCsrfTokenValid('delete' . $document->getId(), $request->request->get('_token'))) {
+
             //Service from FileManager
             $fileManager->delete($document);
 
-        
+
             $em->remove($document);
             $em->flush();
         }
 
-        return $this->redirectToRoute('task_show',[
+        return $this->redirectToRoute('task_show', [
             'id' => $tid
         ]);
-        
-       
     }
 }
