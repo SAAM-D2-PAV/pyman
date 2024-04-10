@@ -4,7 +4,7 @@ twig:
         - bootstrap_4_layout.html.twig
     globals:
         app_name: 'Pyman'
-        app_version: 'Beta'
+        app_version: '1.2'
         app_date: "avril. 2023"
         app_theme: "w"
         default_admin_email: audiovideo.ac@education.gouv.fr
